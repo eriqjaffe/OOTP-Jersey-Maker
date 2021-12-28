@@ -8,10 +8,13 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
-  "author": "Eriq P Jaffe",
+  "author": {
+    "name": "Eriq Jaffe",
+    "email": "eriqjaffe@gmail.com",
+    "url": "https://github.com/eriqjaffe/parkgen"
+  },
   "license": "ISC",
   "dependencies": {
-    "electron": "^16.0.3",
     "electron-build": "^0.0.3",
     "express": "^4.17.1",
     "imagemagick-cli": "^0.5.0",
@@ -20,8 +23,8 @@
   },
   "packageManager": "yarn@3.1.0",
   "devDependencies": {
-    "electron": "^16.0.0",
-    "electron-builder": "^22.13.1"
+    "electron": "^16.0.3",
+    "electron-builder": "^22.14.5"
   },
   "build": {
     "appId": "com.hypermodules.testapp",
