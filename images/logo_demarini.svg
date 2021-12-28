@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="56.444443mm"
+   height="58.942352mm"
+   viewBox="0 0 199.99999 208.85085"
+   id="svg27851"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="logo_demarini.svg">
+  <defs
+     id="defs27853" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-405.92738"
+     inkscape:cy="-10.272985"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1600"
+     inkscape:window-height="838"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata27856">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-293.78452,-313.23837)">
+    <path
+       inkscape:connector-curvature="0"
+       id="path19841"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       d="m 468.39846,458.18134 c 1.64824,-1.18347 39.13933,-28.674 19.9164,-74.46618 -16.70423,-39.79023 -37.44895,-64.16992 -58.18512,-69.3603 -13.93122,-3.49973 -31.46371,1.53007 -45.13272,10.87108 l -91.2125,61.69308 22.88322,48.25212 52.74091,-37.23733 -37.75265,68.50655 23.83825,55.64886 16.92403,-28.02312 12.291,23.26383 83.68918,-59.14859 z m -36.07927,-56.62947 c 3.90549,8.53796 7.59113,16.63632 -6.88105,27.55815 l -26.88175,18.77506 c -4.43818,-8.15756 -10.46557,-20.67708 -18.14101,-36.9499 l -7.33771,-15.58811 c 7.98004,-5.63843 19.16397,-13.21269 19.12991,-13.18734 l 1.91063,-1.23422 c 10.76948,-7.65875 13.44093,-8.52101 18.77486,-7.42209 7.42247,1.52164 14.19336,16.34894 19.42612,28.04845" />
+  </g>
+</svg>

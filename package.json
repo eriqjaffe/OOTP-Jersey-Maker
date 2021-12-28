@@ -1,0 +1,51 @@
+{
+  "name": "jerseymaker",
+  "version": "0.1.0",
+  "description": "OOTP Jersey Maker",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "Eriq P Jaffe",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^16.0.3",
+    "electron-build": "^0.0.3",
+    "express": "^4.17.1",
+    "imagemagick-cli": "^0.5.0",
+    "jimp": "^0.16.1",
+    "ttfinfo": "^0.2.0"
+  },
+  "packageManager": "yarn@3.1.0",
+  "devDependencies": {
+    "electron": "^16.0.0",
+    "electron-builder": "^22.13.1"
+  },
+  "build": {
+    "appId": "com.hypermodules.testapp",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        "zip",
+        "dmg"
+      ]
+    },
+    "portable": {
+      "artifactName": "${productName}_${version}_portable.${ext}"
+    },
+    "nsis": {
+      "perMachine": true,
+      "artifactName": "${productName}_${version}_setup.${ext}"
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "tar.gz"
+      ]
+    },
+    "deb": {}
+  }
+}
