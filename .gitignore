@@ -2,3 +2,4 @@ dist/
 node_modules/
 images_original/
 .yarn/install-state.gz
+.yarn/cache/
