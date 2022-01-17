@@ -27,7 +27,7 @@
     "electron-builder": "^22.14.5"
   },
   "build": {
-    "appId": "com.hypermodules.testapp",
+    "appId": "com.ootputilities.jerseymaker",
     "mac": {
       "category": "public.app-category.utilities",
       "target": [
@@ -39,8 +39,14 @@
       "artifactName": "${productName}_${version}_portable.${ext}"
     },
     "nsis": {
+      "oneClick": false,
       "perMachine": true,
-      "artifactName": "${productName}_${version}_setup.${ext}"
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "artifactName": "${productName}_${version}_setup.${ext}",
+      "menuCategory": "OOTP Utilities",
+      "shortcutName": "OOTP Jersey Maker",
+      "include": "build/installer.nsh"
     },
     "linux": {
       "target": [
