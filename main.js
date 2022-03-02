@@ -94,8 +94,8 @@ const template = [
 const menu = Menu.buildFromTemplate(template)
 Menu.setApplicationMenu(menu)
 
-app2.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+const server = app2.listen(0, () => {
+	console.log(`Server running on port ${server.address().port}`);
 });
 
 app2.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
@@ -431,7 +431,7 @@ const createWindow = () => {
     })
   
     // and load the index.html of the app.
-    mainWindow.loadFile('index.html')
+    mainWindow.loadURL(`file://${__dirname}/index.html?port=${server.address().port}`);
 
 	mainWindow.webContents.on('new-window', function(e, url) {
 		e.preventDefault();

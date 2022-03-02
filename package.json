@@ -1,6 +1,7 @@
 {
   "name": "jerseymaker",
-  "version": "0.1.1",
+  "productName": "OOTP Jersey Maker",
+  "version": "0.1.2",
   "description": "OOTP Jersey Maker",
   "main": "main.js",
   "scripts": {
@@ -11,11 +12,10 @@
   "author": {
     "name": "Eriq Jaffe",
     "email": "eriqjaffe@gmail.com",
-    "url": "https://github.com/eriqjaffe/jerseymaker"
+    "url": "https://github.com/eriqjaffe/OOTP-Jersey-Maker"
   },
   "license": "ISC",
   "dependencies": {
-    "electron-build": "^0.0.3",
     "express": "^4.17.1",
     "imagemagick-cli": "^0.5.0",
     "jimp": "^0.16.1",
@@ -23,7 +23,7 @@
   },
   "packageManager": "yarn@3.1.0",
   "devDependencies": {
-    "electron": "^16.0.3",
+    "electron": "^17.1.0",
     "electron-builder": "^22.14.5"
   },
   "build": {
@@ -35,6 +35,12 @@
         "dmg"
       ]
     },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
     "portable": {
       "artifactName": "${productName}_${version}_portable.${ext}"
     },
@@ -43,10 +49,13 @@
       "perMachine": true,
       "allowToChangeInstallationDirectory": true,
       "allowElevation": true,
-      "artifactName": "${productName}_${version}_setup.${ext}",
+      "artifactName": "${productName} ${version} setup.${ext}",
       "menuCategory": "OOTP Utilities",
-      "shortcutName": "OOTP Jersey Maker",
-      "include": "build/installer.nsh"
+      "shortcutName": "${productName}",
+      "include": "build/installer.nsh",
+      "uninstallDisplayName": "${productName} ${version}",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico"
     },
     "linux": {
       "target": [

@@ -25,6 +25,9 @@
 	<link href='./scripts/dd.css' rel='stylesheet' type='text/css'>
 	<link href='./scripts/jquery.range.css' rel='stylesheet' type='text/css'>
 	<script>
+		const params = new URLSearchParams(window.location.search)
+		const port = params.get('port')
+
 		var initialColors = {jerseyColor:"#FFFFFF",jerseyFrontColor:"#008800",jerseyBackColor:"#880000",buttonPadFillColor:"transparent",buttonPadColor:"#000000",collarColor:"#103959",leftSleeveColor:"#FFFFFF",rightSleeveColor:"#FFFFFF",leftSleeveLongColor:"#FFFFFF",rightSleeveLongColor:"#FFFFFF",pinstripesColor:"#000000",pinstripesStrokeColor:"transparent",undershirtColor:"#103959",sleeveSeamAngledColor:"#0202f0",sleeveSeamAngledStrokeColor:"#000000",racingStripeLargeColor:"#ff0000",racingStripeSmallColor:"#00FF00",sleeveSeamXLColor:"#971717",sleeveSeamXLStrokeColor:"#000000",smallTopShouldersColor:"#999999",smallTopShouldersStrokeColor:"#000000",bigTopShouldersColor:"#00FF00",bigTopShouldersStrokeColor:"#000000",sidePanelSmallColor:"#FF0000",sidePanelSmallStrokeColor:"#0000FF",sidePanelSmallRoundedColor:"#0000FF",sidePanelSmallRoundedStrokeColor:"#FF0000",sidePanelLargeRoundedColor:"#00FF00",sidePanelLargeRoundedStrokeColor:"yellow",sidePanelVColor:"yellow",sidePanelVStrokeColor:"#00FF00",arcedStripeColor:"#003399",placketPipingInnerColor:"#FF0000",placketPipingMiddleColor:"#00FF00",placketPipingOuterColor:"#0000FF",widePlacketPipingInnerColor:"#FF0000",widePlacketPipingMiddleColor:"#00FF00",widePlacketPipingOuterColor:"#0000FF",tequilaSunrise1Color:"#ef7212",tequilaSunrise2Color:"#ffcf00",tequilaSunrise3Color:"#ff7900",tequilaSunrise4Color:"#d70039",sleevePipingInnerColor:"#FF0000",sleevePipingMiddleColor:"#FFFFFF",sleevePipingOuterColor:"#0000FF",thinCuffInnerColor:"#FF0000",thinCuffMiddleColor:"#FFFFFF",thinCuffOuterColor:"#0000FF",sleeveCuffInnerColor:"#FF0000",sleeveCuffMiddleColor:"#FFFFFF",sleeveCuffOuterColor:"#0000FF",shoulderPipingInnerColor:"#FF0000",shoulderPipingMiddleColor:"#FFFFFF",shoulderPipingOuterColor:"#0000FF",swashFillColor:"#000000",swashStrokeColor:"#FF0000",wordmarkTextColor:"#103959",wordmarkTextStroke1Color:"#FFFFFF",wordmarkTextStroke2Color:"#FF0000",beachBlanketTopColor:"#FF0000",beachBlanketMiddleColor:"#0000FF",beachBlanketBottomColor:"#FF0000",vNeckThinInnerColor:"#FF0000",vNeckThinMiddleColor:"#FFFFFF",vNeckThinOuterColor:"#0000FF",vNeckOffsetInnerColor:"#FF0000",vNeckOffsetMiddleColor:"#FFFFFF",vNeckOffsetOuterColor:"#0000FF",vNeckThickInnerColor:"#FF0000",vNeckThickMiddleColor:"#FFFFFF",vNeckThickOuterColor:"#0000FF",buttonsColor:"#FFFFFF",camoBaseColor:"#4a551e",camoLayer1Color:"#052503",camoLayer2Color:"#beb585",digiCamoBaseColor:"#9a8b62",digiCamoLayer1Color:"#372900",digiCamoLayer2Color:"#736632",butterflyColor:"#103959",cadetCollarColor:"#FF0000",fullCollarColor:"#00FF00",neckCollarColor:"#0000FF",sunCollar1Color:"#FF0000",sunCollar2Color:"#00FF00",buttonDownCollarColor:"#00FFFF",jerseyFlapColor:"#191970",jerseyFlapTrimColor:"#800000",jerseyFlapButtonsColor:"#FFFFFF",jerseyShield1WideStrokeColor:"#FF0000",jerseyShield1WideColor:"#0000FF",jerseyShield1InnerStrokeColor:"#000000",jerseyShield1InnerColor:"#00FF00",jerseyShield1ButtonsColor:"#FFFFFF",jerseyShield2StrokeColor:"#FF0000",jerseyShield2InnerColor:"#0000FF",jerseyShield2ButtonsColor:"#FFFFFF",jerseyPanelStrokeColor:"#FF0000",jerseyPanelFillColor:"#00FF00",jerseyPanelButtonColor:"#FFFFFF",bowTie1Color:"#0000FF",bowTie2Color:"#FF0000",tieColor:"#272A26",pocketFillColor:"#fffdd0",xLacesColor:"#0000FF",vLacesColor:"#FF0000",hockeyLacesColor:"#CFCFCF",suspendersColor:"#228b22",nikeHornsColor:"#FF9933",shoulderLoops1Color:"#6600CC",shoulderLoops2Color:"#339933",ncaaShoulderColor:"#996633",makersMarkColor:"#000000",snakeskinColor:"#A41E20",rainbowShoulder1Color:"#041E42",
 		rainbowShoulder2Color:"#D50032",
 		rainbowShoulder3Color:"#FA4616",
@@ -3774,7 +3777,7 @@
 	$("#fakeImageButton").on("click",function() {
 		$.ajax({
 			type: "GET",
-			url: "http://127.0.0.1:8080/uploadImage",
+			url: "http://127.0.0.1:"+port+"/uploadImage",
 			success: function(data) {
 				var imgObj = new Image();
 				imgObj.src = data.image;
@@ -4542,7 +4545,7 @@
 			
 			$.ajax({
 				type: "POST",
-				url: "http://127.0.0.1:8080/warpText",
+				url: "http://127.0.0.1:"+port+"/warpText",
 				data: {deform: $("#warpEffect").val(), amount: $("#warpAmount").val(), imgdata: theImage},
 				success: function(data) {
 					var imgObj = new Image();
@@ -4669,7 +4672,7 @@
 				theImage = theImage.substr(theImage.indexOf(',') + 1).toString();
 				$.ajax({
 					type: "POST",
-					url: "http://127.0.0.1:8080/removeBorder",
+					url: "http://127.0.0.1:"+port+"/removeBorder",
 					data: {imgdata: theImage, x: "1", y: "1", action: "removeBorder", color: "null", newcolor: "null", fuzz: fuzz, filename: pictureName},
 					success: function(data) {
 						$("#overlay").css("display","none");
@@ -4745,7 +4748,7 @@
 				theImage = theImage.substr(theImage.indexOf(',') + 1).toString();			
 				$.ajax({
 					type: "POST",
-					url: "http://127.0.0.1:8080/removeColorRange",
+					url: "http://127.0.0.1:"+port+"/removeColorRange",
 					data: {imgdata: theImage, x: x, y: y, color: color, action: action, fuzz: fuzz, filename: pictureName},
 					success: function(data) {
 						var imgObj = new Image();
@@ -4811,7 +4814,7 @@
 				$.ajax({
 					type: "POST",
 					//url: "./scripts/changecolor.php",
-					url: "http://127.0.0.1:8080/removeAllColor",
+					url: "http://127.0.0.1:"+port+"/removeAllColor",
 					data: {imgdata: theImage, x: x, y: y, color: color, action: action, fuzz: fuzz, filename: pictureName},
 					success: function(data) {
 						var imgObj = new Image();
@@ -4889,7 +4892,7 @@
 				
 				$.ajax({
 					type: "POST",
-					url: "http://127.0.0.1:8080/replaceColor",
+					url: "http://127.0.0.1:"+port+"/replaceColor",
 					data: {imgdata: theImage, x: x, y: y, action: action, color: color, newcolor: newcolor, fuzz: fuzz, filename: pictureName},
 					success: function(data) {
 					//$("#testImage").attr("src","data:image/png;base64,"+data);
@@ -5207,7 +5210,7 @@
 		exportCtx.drawImage(composite,0,0);
 		exportCtx.drawImage(can4,0,0)
 		exportCtx.drawImage(can5,0,0)
-		new CanvasSaver('http://127.0.0.1:8080/saveJersey').savePNG(document.getElementById("final"), fileName, "jersey");
+		new CanvasSaver('http://127.0.0.1:'+port+'/saveJersey').savePNG(document.getElementById("final"), fileName, "jersey");
 	})
 
 	$("#loadJersey").on("click",function(e) {
@@ -5444,7 +5447,7 @@
 		//$("#fontTypeCombo").removeClass().addClass('alegreya');
 		$.ajax({
 			type: "GET",
-			url: "http://127.0.0.1:8080/customFont",
+			url: "http://127.0.0.1:"+port+"/customFont",
 			success: function(data) {
 				//console.log(data)
 				$("head").prepend("<style>@font-face {\n   font-family: '"+data.familyName+"';\n   src: url('"+data.fontData+"') format('truetype');\n}\n."+data.familyName+" { font-family: '"+data.familyName+"'; font-size: 1.1em;}\n</style>");
