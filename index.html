@@ -40,6 +40,8 @@
 		if (!prefColorFormat) {
 			prefColorFormat = "hex";
 		}
+		const camoArr = [{"name":"camoBase","fill":"#4a551e"},{"name":"camoLayer1","fill":"#052503"},{"name":"camoLayer2","fill":"#beb585"}]
+		const digiCamoArr = [{"name":"digiCamoBase","fill":"#9a8b62"},{"name":"digiCamoLayer1","fill":"#372900"},{"name":"digiCamoLayer2","fill":"#736632"}]
 		const logosArr = [{"name":"logo_adidas","top":"345.25","left":"303.25","angle":"0","height":"13"},{"name":"logo_asics","top":"345.25","left":"303.25","angle":"0","height":"10"},{"name":"logo_demarini","top":"345.25","left":"400.25","angle":"0","height":"15"},{"name":"logo_macron","top":"345.25","left":"303.25","angle":"0","height":"7"},{"name":"logo_majestic","top":"156.25","left":"61.25","angle":"300.7032582977242","height":"9.557466742490037"},{"name":"logo_majestic_2","top":"156.25","left":"61.25","angle":"300.7032582977242","height":"9.557466742490037"},{"name":"logo_maxim","top":"345.25","left":"303.25","angle":"0","height":"13"},{"name":"logo_mizuno","top":"345.25","left":"303.25","angle":"0","height":"13"},{"name":"logo_new_balance","top":"345.25","left":"303.25","angle":"0","height":"13"},{"name":"logo_nike","top":"345.25","left":"303.25","angle":"0","height":"10","original-angle":"0"},{"name":"logo_puma","top":"345.25","left":"308.25","angle":"0","height":"15"},{"name":"logo_rawlings","top":"156.25","left":"61.25","angle":"300.7032582977242","height":"9.557466742490037"},{"name":"logo_rawlings_2","top":"156.25","left":"61.25","angle":"300.7032582977242","height":"9.557466742490037"},{"name":"logo_reebok","top":"345.25","left":"400.25","angle":"0","height":"7"},{"name":"logo_rbk","top":"345.25","left":"303.25","angle":"0","height":"13"},{"name":"logo_russell","top":"345.25","left":"303.25","angle":"0","height":"13"},{"name":"logo_spalding_2","top":"156.25","left":"61.25","angle":"300.7032582977242","height":"9.557466742490037"},{"name":"logo_ssk","top":"345.25","left":"303.25","angle":"0","height":"13"},{"name":"logo_umbro","top":"345.25","left":"303.25","angle":"0","height":"13"},{"name":"logo_under_armour","top":"345.25","left":"303.25","angle":"0","height":"13"},{"name":"logo_wilson","top":"156.25","left":"61.25","angle":"300.7032582977242","height":"9.557466742490037"}]
 		var validFonts = ['Acme','AthleticGothic','AthleticGothicShadow','BeavertonScript','Berkshire_Swash','Cantora_One','CaxtonRoman','Chela_One','Circus','Condiment','Cookie','Courgette','Croissant_One','Damion','Engagement','RawlingsFancyBlock','Germania_One','Graduate','Grand_Hotel','Jockey_One','Kansas','Kaushan_Script','Leckerli_One','Lily_Script_One','Lobster','Lobster_Two','Metal_Mania','Miniver','Molle','New_Rocker','Norican','OldEnglish','Oleo_Script','Oleo_Script_Swash_Caps','Pacifico','Pirata_One','Playball','ProFullBlock','RichardsonFancyBlock','Rubik_One','Rum_Raisin','Satisfy','Seymour_One','spl28','TiffanyRegular','Trade_Winds','Tuscan','UnifrakturCook','UnifrakturMaguntia','Vibur','Viga','Wellfleet','Wendy_One','Yellowtail']
 		var fontSources = {Acme: "Acme-Regular.ttf",athletic_gothicregular: "athletic_gothic-webfont.ttf",athletic_gothic_shadowregular: "athletic_gothic_shadow-webfont.ttf",beaverton_scriptregular: "beaverton_script-webfont.ttf",'"Berkshire Swash"': "BerkshireSwash-Regular.ttf",'"Cantora One"': "CantoraOne-Regular.ttf",caxton_romanregular: "caxton_roman-webfont.ttf",'"Chela One"': "ChelaOne-Regular.ttf",russell_circusregular: "circus-webfont.ttf",Condiment: "Condiment-Regular.ttf",Cookie: "Cookie-Regular.ttf",Courgette: "Courgette-Regular.ttf",'"Croissant One"': "CroissantOne-Regular.ttf",Damion: "Damion-Regular.ttf",Engagement: "Engagement-Regular.ttf",rawlings_fancy_blockregular: "rawlingsfancyblock-regular-webfont.ttf",'"Germania One"': "GermaniaOne-Regular.ttf",Graduate: "Graduate-Regular.ttf",'"Grand Hotel"': "GrandHotel-Regular.ttf",'"Jockey One"': "JockeyOne-Regular.ttf",kansasregular: "tuscan-webfont.ttf",'"Kaushan Script"': "KaushanScript-Regular.ttf",'"Leckerli One"': "LeckerliOne-Regular.ttf",'"Lily Script One"': "LilyScriptOne-Regular.ttf",Lobster: "Lobster-Regular.ttf",'"Lobster Two"': "LobsterTwo-Regular.ttf",'"Metal Mania"': "MetalMania-Regular.ttf",Miniver: "Miniver-Regular.ttf",'Molle,italic': "Molle-Regular.ttf",'"New Rocker"': "NewRocker-Regular.ttf",Norican: "Norican-Regular.ttf",rawlings_old_englishmedium: "rawlingsoldenglish-webfont.ttf",'"Oleo Script"': "OleoScript-Regular.ttf",'"Oleo Script Swash Caps"': "OleoScriptSwashCaps-Regular.ttf",Pacifico: "Pacifico.ttf",'"Pirata One"': "PirataOne-Regular.ttf",Playball: "Playball-Regular.ttf",pro_full_blockregular: "pro_full_block-webfont.ttf",richardson_fancy_blockregular: "richardson_fancy_block-webfont.ttf",'"Rubik One"': "RubikOne-Regular.ttf",'"Rum Raisin"': "RumRaisin-Regular.ttf",Satisfy: "Satisfy-Regular.ttf",'"Seymour One"': "SeymourOne-Regular.ttf",spl28scriptregular: "spl28script-webfont.ttf",ua_tiffanyregular: "tiffany-webfont.ttf",'"Trade Winds"': "TradeWinds-Regular.ttf",mlb_tuscan_newmedium: "mlb_tuscan_new-webfont.ttf",UnifrakturCook: "UnifrakturCook-Bold.ttf",UnifrakturMaguntia: "UnifrakturMaguntia-Book.ttf",Vibur: "Vibur-Regular.ttf",Viga: "Viga-Regular.ttf",Wellfleet: "Wellfleet-Regular.ttf",'"Wendy One"': "WendyOne-Regular.ttf",Yellowtail: "Yellowtail-Regular.ttf"};
@@ -536,23 +538,28 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="camoCheck" class="multiToggle camoToggle" data-canvas="below" data-id="camoBase,camoLayer1,camoLayer2"></td>
-									<td><label>Camouflage: </label></td>
+									<td class="checkCell"><input type="checkbox" id="camoCheck" class="belowTextureToggle camoToggle" data-canvas="below" data-id="camoGroup"></td>
+									<td><label>Camouflage: </label>
+										<select id="camoSelect">
+											<option value="standard">Standard</option>
+											<option value="digi">Digital</option>
+										</select>	
+									</td>
 									<td style="text-align:right;">
 										<input class="camoBaseSelector" type="text" id="camoBaseColor" data-element="camoBase">
-										<input class="selector" type="text" id="camoLayer1Color" data-element="camoLayer1">
-										<input class="selector" type="text" id="camoLayer2Color" data-element="camoLayer2">
+										<input class="camoSelector" type="text" id="camoLayer1Color" data-element="camoLayer1">
+										<input class="camoSelector" type="text" id="camoLayer2Color" data-element="camoLayer2">
 									</td>
 								</tr>
-								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="digiCamoCheck" class="multiToggle camoToggle" data-canvas="below" data-id="digiCamoBase,digiCamoLayer1,digiCamoLayer2"></td>
+								<!--<tr class="color_tr">
+									<td class="checkCell"><input type="checkbox" id="digiCamoCheck" class="belowTextureToggle camoToggle" data-canvas="below" data-id="digiCamoGroup"></td>
 									<td><label>Digital Camouflage: </label></td>
 									<td style="text-align:right;">
 										<input class="camoBaseSelector" type="text" id="digiCamoBaseColor" data-element="digiCamoBase">
-										<input class="selector" type="text" id="digiCamoLayer1Color" data-element="digiCamoLayer1">
-										<input class="selector" type="text" id="digiCamoLayer2Color" data-element="digiCamoLayer2">
+										<input class="camoSelector" type="text" id="digiCamoLayer1Color" data-element="digiCamoLayer1">
+										<input class="camoSelector" type="text" id="digiCamoLayer2Color" data-element="digiCamoLayer2">
 									</td>
-								</tr>
+								</tr>-->
 								<tr class="color_tr">
 									<td class="checkCell"><input type="checkbox" id="snakeskinCheck" class="multiToggle" data-canvas="below" data-id="snakeskin"></td>
 									<td><label>Snakeskin: </label></td>
@@ -1392,11 +1399,25 @@
 	
 	$(".camoToggle").on("click",function() {
 		var object = $(this);
+		var chosen = $("#camoSelect").val()
 		if ($(this).is(':checked')) {
-			var object = $(this).parent().parent().find(".camoBaseSelector");
-			var color = object.spectrum("get");
+			if ($("#camoSelect").val() == "standard") {
+				var g = below.getObjects('group').find(o => o.id === 'camoGroup');
+				var base = g.getObjects().find(o => o.id === 'camoBase');
+				var layer1 = g.getObjects().find(o => o.id === 'camoLayer1');
+				var layer2 = g.getObjects().find(o => o.id === 'camoLayer2');
+				
+			} else {
+				var g = below.getObjects('group').find(o => o.id === 'digiCamoGroup');
+				var base = g.getObjects().find(o => o.id === 'digiCamoBase');
+				var layer1 = g.getObjects().find(o => o.id === 'digiCamoLayer1');
+				var layer2 = g.getObjects().find(o => o.id === 'digiCamoLayer2');
+			}
+			$("#camoBaseColor").spectrum("set", base.fill)
+			$("#camoLayer1Color").spectrum("set", layer1.fill)
+			$("#camoLayer2Color").spectrum("set", layer2.fill)
 			var overlayImage = logoCanvas.item(0);
-			overlayImage.filters[0]['color'] = color.toHexString();
+			overlayImage.filters[0]['color'] = base.fill;
 			overlayImage.applyFilters(logoCanvas.renderAll.bind(logoCanvas))
 		} else {
 			var color = $("#jerseyColor").spectrum("get");
@@ -1404,6 +1425,32 @@
 			overlayImage.filters[0]['color'] = color.toHexString();
 			overlayImage.applyFilters(logoCanvas.renderAll.bind(logoCanvas))
 		}
+		reRenderBG();
+	})
+
+	$("#camoSelect").on("change",function() {
+		var camo = $(this).val()
+		const std = below.getObjects('group').find(o => o.id === 'camoGroup');
+		const dig = below.getObjects('group').find(o => o.id === 'digiCamoGroup');
+		if ($(this).val() == "standard") {
+			console.log("standard")
+			std.visible = true
+			dig.visible = false
+			var g = std
+		} else {
+			console.log("digital")
+			std.visible = false
+			dig.visible = true
+			var g = dig;
+		}
+		console.log(g._objects[0].fill)
+		$("#camoBaseColor").spectrum("set", g._objects[0].fill)
+		$("#camoLayer1Color").spectrum("set", g._objects[1].fill)
+		$("#camoLayer2Color").spectrum("set", g._objects[2].fill)
+		var overlayImage = logoCanvas.item(0);
+		overlayImage.filters[0]['color'] = g._objects[0].fill;
+		overlayImage.applyFilters(logoCanvas.renderAll.bind(logoCanvas))
+		reRenderBG();
 	})
 	
 	$(".camoBaseSelector").each(function() {
@@ -1438,19 +1485,24 @@
 				}
 				$(this).data('changed', true);
 				var id = $(this).data('element');
-				var objects = below.getObjects();
-				for (x in objects) {
-					if (objects[x].id == id) {
-						objects[x].setFill(colorX);
-					} 						
-				}
+				var g = below.getObjects('group').find(o => o.id === 'camoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
+				var g = below.getObjects('group').find(o => o.id === 'digiCamoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
 				reRenderBG();
 				var overlayImage = logoCanvas.item(0);
 				overlayImage.filters[0]['color'] = color.toHexString();
 				overlayImage.applyFilters(logoCanvas.renderAll.bind(logoCanvas))
 			},
 			change: function(color) {
-				change = true;
 				if (color == null) {
 					var colorX = "transparent";
 				} else {
@@ -1458,12 +1510,18 @@
 				}
 				$(this).data('changed', true);
 				var id = $(this).data('element');
-				var objects = below.getObjects();
-				for (x in objects) {
-					if (objects[x].id == id) {
-						objects[x].setFill(colorX);
-					} 						
-				}
+				var g = below.getObjects('group').find(o => o.id === 'camoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
+				var g = below.getObjects('group').find(o => o.id === 'digiCamoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
 				reRenderBG();
 				var overlayImage = logoCanvas.item(0);
 				overlayImage.filters[0]['color'] = color.toHexString();
@@ -1477,16 +1535,112 @@
 				}
 				$(this).data('changed', true);
 				var id = $(this).data('element');
-				var objects = below.getObjects();
-				for (x in objects) {
-					if (objects[x].id == id) {
-						objects[x].setFill(colorX);
-					} 						
-				}
+				var g = below.getObjects('group').find(o => o.id === 'camoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
+				var g = below.getObjects('group').find(o => o.id === 'digiCamoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
 				reRenderBG();
 				var overlayImage = logoCanvas.item(0);
 				overlayImage.filters[0]['color'] = color.toHexString();
 				overlayImage.applyFilters(logoCanvas.renderAll.bind(logoCanvas))
+			}
+		})
+	})
+
+	$(".camoSelector").each(function() {
+		var color = $(this).attr('id');
+		var change = false;
+		if (color == 'transparent') {
+			color = null;
+		}
+		$(this).spectrum({
+			showInput: true,
+			preferredFormat: prefColorFormat,
+			showInitial: true,
+			showPalette: true,
+			showButtons: true,
+			allowEmpty: true,
+			showSelectionPalette: true,
+			localStorageKey: "spectrum.jerseymaker",
+			palette: [ ],
+			color: initialColors[$(this).attr('id')],
+			show: function(color) {
+				var original_color = color;
+				$(this).data('changed', false);
+			},
+			move: function(color) {
+				if (color == null) {
+					var colorX = "transparent";
+				} else {
+					colorX = color.toHexString();
+				}
+				$(this).data('changed', true);
+				var id = $(this).data('element');
+				var g = below.getObjects('group').find(o => o.id === 'camoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
+				var g = below.getObjects('group').find(o => o.id === 'digiCamoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
+				reRenderBG();
+			},
+			change: function(color) {
+				if (color == null) {
+					var colorX = "transparent";
+				} else {
+					colorX = color.toHexString();
+				}
+				$(this).data('changed', true);
+				var id = $(this).data('element');
+				var g = below.getObjects('group').find(o => o.id === 'camoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
+				var g = below.getObjects('group').find(o => o.id === 'digiCamoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
+				reRenderBG();
+			},
+			hide: function(color) {
+				if (color == null) {
+					var colorX = "transparent";
+				} else {
+					colorX = color.toHexString();
+				}
+				$(this).data('changed', true);
+				var id = $(this).data('element');
+				var g = below.getObjects('group').find(o => o.id === 'camoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
+				var g = below.getObjects('group').find(o => o.id === 'digiCamoGroup');
+				g.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						o.setFill(colorX)
+					}
+				})
+				reRenderBG();
 			}
 		})
 	})
@@ -3122,6 +3276,50 @@
 			top: 0,
 			left: 0
 		 });
+
+		camoGroup = new fabric.Group([], {
+			id: 'camoGroup',
+			visible: false,
+			selectable: false,
+		})
+
+ 		camoArr.forEach(function(logo) {
+			fabric.loadSVGFromURL('./images/jm_'+logo.name+'.svg',function(svg,options) {
+				tmp = new fabric.PathGroup(svg,options);
+				tmp.setOptions ({
+					originX: 'center',
+					originY: 'center',
+					id: logo.name,
+					top: 256,
+					left: 256,
+					fill: logo.fill,
+					visible: true
+				});
+				camoGroup.add(tmp)
+			})
+		})
+
+		digiCamoGroup = new fabric.Group([], {
+			id: 'digiCamoGroup',
+			visible: false,
+			selectable: false,
+		})
+
+ 		digiCamoArr.forEach(function(logo) {
+			fabric.loadSVGFromURL('./images/jm_'+logo.name+'.svg',function(svg,options) {
+				tmp = new fabric.PathGroup(svg,options);
+				tmp.setOptions ({
+					originX: 'center',
+					originY: 'center',
+					id: logo.name,
+					top: 256,
+					left: 256,
+					fill: logo.fill,
+					visible: true
+				});
+				digiCamoGroup.add(tmp)
+			})
+		})
 		
 		below.add(jerseyColor);
 		below.add(collar);
@@ -3135,8 +3333,12 @@
 		below.add(buttonPadFill);
 		below.add(jerseyBack);
 		below.add(undershirt);
+		below.add(camoGroup)
+		below.add(digiCamoGroup)
+		
 		below.add(leftSleeve);
 		below.add(rightSleeve);
+
 		below.add(leftSleeveLong);
 		below.add(rightSleeveLong);
 		// below.add(camoBase);
@@ -3204,7 +3406,7 @@
 		below.add(pocket);
 		below.add(butterfly);
 
-		fabric.loadSVGFromURL('./images/jm_camoBase.svg',function(svg,options) {
+		/* fabric.loadSVGFromURL('./images/jm_camoBase.svg',function(svg,options) {
 			camoBase = new fabric.PathGroup(svg,options);
 			camoBase.setOptions ({
 				originX: 'center',
@@ -3322,7 +3524,7 @@
 					})
 				})
 			})
-		})
+		}) */
 
 		aboveCanvas.add(widePlacketPipingInner);
 		aboveCanvas.add(widePlacketPipingMiddle);
