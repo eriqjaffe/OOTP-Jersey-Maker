@@ -59,6 +59,7 @@ app2.post('/saveJersey', (req, res) => {
 	const output = fs.createWriteStream(tempDir + '/'+req.body.name+'.zip');
 
 	output.on('close', function() {
+		fs.writeFileSync(app.getPath('downloads') + '/' + req.body.name+'.jrs', json)
 		var data = fs.readFileSync(tempDir + '/'+req.body.name+'.zip');
 		var saveOptions = {
 		  defaultPath: app.getPath('downloads') + '/' + req.body.name+'.zip',
@@ -131,42 +132,15 @@ app2.post('/saveJersey', (req, res) => {
 		}); 
 });
 
-/* app2.post('/saveJersey', (req, res) => {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-
-	const options = {
-		defaultPath: app.getPath('desktop') + '/' + req.body.name,
-	}
-
-	dialog.showSaveDialog(null, options).then((result) => {
-		if (!result.canceled) {
-			Jimp.read(buffer, (err, fir_img) => {
-			if(err) {
-				console.log(err);
-			} else {
-				var watermark = fs.readFileSync(__dirname + "/images/jm_watermark.png", {encoding: 'base64'});
-				var buffer = Buffer.from(watermark, 'base64');
-					Jimp.read(buffer, (err, sec_img) => {
-						if(err) {
-							console.log(err);
-						} else {
-							fir_img.composite(sec_img, 0, 0);
-							fir_img.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
-								const finalImage = Buffer.from(buffer).toString('base64');
-								fs.writeFile(result.filePath, finalImage, 'base64', function(err) {
-									console.log(err);
-								});
-							  });
-							
-						}
-					})
-				}
-			});
-		} 
-	}).catch((err) => {
-		console.log(err);
-	});
-}); */
+app2.get("/uploadJersey", (req, res) => {
+	const file = dialog.showOpenDialogSync(null, {
+		properties: ['openFile'],
+		filters: [
+			{ name: 'Jersey Files', extensions: ['jrs'] }
+		]
+	})
+	res.end(JSON.stringify(JSON.parse(fs.readFileSync(file[0]).toString())))
+})
 
 app2.post("/removeBorder", (req, res) => {
 	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
@@ -457,10 +431,12 @@ const createWindow = () => {
 			submenu: [
 			{
 				click: () => mainWindow.webContents.send('load-jersey','click'),
+				accelerator: process.platform === 'darwin' ? 'Cmd+L' : 'Control+L',
 				label: 'Load Jersey',
 			},
 			{
 				click: () => mainWindow.webContents.send('save-jersey','click'),
+				accelerator: process.platform === 'darwin' ? 'Cmd+S' : 'Control+S',
 				label: 'Save Jersey',
 			},
 			isMac ? { role: 'close' } : { role: 'quit' }
