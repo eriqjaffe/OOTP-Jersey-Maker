@@ -148,8 +148,8 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="buttonsCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="buttonsColor" checked></td>
-									<td><label>Button Opacity: <span id="buttonOpacitySpan"></span>%: </label></td>
+									<td class="checkCell"><input type="checkbox" id="buttonsColorCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="buttonsColor" checked></td>
+									<td><label>Buttons (Opacity: <span id="buttonOpacitySpan"></span>%: </label>)</td>
 									<td style="text-align:right;">
 										<input type="button" class="button rangeButton" value="-" data-span="buttonOpacitySpan">
 										<input type="range" class="range" id="buttonOpacity" value=buttonOpacity min="0" max="100">
@@ -163,12 +163,12 @@
 									<td style="text-align:right;">&nbsp;</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="jerseyFrontCheck" class="belowTextureToggle" data-id="jerseyFrontColor"></td>
+									<td class="checkCell"><input type="checkbox" id="jerseyFrontColorCheck" class="belowTextureToggle" data-id="jerseyFrontColor"></td>
 									<td><label>Jersey Front: </label></td>
 									<td style="text-align:right;"><input class="selector" type="text" id="jerseyFrontColor" data-element="jerseyFrontColor"></td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="jerseyBackCheck" class="belowTextureToggle" data-id="jerseyBackColor"></td>
+									<td class="checkCell"><input type="checkbox" id="jerseyBackColorCheck" class="belowTextureToggle" data-id="jerseyBackColor"></td>
 									<td><label>Jersey Back: </label></td>
 									<td style="text-align:right;"><input class="selector" type="text" id="jerseyBackColor" data-element="jerseyBackColor"></td>
 								</tr>
@@ -236,7 +236,7 @@
 						<div class="accord-content">
 							<table style="width:100%">
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="pinstripesCheck" class="multiToggle" data-canvas="below" data-id="pinstripesColor,pinstripesStrokeColor"></td>
+									<td class="checkCell"><input type="checkbox" id="pinstripesColorCheck" class="multiToggle" data-canvas="below" data-id="pinstripesColor,pinstripesStrokeColor"></td>
 									<td><label>Pinstripes: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="pinstripesColor" data-element="pinstripesColor">
@@ -244,7 +244,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="placketPipingCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="placketPipingInnerColor,placketPipingMiddleColor,placketPipingOuterColor"></td>
+									<td class="checkCell"><input type="checkbox" id="placketPipingInnerColorCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="placketPipingInnerColor,placketPipingMiddleColor,placketPipingOuterColor"></td>
 									<td><label>Narrow Placket Piping: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="placketPipingInnerColor" data-element="placketPipingInnerColor">
@@ -253,7 +253,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="widePlacketPipingCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="widePlacketPipingInnerColor,widePlacketPipingMiddleColor,widePlacketPipingOuterColor"></td>
+									<td class="checkCell"><input type="checkbox" id="widePlacketPipingInnerColorCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="widePlacketPipingInnerColor,widePlacketPipingMiddleColor,widePlacketPipingOuterColor"></td>
 									<td><label>Wide Placket Piping: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="widePlacketPipingInnerColor" data-element="widePlacketPipingInnerColor">
@@ -262,7 +262,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="shoulderPipingCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="shoulderPipingInnerColor,shoulderPipingMiddleColor,shoulderPipingOuterColor"></td>
+									<td class="checkCell"><input type="checkbox" id="shoulderPipingInnerColorCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="shoulderPipingInnerColor,shoulderPipingMiddleColor,shoulderPipingOuterColor"></td>
 									<td><label>Shoulder Piping: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="shoulderPipingInnerColor" data-element="shoulderPipingInnerColor">
@@ -271,7 +271,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="sleeveCuffCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="sleeveCuffInnerColor,sleeveCuffMiddleColor,sleeveCuffOuterColor"></td>
+									<td class="checkCell"><input type="checkbox" id="sleeveCuffInnerColorCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="sleeveCuffInnerColor,sleeveCuffMiddleColor,sleeveCuffOuterColor"></td>
 									<td><label>Thick Sleeve Cuff: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="sleeveCuffInnerColor" data-element="sleeveCuffInnerColor">
@@ -280,7 +280,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="thinCuffCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="thinCuffInnerColor,thinCuffMiddleColor,thinCuffOuterColor"></td>
+									<td class="checkCell"><input type="checkbox" id="thinCuffInnerColorCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="thinCuffInnerColor,thinCuffMiddleColor,thinCuffOuterColor"></td>
 									<td><label>Edge Sleeve Piping: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="thinCuffInnerColor" data-element="thinCuffInnerColor">
@@ -289,7 +289,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="sleevePipingCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="sleevePipingInnerColor,sleevePipingMiddleColor,sleevePipingOuterColor"></td>
+									<td class="checkCell"><input type="checkbox" id="sleevePipingInnerColorCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="sleevePipingInnerColor,sleevePipingMiddleColor,sleevePipingOuterColor"></td>
 									<td><label>Offset Sleeve Piping: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="sleevePipingInnerColor" data-element="sleevePipingInnerColor">
@@ -298,7 +298,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="vNeckThinCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="vNeckThinInnerColor,vNeckThinMiddleColor,vNeckThinOuterColor"></td>
+									<td class="checkCell"><input type="checkbox" id="vNeckThinInnerColorCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="vNeckThinInnerColor,vNeckThinMiddleColor,vNeckThinOuterColor"></td>
 									<td><label>Thin V-Neck: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="vNeckThinInnerColor" data-element="vNeckThinInnerColor">
@@ -307,7 +307,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="vNeckOffsetCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="vNeckOffsetInnerColor,vNeckOffsetMiddleColor,vNeckOffsetOuterColor"></td>
+									<td class="checkCell"><input type="checkbox" id="vNeckOffsetInnerColorCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="vNeckOffsetInnerColor,vNeckOffsetMiddleColor,vNeckOffsetOuterColor"></td>
 									<td><label>Offset V-Neck: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="vNeckOffsetInnerColor" data-element="vNeckOffsetInnerColor">
@@ -316,7 +316,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="vNeckThickCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="vNeckThickInnerColor,vNeckThickMiddleColor,vNeckThickOuterColor"></td>
+									<td class="checkCell"><input type="checkbox" id="vNeckThickInnerColorCheck" class="multiToggle" data-canvas="aboveCanvas" data-id="vNeckThickInnerColor,vNeckThickMiddleColor,vNeckThickOuterColor"></td>
 									<td><label>Thick V-Neck: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="vNeckThickInnerColor" data-element="vNeckThickInnerColor">
@@ -431,84 +431,84 @@
 						<div class="accord-content">
 							<table style="width:100%;">		
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="pocketCheck" class="multiToggle" data-canvas="below" data-id="pocket,pocketFillColor"></td>
+									<td class="checkCell"><input type="checkbox" id="pocketFillColorCheck" class="multiToggle" data-canvas="below" data-id="pocket,pocketFillColor"></td>
 									<td><label>Pocket: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="pocketFillColor" data-element="pocketFillColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="jerseyFlapCheck" class="multiToggle hideButtons multiLine" data-above="jerseyFlapButtonsColor" data-canvas="below" data-id="jerseyFlapColor,jerseyFlapTrimColor"></td>
+									<td class="checkCell"><input type="checkbox" id="jerseyFlapColorCheck" class="multiToggle hideButtons multiLine" data-above="jerseyFlapButtonsColor" data-canvas="below" data-id="jerseyFlapColor,jerseyFlapTrimColor"></td>
 									<td><label>Jersey Flap: </label></td>
 									<td style="text-align:right;">
-										<input class="selector" type="text" id="jerseyFlapColor" data-element="jerseyFlapColor">
-										<input class="selector" type="text" id="jerseyFlapTrimColor" data-element="jerseyFlapTrimColor">
+										<input class="selector jerseyFlapColorSpectrum" type="text" id="jerseyFlapColor" data-element="jerseyFlapColor">
+										<input class="selector jerseyFlapColorSpectrum" type="text" id="jerseyFlapTrimColor" data-element="jerseyFlapTrimColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
 									<td class="checkCell">&nbsp;</td>
 									<td><label>Button Opacity: <span id="flapButtonOpacitySpan"></span>%</label></td>
 									<td style="text-align:right;">	
-										<input type="button" class="button rangeButton" value="-" data-span="flapButtonOpacitySpan">
-										<input type="range" class="range" id="flapButtonOpacity" value=buttonOpacity min="0" max="100">
-										<input type="button" class="button rangeButton" value="+" data-span="flapButtonOpacitySpan">
-										<input class="selector" type="text" id="jerseyFlapButtonsColor" data-element="jerseyFlapButtonsColor">
+										<input type="button" class="button rangeButton jerseyFlapColorRange" value="-" data-span="flapButtonOpacitySpan">
+										<input type="range" class="range jerseyFlapColorRange" id="flapButtonOpacity" value=buttonOpacity min="0" max="100">
+										<input type="button" class="button rangeButton jerseyFlapColorRange" value="+" data-span="flapButtonOpacitySpan">
+										<input class="selector jerseyFlapColorSpectrum" type="text" id="jerseyFlapButtonsColor" data-element="jerseyFlapButtonsColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="jerseyShield1Check" class="multiToggle hideButtons multiLine" data-above="jerseyShield1ButtonsColor" data-canvas="below" data-id="jerseyShield1WideStrokeColor,jerseyShield1WideColor,jerseyShield1InnerStrokeColor,jerseyShield1InnerColor"></td>
+									<td class="checkCell"><input type="checkbox" id="jerseyShield1WideStrokeColorCheck" class="multiToggle hideButtons multiLine" data-above="jerseyShield1ButtonsColor" data-canvas="below" data-id="jerseyShield1WideStrokeColor,jerseyShield1WideColor,jerseyShield1InnerStrokeColor,jerseyShield1InnerColor"></td>
 									<td><label>Jersey Shield 1: </label></td>
 									<td style="text-align:right;">
-										<input class="selector" type="text" id="jerseyShield1WideStrokeColor" data-element="jerseyShield1WideStrokeColor">
-										<input class="selector" type="text" id="jerseyShield1WideColor" data-element="jerseyShield1WideColor">
-										<input class="selector" type="text" id="jerseyShield1InnerStrokeColor" data-element="jerseyShield1InnerStrokeColor">
-										<input class="selector" type="text" id="jerseyShield1InnerColor" data-element="jerseyShield1InnerColor">
+										<input class="selector jerseyShield1WideStrokeColorCheck" type="text" id="jerseyShield1WideStrokeColor" data-element="jerseyShield1WideStrokeColor">
+										<input class="selector jerseyShield1WideStrokeColorCheck" type="text" id="jerseyShield1WideColor" data-element="jerseyShield1WideColor">
+										<input class="selector jerseyShield1WideStrokeColorCheck" type="text" id="jerseyShield1InnerStrokeColor" data-element="jerseyShield1InnerStrokeColor">
+										<input class="selector jerseyShield1WideStrokeColorCheck" type="text" id="jerseyShield1InnerColor" data-element="jerseyShield1InnerColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
 									<td class="checkCell">&nbsp;</td>
 									<td><label>Button Opacity: <span id="shield1ButtonOpacitySpan"></span>%</label></td>
 									<td style="text-align:right;">
-										<input type="button" class="button rangeButton" value="-" data-span="shield1ButtonOpacitySpan">
-										<input type="range" class="range" id="shield1ButtonOpacity" value=buttonOpacity min="0" max="100">
-										<input type="button" class="button rangeButton" value="+" data-span="shield1ButtonOpacitySpan">
-										<input class="selector" type="text" id="jerseyShield1ButtonsColor" data-element="jerseyShield1ButtonsColor">
+										<input type="button" class="button rangeButton jerseyShield1WideStrokeColorRange" value="-" data-span="shield1ButtonOpacitySpan">
+										<input type="range" class="range jerseyShield1WideStrokeColorRange" id="shield1ButtonOpacity" value=buttonOpacity min="0" max="100">
+										<input type="button" class="button rangeButton jerseyShield1WideStrokeColorRange" value="+" data-span="shield1ButtonOpacitySpan">
+										<input class="selector jerseyShield1WideStrokeColorSpectrum" type="text" id="jerseyShield1ButtonsColor" data-element="jerseyShield1ButtonsColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="jerseyShield2Check" class="multiToggle hideButtons multiLine" data-above="jerseyShield2ButtonsColor" data-canvas="below" data-id="jerseyShield2StrokeColor,jerseyShield2InnerColor"></td>
+									<td class="checkCell"><input type="checkbox" id="jerseyShield2StrokeColorCheck" class="multiToggle hideButtons multiLine" data-above="jerseyShield2ButtonsColor" data-canvas="below" data-id="jerseyShield2StrokeColor,jerseyShield2InnerColor"></td>
 									<td><label>Jersey Shield 2: </label></td>
 									<td style="text-align:right;">
-										<input class="selector" type="text" id="jerseyShield2StrokeColor" data-element="jerseyShield2StrokeColor">
-										<input class="selector" type="text" id="jerseyShield2InnerColor" data-element="jerseyShield2InnerColor">
+										<input class="selector jerseyShield2StrokeColorSpectrum" type="text" id="jerseyShield2StrokeColor" data-element="jerseyShield2StrokeColor">
+										<input class="selector jerseyShield2StrokeColorSpectrum" type="text" id="jerseyShield2InnerColor" data-element="jerseyShield2InnerColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
 									<td class="checkCell">&nbsp;</td>
 									<td><label>Button Opacity: <span id="shield2ButtonOpacitySpan"></span>%</label></td>
 									<td style="text-align:right;">
-										<input type="button" class="button rangeButton" value="-" data-span="shield2ButtonOpacitySpan">
-										<input type="range" class="range" id="shield2ButtonOpacity" value=buttonOpacity min="0" max="100">
-										<input type="button" class="button rangeButton" value="+" data-span="shield2ButtonOpacitySpan">
-										<input class="selector" type="text" id="jerseyShield2ButtonsColor" data-element="jerseyShield2ButtonsColor">
+										<input type="button" class="button rangeButton jerseyShield2StrokeColorRange" value="-" data-span="shield2ButtonOpacitySpan">
+										<input type="range" class="range jerseyShield2StrokeColorRange" id="shield2ButtonOpacity" value=buttonOpacity min="0" max="100">
+										<input type="button" class="button rangeButton jerseyShield2StrokeColorRange" value="+" data-span="shield2ButtonOpacitySpan">
+										<input class="selector jerseyShield2StrokeColorSpectrum" type="text" id="jerseyShield2ButtonsColor" data-element="jerseyShield2ButtonsColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="jerseyPanelCheck" class="multiToggle hideButtons multiLine" data-above="jerseyPanelButtonsColor" data-canvas="below" data-id="jerseyPanelStrokeColor,jerseyPanelFillColor"></td>
+									<td class="checkCell"><input type="checkbox" id="jerseyPanelStrokeColorCheck" class="multiToggle hideButtons multiLine" data-above="jerseyPanelButtonsColor" data-canvas="below" data-id="jerseyPanelStrokeColor,jerseyPanelFillColor"></td>
 									<td><label>Jersey Panel: </label></td>
 									<td style="text-align:right;">
-										<input class="selector" type="text" id="jerseyPanelStrokeColor" data-element="jerseyPanelStrokeColor">
-										<input class="selector" type="text" id="jerseyPanelFillColor" data-element="jerseyPanelFillColor">
+										<input class="selector jerseyPanelStrokeColorSpectrum" type="text" id="jerseyPanelStrokeColor" data-element="jerseyPanelStrokeColor">
+										<input class="selector jerseyPanelStrokeColorSpectrum" type="text" id="jerseyPanelFillColor" data-element="jerseyPanelFillColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
 									<td class="checkCell">&nbsp;</td>
 									<td><label>Button Opacity: <span id="jerseyPanelButtonOpacitySpan"></span>%</label></td>
 									<td style="text-align:right;">
-										<input type="button" class="button rangeButton" value="-" data-span="jerseyPanelButtonOpacitySpan">
-										<input type="range" class="range" id="jerseyPanelButtonOpacity" value=buttonOpacity min="0" max="100">
-										<input type="button" class="button rangeButton" value="+" data-span="jerseyPanelButtonOpacitySpan">
-										<input class="selector" type="text" id="jerseyPanelButtonColor" data-element="jerseyPanelButtonsColor">
+										<input type="button" class="button rangeButton jerseyPanelStrokeColorRange" value="-" data-span="jerseyPanelButtonOpacitySpan">
+										<input type="range" class="range jerseyPanelStrokeColorRange" id="jerseyPanelButtonOpacity" value=buttonOpacity min="0" max="100">
+										<input type="button" class="button rangeButton jerseyPanelStrokeColorRange" value="+" data-span="jerseyPanelButtonOpacitySpan">
+										<input class="selector jerseyPanelStrokeColorSpectrum" type="text" id="jerseyPanelButtonColor" data-element="jerseyPanelButtonsColor">
 									</td>
 								</tr>
 							</table>
@@ -517,7 +517,7 @@
 						<div class="accord-content">
 							<table style="width:100%;">
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="arcedStripeCheck" class="multiToggle" data-canvas="below" data-id="arcedStripeColor"></td>
+									<td class="checkCell"><input type="checkbox" id="arcedStripeColorCheck" class="multiToggle" data-canvas="below" data-id="arcedStripeColor"></td>
 									<td><label>Arced Stripe: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="arcedStripeColor" data-element="arcedStripeColor">
@@ -548,14 +548,14 @@
 									</td>
 								</tr>-->
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="snakeskinCheck" class="multiToggle" data-canvas="below" data-id="snakeskin"></td>
+									<td class="checkCell"><input type="checkbox" id="snakeskinColorCheck" class="multiToggle" data-canvas="below" data-id="snakeskinColor"></td>
 									<td><label>Snakeskin: </label></td>
 									<td style="text-align:right;">
-										<input class="selector" type="text" id="snakeskinColor" data-element="snakeskin">
+										<input class="selector" type="text" id="snakeskinColor" data-element="snakeskinColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="beachBlanketCheck" class="multiToggle hideButtons" data-canvas="below" data-id="beachBlanketTopColor,beachBlanketBottomColor,beachBlanketMiddleColor"></td>
+									<td class="checkCell"><input type="checkbox" id="beachBlanketTopColorCheck" class="multiToggle hideButtons" data-canvas="below" data-id="beachBlanketTopColor,beachBlanketBottomColor,beachBlanketMiddleColor"></td>
 									<td><label>Beach Blanket: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="beachBlanketTopColor" data-element="beachBlanketTopColor">
@@ -564,7 +564,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="tequilaSunriseCheck" class="multiToggle hideButtons" data-canvas="below" data-id="tequilaSunrise1Color,tequilaSunrise2Color,tequilaSunrise3Color,tequilaSunrise4Color"></td>
+									<td class="checkCell"><input type="checkbox" id="tequilaSunrise1ColorCheck" class="multiToggle hideButtons" data-canvas="below" data-id="tequilaSunrise1Color,tequilaSunrise2Color,tequilaSunrise3Color,tequilaSunrise4Color"></td>
 									<td><label>Tequila Sunrise: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="tequilaSunrise1Color" data-element="tequilaSunrise1Color">
@@ -574,7 +574,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="rainbowShoulderCheck" class="multiToggle" data-canvas="below" data-id="rainbowShoulder1Color,rainbowShoulder2Color,rainbowShoulder3Color,rainbowShoulder4Color"></td>
+									<td class="checkCell"><input type="checkbox" id="rainbowShoulder1ColorCheck" class="multiToggle" data-canvas="below" data-id="rainbowShoulder1Color,rainbowShoulder2Color,rainbowShoulder3Color,rainbowShoulder4Color"></td>
 									<td><label>Rainbow Shoulders: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="rainbowShoulder1Color" data-element="rainbowShoulder1Color">
@@ -584,7 +584,7 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="racingStripeCheck" class="multiToggle" data-canvas="below" data-id="racingStripeLargeColor,racingStripeSmallColor"></td>
+									<td class="checkCell"><input type="checkbox" id="racingStripeSmallColorCheck" class="multiToggle" data-canvas="below" data-id="racingStripeLargeColor,racingStripeSmallColor"></td>
 									<td><label>Racing Stripes: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="racingStripeSmallColor" data-element="racingStripeSmallColor">
@@ -592,35 +592,35 @@
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="butterflyCollarCheck" class="multiToggle hideButtons" data-canvas="below" data-id="butterflyColor"></td>
+									<td class="checkCell"><input type="checkbox" id="butterflyColorCheck" class="multiToggle hideButtons" data-canvas="below" data-id="butterflyColor"></td>
 									<td><label>Butterfly Collar: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="butterflyColor" data-element="butterflyColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="nikeHornsCheck" class="multiToggle" data-canvas="below" data-id="nikeHornsColor"></td>
+									<td class="checkCell"><input type="checkbox" id="nikeHornsColorCheck" class="multiToggle" data-canvas="below" data-id="nikeHornsColor"></td>
 									<td><label>Nike "Horns": </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="nikeHornsColor" data-element="nikeHornsColor">
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="shoulderLoops1Check" class="multiToggle" data-canvas="below" data-id="shoulderLoops1Color"></td>
+									<td class="checkCell"><input type="checkbox" id="shoulderLoops1ColorCheck" class="multiToggle" data-canvas="below" data-id="shoulderLoops1Color"></td>
 									<td><label>Shoulder Loops 1: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="shoulderLoops1Color" data-element="shoulderLoops1Color">
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="shoulderLoops2Check" class="multiToggle" data-canvas="below" data-id="shoulderLoops2Color"></td>
+									<td class="checkCell"><input type="checkbox" id="shoulderLoops2ColorCheck" class="multiToggle" data-canvas="below" data-id="shoulderLoops2Color"></td>
 									<td><label>Shoulder Loops 2: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="shoulderLoops2Color" data-element="shoulderLoops2Color">
 									</td>
 								</tr>
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="ncaaShoulderCheck" class="multiToggle" data-canvas="below" data-id="ncaaShoulderColor"></td>
+									<td class="checkCell"><input type="checkbox" id="ncaaShoulderColorCheck" class="multiToggle" data-canvas="below" data-id="ncaaShoulderColor"></td>
 									<td><label>NCAA Shoulder: </label></td>
 									<td style="text-align:right;">
 										<input class="selector" type="text" id="ncaaShoulderColor" data-element="ncaaShoulderColor">
@@ -1616,6 +1616,7 @@
 				$(this).data('changed', false);
 			},
 			move: function(color) {	
+				change = true;
 				if (color == null) {
 					var colorX = "transparent";
 				} else {
@@ -1623,55 +1624,61 @@
 				}
 				$(this).data('changed', true);
 				var id = $(this).data('element');
-				var objects = below.getObjects();
-				for (x in objects) {
-					if (objects[x].get('type') == "group") {
-						var groupObjects = objects[x].getObjects();
-						for(y in groupObjects){
-							if (groupObjects[y].id == id) {
-								groupObjects[y].set("fill", colorX);
-								groupObjects[y].set("stroke", colorX);
-							}
+				below.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						console.log(o.id)
+						if (o.get('type') == "image") {
+							o.filters[0]['color'] = color.toHexString();
+							o.applyFilters()
+							below.requestRenderAll()
 						}
-					} else {
-						if (objects[x].id == id) {
-							if (objects[x].get('type') == "path-group") {
-								objects[x].set("fill", colorX);	
-							} else {
-								objects[x].set("fill", colorX);	
-							}
-							
-						} 						
+						if (o.get('type') == "group") {
+							o.getObjects().forEach(function(q) {
+								if (q.id == id) {
+									q.set("fill", colorX);
+									q.set("stroke", colorX);
+								}
+							});
+						} else {
+							if (o.id == id) {
+								if (o.get('type') == "path-group") {
+									o.set("fill", colorX);	
+								} else {
+									o.set("fill", colorX);	
+								}
+								
+							} 						
+						} 
 					} 
-				}
-				objects = aboveCanvas.getObjects();
-				for (x in objects) {
-					if (objects[x].get('type') == "group") {
-						var groupObjects = objects[x].getObjects();
-						for(y in groupObjects){
-							if (groupObjects[y].id == id) {
-								groupObjects[y].set("fill", colorX);
-								groupObjects[y].set("stroke", colorX);
+				});
+				aboveCanvas.getObjects().forEach(function(o) {
+					if (o.get('type') == "group") {
+						o.getObjects().forEach(function(q) {
+							if (q.id == id) {
+								q.set("fill", colorX);
+								q.set("stroke", colorX);
 							}
-						}
+						})
 					} else {
-						if (objects[x].id == id) {
-							objects[x].set("fill", colorX);;
+						if (o.id == id) {
+							o.set("fill", colorX);;
 						} 						
 					}
-				}
-				objects = logoCanvas.getObjects();
-				for (x in objects) {
-					if (objects[x].get('type') == "group") {
-						var groupObjects = objects[x].getObjects();
-						for(y in groupObjects){
-							if (groupObjects[y].id == id) {
-								groupObjects[y].set("fill", colorX);
-								groupObjects[y].set("stroke", colorX);
+				});
+				logoCanvas.getObjects().forEach(function(o) {
+					if (o.get('type') == "group") {
+						o.getObjects().forEach(function(q) {
+							if (q.id == id) {
+								q.set("fill", colorX);
+								q.set("stroke", colorX);
 							}
-						}
-					} 
-				}
+						})
+					} else {
+						if (o.id == id) {
+							o.set("fill", colorX);;
+						} 						
+					}
+				});
 				reRenderBG();
 				aboveCanvas.renderAll();
 				logoCanvas.renderAll();
@@ -1685,107 +1692,65 @@
 				}
 				$(this).data('changed', true);
 				var id = $(this).data('element');
-				var objects = below.getObjects();
-				for (x in objects) {
-					if (objects[x].get('type') == "group") {
-						var groupObjects = objects[x].getObjects();
-						for(y in groupObjects){
-							if (groupObjects[y].id == id) {
-								groupObjects[y].set("fill", colorX);
-								groupObjects[y].set("stroke", colorX);
-							}
+				below.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						console.log(o.id)
+						if (o.get('type') == "image") {
+							o.filters[0]['color'] = color.toHexString();
+							o.applyFilters()
+							below.requestRenderAll()
 						}
-					} else {
-						if (objects[x].id == id) {
-							if (objects[x].get('type') == "path-group") {
-								objects[x].set("fill", colorX);	
-							} else {
-								objects[x].set("fill", colorX);	
-							}
-							
-						}  						
+						if (o.get('type') == "group") {
+							o.getObjects().forEach(function(q) {
+								if (q.id == id) {
+									q.set("fill", colorX);
+									q.set("stroke", colorX);
+								}
+							});
+						} else {
+							if (o.id == id) {
+								if (o.get('type') == "path-group") {
+									o.set("fill", colorX);	
+								} else {
+									o.set("fill", colorX);	
+								}
+								
+							} 						
+						} 
 					} 
-				}
-				objects = aboveCanvas.getObjects();
-				for (x in objects) {
-					if (objects[x].get('type') == "group") {
-						var groupObjects = objects[x].getObjects();
-						for(y in groupObjects){
-							if (groupObjects[y].id == id) {
-								groupObjects[y].set("fill", colorX);
-								groupObjects[y].set("stroke", colorX);
+				});
+				aboveCanvas.getObjects().forEach(function(o) {
+					if (o.get('type') == "group") {
+						o.getObjects().forEach(function(q) {
+							if (q.id == id) {
+								q.set("fill", colorX);
+								q.set("stroke", colorX);
 							}
-						}
+						})
 					} else {
-						if (objects[x].id == id) {
-							objects[x].set("fill", colorX);;
+						if (o.id == id) {
+							o.set("fill", colorX);;
 						} 						
 					}
-				}
-				objects = logoCanvas.getObjects();
-				for (x in objects) {
-					if (objects[x].get('type') == "group") {
-						var groupObjects = objects[x].getObjects();
-						for(y in groupObjects){
-							if (groupObjects[y].id == id) {
-								groupObjects[y].set("fill", colorX);
-								groupObjects[y].set("stroke", colorX);
+				});
+				logoCanvas.getObjects().forEach(function(o) {
+					if (o.get('type') == "group") {
+						o.getObjects().forEach(function(q) {
+							if (q.id == id) {
+								q.set("fill", colorX);
+								q.set("stroke", colorX);
 							}
-						}
-					} 
-				}
-				if ($(this).hasClass("sleeve")) {
-					var link = $(this).data("link");
-					$("#"+link+"Color").spectrum("set",color);
-					var objects = below.getObjects();
-					for (x in objects) {
-						if (objects[x].id == link) {
-							objects[x].set("fill", colorX);
-							objects[x].set("stroke", colorX);
-						}
-					}
-				}
-				if ($(this).hasClass("textColorSelector")) {
-					if ($("#warpEffect").val() == "skewUp") {
-						var amount = (parseInt($("#warpAmount").val())/100)*-1;
-						wordmarkText.transformMatrix = [1, amount, 0, 1, 0, 0];
-						wordmarkTextStroke1.transformMatrix = [1, amount, 0, 1, 0, 0];
-						wordmarkTextStroke2.transformMatrix = [1, amount, 0, 1, 0, 0];
-						var objects = logoCanvas.getObjects();
-						for (x in objects) {
-							if (objects[x].get('name') == "warpedText") {
-								logoCanvas.remove(objects[x]);
-							}
-							if (objects[x].id == "wordmark") {
-								objects[x].visible = true;
-							}
-						}
-						logoCanvas.renderAll();
-					} else if ($("#warpEffect").val() == "skewDown") {
-						var amount = parseInt($("#warpAmount").val())/100;
-						wordmarkText.transformMatrix = [1, amount, 0, 1, 0, 0];
-						wordmarkTextStroke1.transformMatrix = [1, amount, 0, 1, 0, 0];
-						wordmarkTextStroke2.transformMatrix = [1, amount, 0, 1, 0, 0];
-						var objects = logoCanvas.getObjects();
-						for (x in objects) {
-							if (objects[x].get('name') == "warpedText") {
-								logoCanvas.remove(objects[x]);
-							}
-							if (objects[x].id == "wordmark") {
-								objects[x].visible = true;
-							}
-						}
-						logoCanvas.renderAll();
+						})
 					} else {
-						warpText();
+						if (o.id == id) {
+							o.set("fill", colorX);;
+						} 						
 					}
-				}
+				});
 				reRenderBG();
 				aboveCanvas.renderAll();
 				logoCanvas.renderAll();
-			},
-			hide: function(color) {
-				change = true;
+				/* change = true;
 				if (color == null) {
 					var colorX = "transparent";
 				} else {
@@ -1890,7 +1855,181 @@
 				}
 				reRenderBG();
 				aboveCanvas.renderAll();
+				logoCanvas.renderAll(); */
+			},
+			hide: function(color) {
+				change = true;
+				if (color == null) {
+					var colorX = "transparent";
+				} else {
+					colorX = color.toHexString();
+				}
+				$(this).data('changed', true);
+				var id = $(this).data('element');
+				below.getObjects().forEach(function(o) {
+					if (o.id == id) {
+						console.log(o.id)
+						if (o.get('type') == "image") {
+							o.filters[0]['color'] = color.toHexString();
+							o.applyFilters()
+							below.requestRenderAll()
+						}
+						if (o.get('type') == "group") {
+							o.getObjects().forEach(function(q) {
+								if (q.id == id) {
+									q.set("fill", colorX);
+									q.set("stroke", colorX);
+								}
+							});
+						} else {
+							if (o.id == id) {
+								if (o.get('type') == "path-group") {
+									o.set("fill", colorX);	
+								} else {
+									o.set("fill", colorX);	
+								}
+								
+							} 						
+						} 
+					} 
+				});
+				aboveCanvas.getObjects().forEach(function(o) {
+					if (o.get('type') == "group") {
+						o.getObjects().forEach(function(q) {
+							if (q.id == id) {
+								q.set("fill", colorX);
+								q.set("stroke", colorX);
+							}
+						})
+					} else {
+						if (o.id == id) {
+							o.set("fill", colorX);;
+						} 						
+					}
+				});
+				logoCanvas.getObjects().forEach(function(o) {
+					if (o.get('type') == "group") {
+						o.getObjects().forEach(function(q) {
+							if (q.id == id) {
+								q.set("fill", colorX);
+								q.set("stroke", colorX);
+							}
+						})
+					} else {
+						if (o.id == id) {
+							o.set("fill", colorX);;
+						} 						
+					}
+				});
+				reRenderBG();
+				aboveCanvas.renderAll();
 				logoCanvas.renderAll();
+				/* change = true;
+				if (color == null) {
+					var colorX = "transparent";
+				} else {
+					colorX = color.toHexString();
+				}
+				$(this).data('changed', true);
+				var id = $(this).data('element');
+				var objects = below.getObjects();
+				for (x in objects) {
+					if (objects[x].get('type') == "group") {
+						var groupObjects = objects[x].getObjects();
+						for(y in groupObjects){
+							if (groupObjects[y].id == id) {
+								groupObjects[y].set("fill", colorX);
+								groupObjects[y].set("stroke", colorX);
+							}
+						}
+					} else {
+						if (objects[x].id == id) {
+							if (objects[x].get('type') == "path-group") {
+								objects[x].set("fill", colorX);	
+							} else {
+								objects[x].set("fill", colorX);	
+							}
+							
+						}  						
+					} 
+				}
+				objects = aboveCanvas.getObjects();
+				for (x in objects) {
+					if (objects[x].get('type') == "group") {
+						var groupObjects = objects[x].getObjects();
+						for(y in groupObjects){
+							if (groupObjects[y].id == id) {
+								groupObjects[y].set("fill", colorX);
+								groupObjects[y].set("stroke", colorX);
+							}
+						}
+					} else {
+						if (objects[x].id == id) {
+							objects[x].set("fill", colorX);;
+						} 						
+					}
+				}
+				objects = logoCanvas.getObjects();
+				for (x in objects) {
+					if (objects[x].get('type') == "group") {
+						var groupObjects = objects[x].getObjects();
+						for(y in groupObjects){
+							if (groupObjects[y].id == id) {
+								groupObjects[y].set("fill", colorX);
+								groupObjects[y].set("stroke", colorX);
+							}
+						}
+					} 
+				}
+				if ($(this).hasClass("sleeve")) {
+					var link = $(this).data("link");
+					$("#"+link+"Color").spectrum("set",color);
+					var objects = below.getObjects();
+					for (x in objects) {
+						if (objects[x].id == link) {
+							objects[x].set("fill", colorX);
+							objects[x].set("stroke", colorX);
+						}
+					}
+				}
+				if ($(this).hasClass("textColorSelector")) {
+					if ($("#warpEffect").val() == "skewUp") {
+						var amount = (parseInt($("#warpAmount").val())/100)*-1;
+						wordmarkText.transformMatrix = [1, amount, 0, 1, 0, 0];
+						wordmarkTextStroke1.transformMatrix = [1, amount, 0, 1, 0, 0];
+						wordmarkTextStroke2.transformMatrix = [1, amount, 0, 1, 0, 0];
+						var objects = logoCanvas.getObjects();
+						for (x in objects) {
+							if (objects[x].get('name') == "warpedText") {
+								logoCanvas.remove(objects[x]);
+							}
+							if (objects[x].id == "wordmark") {
+								objects[x].visible = true;
+							}
+						}
+						logoCanvas.renderAll();
+					} else if ($("#warpEffect").val() == "skewDown") {
+						var amount = parseInt($("#warpAmount").val())/100;
+						wordmarkText.transformMatrix = [1, amount, 0, 1, 0, 0];
+						wordmarkTextStroke1.transformMatrix = [1, amount, 0, 1, 0, 0];
+						wordmarkTextStroke2.transformMatrix = [1, amount, 0, 1, 0, 0];
+						var objects = logoCanvas.getObjects();
+						for (x in objects) {
+							if (objects[x].get('name') == "warpedText") {
+								logoCanvas.remove(objects[x]);
+							}
+							if (objects[x].id == "wordmark") {
+								objects[x].visible = true;
+							}
+						}
+						logoCanvas.renderAll();
+					} else {
+						warpText();
+					}
+				}
+				reRenderBG();
+				aboveCanvas.renderAll();
+				logoCanvas.renderAll(); */
 			}
 		})
 	})
@@ -3278,23 +3417,17 @@
 			})
 		})
 
-		fabric.loadSVGFromURL('./images/jm_snakeskin.svg',function(svg,options) {
-			var tmp = fabric.util.groupSVGElements(svg,options);
-			tmp.set('sourcePath', './images/jm_snakeskin.svg');
-			tmp.setOptions ({
-				originX: 'center',
-				originY: 'center',
-				left: 256,
-				top: 256,
-				id: 'snakeskin',
-				fill: initialColors['snakeskinColor'],
-				visible: false,
-				clipTo: function(ctx) {
-					clippingPath.render(ctx)
-				}
-			});
-			below.add(tmp);
-			below.moveTo(tmp, 52);
+		snakeskinColor = new fabric.Image.fromURL('./images/jm_snakeskin.png', function(oImg) {
+			oImg.id = "snakeskinColor";
+			oImg.visible = false;
+			oImg.filters.push(new fabric.Image.filters.BlendColor({
+  				color: initialColors['snakeskinColor'],
+				mode: 'tint',
+  				alpha: 1.0
+			}))
+			oImg.applyFilters()
+			below.add(oImg)
+			below.moveTo(oImg, 52);
 		})
 
 		undershirtGroup = new fabric.Group([],{
@@ -4474,42 +4607,47 @@
 	})
 
 	$("#buttonOpacity").on("change",function(e) {
-		buttonsColor.set('opacity',parseInt($(this).val())/100);
+		var o = aboveCanvas.getObjects().find(o => o.id === 'buttonsColor');
+		o.set('opacity',parseInt($(this).val())/100);
 		$("#buttonOpacitySpan").html($(this).val());
 		aboveCanvas.renderAll();
 	})
 
 	$("#flapButtonOpacity").on("change",function(e) {
-		jerseyFlapButtonsColor.set('opacity',parseInt($(this).val())/100);
+		var o = aboveCanvas.getObjects().find(o => o.id === 'jerseyFlapButtonsColor');
+		o.set('opacity',parseInt($(this).val())/100);
 		$("#flapButtonOpacitySpan").html($(this).val());
 		aboveCanvas.renderAll();
 	})
 
 	$("#shield1ButtonOpacity").on("change",function(e) {
-		jerseyShield1ButtonsColor.set('opacity',parseInt($(this).val())/100);
+		var o = aboveCanvas.getObjects().find(o => o.id === 'jerseyShield1ButtonsColor');
+		o.set('opacity',parseInt($(this).val())/100);
 		$("#shield1ButtonOpacitySpan").html($(this).val());
 		aboveCanvas.renderAll();
 	})
 	
 	$("#shield2ButtonOpacity").on("change",function(e) {
-		jerseyShield2ButtonsColor.set('opacity',parseInt($(this).val())/100);
+		var o = aboveCanvas.getObjects().find(o => o.id === 'jerseyShield2ButtonsColor');
+		o.set('opacity',parseInt($(this).val())/100);
 		$("#shield2ButtonOpacitySpan").html($(this).val());
 		aboveCanvas.renderAll();
 	})
 	
 	$("#jerseyPanelButtonOpacity").on("change",function(e) {
-		jerseyPanelButtonsColor.set('opacity',parseInt($(this).val())/100);
+		var o = aboveCanvas.getObjects().find(o => o.id === 'jerseyPanelButtonsColor');
+		o.set('opacity',parseInt($(this).val())/100);
 		$("#jerseyPanelButtonOpacitySpan").html($(this).val());
 		aboveCanvas.renderAll();
 	})
 	
-	$(".range").on("mousewheel",function(event) {
+  	$(".range").on("mousewheel",function(event) {
 		if ($(this).attr("id") != "warpAmount") {
 			val = parseInt($(this).val()) + event.deltaY;
 			$(this).val(val);
 			$(this).change();		
 		}
-	})	
+	}) 
 
 	$("#warpEffect").on("change",function(e) {
 		var selected = $(this).find('option:selected');
@@ -5452,12 +5590,20 @@
 		console.log(below.toDatalessJSON())
 		
 		exportMeta.team = $("#teamName").val()
-		exportMeta.start = $("#startYear").val()
-		exportMeta.end = $("#endYear").val()
+		exportMeta.start = parseInt($("#startYear").val())
+		exportMeta.end = parseInt($("#endYear").val())
 		exportMeta.type = $("#jerseyType").val()
+		exportMeta.buttonOpacity = parseInt($("#buttonOpacity").val())
+		exportMeta.flapButtonOpacity = parseInt($("#flapButtonOpacity").val())
+		exportMeta.shield1ButtonOpacity = parseInt($("#shield1ButtonOpacity").val())
+		exportMeta.shield2ButtonOpacity = parseInt($("#shield2ButtonOpacity").val())
+		exportMeta.jerseyPanelButtonOpacity = parseInt($("#jerseyPanelButtonOpacity").val())
+		exportMeta.sleeveLength = $("#sleeveType").val()
+		exportMeta.camoType = $("#camoSelect").val()
 		exportMeta.texture = $("#textureSelect").val()
 		exportMeta.makersMark = $("#makersMarkSelect").val()
 		exportMeta.makersMarkFill = $("#makersMarkColor").spectrum("get").toHexString()
+		exportMeta.swashStyle = $("#swashCombo").val()
 		exportMeta.selectedFont = $("#fontTypeCombo").val()
 		exportMeta.customFonts = customFonts;
 		//exportMeta.customTexture = customTextureBase;
@@ -5529,12 +5675,43 @@
 				customFonts.splice(0, customFonts.length)
 				const data = JSON.parse(response)
 				customTextureBase = data.customTexture;
+
+/* 				exportMeta.team = $("#teamName").val()
+		exportMeta.start = parseInt($("#startYear").val())
+		exportMeta.end = parseInt($("#endYear").val())
+		exportMeta.type = $("#jerseyType").val()
+		exportMeta.buttonOpacity = parseInt($("#buttonOpacity").val())
+		exportMeta.flapButtonOpacity = parseInt($("#flapButtonOpacity").val())
+		exportMeta.shield1ButtonOpacity = parseInt($("#shield1ButtonOpacity").val())
+		exportMeta.shield2ButtonOpacity = parseInt($("#shield2ButtonOpacity").val())
+		exportMeta.jerseyPanelButtonOpacity = parseInt($("#jerseyPanelButtonOpacity").val())
+		exportMeta.sleeveLength = $("#sleeveType").val()
+		exportMeta.camoType = $("#camoSelect").val()
+		exportMeta.texture = $("#textureSelect").val()
+		exportMeta.makersMark = $("#makersMarkSelect").val()
+		exportMeta.makersMarkFill = $("#makersMarkColor").spectrum("get").toHexString()
+		exportMeta.swashStyle = $("#swashCombo").val()
+		exportMeta.selectedFont = $("#fontTypeCombo").val() */
+
+
 				$("#teamName").val(data.team)
 				$("#startYear").val(data.start)
 				$("#endYear").val(data.end)
 				$("#jerseyType").val(data.type)
+				$("#sleeveType").val(data.sleeveLength)
 				$("#textureSelect").val(data.texture)
 				$("#makersMarkSelect").val(data.makersMark)
+				$("#buttonOpacity").val(data.buttonOpacity)
+				$("#buttonOpacitySpan").html(data.buttonOpacity);
+				$("#flapButtonOpacity").val(data.flapButtonOpacity)
+				$("#flapButtonOpacitySpan").html(data.flapButtonOpacity);
+				$("#shield1ButtonOpacity").val(data.shield1ButtonOpacity)
+				$("#shield1ButtonOpacitySpan").html(data.shield1ButtonOpacity)
+				$("#shield2ButtonOpacity").val(data.shield2ButtonOpacity)
+				$("#shield2ButtonOpacitySpan").html(data.shield2ButtonOpacity)
+				$("#jerseyPanelButtonOpacity").val(data.jerseyPanelButtonOpacity)
+				$("#jerseyPanelButtonOpacitySpan").html(data.jerseyPanelButtonOpacity)
+				$("#swashCombo").val(data.swashStyle)
 				//$("#makersMarkSide").val(data.makersMarkSide)
 				$("#makersMarkColor").spectrum("set", data.makersMarkFill)
 				if (data.customFonts.length > 0) {
@@ -5558,8 +5735,9 @@
 				below.clear();
 				console.log("BELOW:")
 				below.loadFromJSON(data.canvas.below, below.renderAll.bind(below), function(o, object) {
-					console.log(object.id)
+					//console.log(object.id)
 					below.add(object)
+					$("#"+object.id+"Check").prop("checked",object.visible)
 					$("#"+object.id).spectrum("set", object.fill)
 					if (object.visible) {
 						$("#"+object.id).spectrum('enable');
@@ -5567,17 +5745,60 @@
 						$("#"+object.id).spectrum('disable');
 					}
 					switch (object.id) {
-
+						case "jerseyPanelStrokeColor":				
+							if (object.visible) {
+								$("."+object.id+"Check").prop('disabled', false);
+								$("."+object.id+"Range").prop('disabled', false);
+								$("."+object.id+"Spectrum").spectrum('enable');
+							} else {
+								$("."+object.id+"Check").prop('disabled', true);
+								$("."+object.id+"Range").prop('disabled', true);
+								$("."+object.id+"Spectrum").spectrum('disable');
+							}
+							break;
+						case "jerseyShield2StrokeColor":				
+							if (object.visible) {
+								$("."+object.id+"Check").prop('disabled', false);
+								$("."+object.id+"Range").prop('disabled', false);
+								$("."+object.id+"Spectrum").spectrum('enable');
+							} else {
+								$("."+object.id+"Check").prop('disabled', true);
+								$("."+object.id+"Range").prop('disabled', true);
+								$("."+object.id+"Spectrum").spectrum('disable');
+							}
+							break;
+						case "jerseyShield1WideStrokeColor":				
+							if (object.visible) {
+								$("."+object.id+"Check").prop('disabled', false);
+								$("."+object.id+"Range").prop('disabled', false);
+								$("."+object.id+"Spectrum").spectrum('enable');
+							} else {
+								$("."+object.id+"Check").prop('disabled', true);
+								$("."+object.id+"Range").prop('disabled', true);
+								$("."+object.id+"Spectrum").spectrum('disable');
+							}
+							break;
+						case "jerseyFlapColor":				
+							if (object.visible) {
+								$("."+object.id+"Check").prop('disabled', false);
+								$("."+object.id+"Range").prop('disabled', false);
+								$("."+object.id+"Spectrum").spectrum('enable');
+							} else {
+								$("."+object.id+"Check").prop('disabled', true);
+								$("."+object.id+"Range").prop('disabled', true);
+								$("."+object.id+"Spectrum").spectrum('disable');
+							}
+							break;
+						case "snakeskinColor":
+							console.log("Oh i found it I guess")
+							break;
 					}
-					$("#"+object.id+"Check").prop("checked",object.visible)
-
-					
 				})
 				below.renderAll()
-				console.log("");
-				console.log("ABOVE:")
+				//console.log("");
+				//console.log("ABOVE:")
 				aboveCanvas.loadFromJSON(data.canvas.above, below.renderAll.bind(below), function(o, object) {
-					console.log(object.id)
+					//console.log(object.id)
 					aboveCanvas.add(object)
 					$("#"+object.id).spectrum("set", object.fill)
 					if (object.visible) {
@@ -5588,6 +5809,25 @@
 					$("#"+object.id+"Check").prop("checked",object.visible)
 				})
 				aboveCanvas.renderAll()
+
+				//console.log("");
+				//console.log("LOGOCANVAS:")	
+				logoCanvas.loadFromJSON(data.canvas.logo, logoCanvas.renderAll.bind(logoCanvas), function(o, object) {
+					//console.log(object.id)
+					$("#"+object.id+"Check").prop("checked",object.visible)
+					if (object.id == 'makersMark2') {
+						$("#makersMarkCheck").prop("checked",object.visible)
+						if (object.visible) {
+							$("#makersMarkSelect").prop("disabled", false)
+							$("#makersMarkColor").spectrum("enable")
+						} else {
+							$("#makersMarkSelect").prop("disabled", true)
+							$("#makersMarkColor").spectrum("disable")
+						}				
+					}
+					logoCanvas.add(object)
+				})
+				logoCanvas.renderAll()
 				/* logoCanvas.loadFromJSON(data.canvas.logo, logoCanvas.renderAll.bind(logoCanvas), function(o, object) {
 					$("#"+object.id+"Check").prop("checked",object.visible)
 					if (object.id == 'eyeletGroup') {
@@ -5673,6 +5913,7 @@
 				
 				below.renderAll()
 				$("#fontTypeCombo").val(selectedFont).trigger('change')
+			*/
 
 				if (data.texture == "custom") {
 					$("#clearTexture").css("display","inline-block");
@@ -5683,7 +5924,7 @@
 				}
 				$("#textureSelect").val(data.texture)		
 				
-				if (anyTextVisible == true) {
+			/*	if (anyTextVisible == true) {
 					$("#fontTypeCombo").prop("disabled",false);
 					$(".textOption").each(function() {
 						$(this).prop("disabled",false);
