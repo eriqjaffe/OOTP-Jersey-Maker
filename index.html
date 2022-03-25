@@ -46,6 +46,8 @@
 		var fontFamilies = {Acme: "Acme",athletic_gothicregular: "AthleticGothic",athletic_gothic_shadowregular: "AthleticGothicShadow",beaverton_scriptregular: "BeavertonScript",'Berkshire Swash': "Berkshire_Swash",'Cantora One': "Cantora_One",caxton_romanregular: "CaxtonRoman",'Chela One': "Chela_One",russell_circusregular: "Circus",Condiment: "Comdiment",Cookie: "Coookie",Courgette: "Courgette",'Croissant One': "Croissant_one",Damion: "Damion",Engagement: "Engagement",rawlings_fancy_blockregular: "RawlingsFancyBlock",'Germania One': "Germania_One",Graduate: "Graduate",'Grand Hotel': "Grand_Hotel",'Jockey One': "Jockey_One",kansasregular: "Kansas",'Kaushan Script': "Kaushan_Script",'Leckerli One': "Leckerli_One",'Lily Script One': "Lily_Script_One",Lobster: "Lobster",'Lobster Two': "Lobster_Two",'Metal Mania': "Metal_Mania",Miniver: "Miniver",'Molle,italic': "Molle",'New Rocker': "New_Rocker",Norican: "Norican",rawlings_old_englishmedium: "OldEnglish",'Oleo Script': "Oleo_Script",'Oleo Script Swash Caps': "Oleo_Script_Swash_Caps",Pacifico: "Pacifico",'Pirata One': "Pirata_One",Playball: "Playball",pro_full_blockregular: "ProFullBlock",richardson_fancy_blockregular: "RichardsonFancyBlock",'Rubik One': "Rubik_One",'Rum Raisin': "Rum_Raisin",Satisfy: "Satisfy",'Seymour One': "Seymour_One",spl28scriptregular: "spl28",ua_tiffanyregular: "TiffanyRegular",'Trade Winds': "Trade_Winds",mlb_tuscan_newmedium: "Tuscan",UnifrakturCook: "UnifrakturCook",UnifrakturMaguntia: "UnifrakturMaguntia",Vibur: "Vibur",Viga: "Viga",Wellfleet: "Wellfleet",'Wendy One': "Wendy_One",Yellowtail: "Yellowtail"};
 		var customFonts = [];
 		var exportMeta = {}
+		const digiGroup = [];
+		const camoGroup = [];
 	</script>
 </head>
 <body>
@@ -523,22 +525,28 @@
 								</tr>
 								<tr class="color_tr">
 									<td class="checkCell"><input type="checkbox" id="camoCheck" class="multiToggle camoToggle" data-canvas="below" data-id="camoBase,camoLayer1,camoLayer2"></td>
-									<td><label>Camouflage: </label></td>
+									<td>
+										<label>Camouflage: </label>
+										<select id="camoSelect">
+											<option value="camo">Traditional</option>
+											<option value="digi">Digital</option>
+										</select>
+									</td>
 									<td style="text-align:right;">
-										<input class="camoBaseSelector" type="text" id="camoBaseColor" data-element="camoBase">
-										<input class="selector" type="text" id="camoLayer1Color" data-element="camoLayer1">
-										<input class="selector" type="text" id="camoLayer2Color" data-element="camoLayer2">
+										<input class="camoSelector camoBaseSelector" type="text" id="camoBaseColor" data-element="camoBase">
+										<input class="camoSelector" type="text" id="camoLayer1Color" data-element="camoLayer1">
+										<input class="camoSelector" type="text" id="camoLayer2Color" data-element="camoLayer2">
 									</td>
 								</tr>
-								<tr class="color_tr">
+								<!--<tr class="color_tr">
 									<td class="checkCell"><input type="checkbox" id="digiCamoCheck" class="multiToggle camoToggle" data-canvas="below" data-id="digiCamoBase,digiCamoLayer1,digiCamoLayer2"></td>
 									<td><label>Digital Camouflage: </label></td>
 									<td style="text-align:right;">
-										<input class="camoBaseSelector" type="text" id="digiCamoBaseColor" data-element="digiCamoBase">
-										<input class="selector" type="text" id="digiCamoLayer1Color" data-element="digiCamoLayer1">
-										<input class="selector" type="text" id="digiCamoLayer2Color" data-element="digiCamoLayer2">
+										<input class="camoSelector camoBaseSelector" type="text" id="digiCamoBaseColor" data-element="digiCamoBase">
+										<input class="camoSelector" type="text" id="digiCamoLayer1Color" data-element="digiCamoLayer1">
+										<input class="camoSelector" type="text" id="digiCamoLayer2Color" data-element="digiCamoLayer2">
 									</td>
-								</tr>
+								</tr>-->
 								<tr class="color_tr">
 									<td class="checkCell"><input type="checkbox" id="snakeskinCheck" class="multiToggle" data-canvas="below" data-id="snakeskin"></td>
 									<td><label>Snakeskin: </label></td>
@@ -1381,25 +1389,63 @@
 	})
 	
 	$(".camoToggle").on("click",function() {
-		var object = $(this);
+		const group = ($("#camoSelect").val() == "digi") ? digiGroup : camoGroup;
 		if ($(this).is(':checked')) {
 			var object = $(this).parent().parent().find(".camoBaseSelector");
 			var color = object.spectrum("get");
 			var overlayImage = logoCanvas.item(0);
+			group.forEach(function(o) {
+				o.visible = true;
+			})
 			overlayImage.filters[0]['color'] = color.toHexString();
 			overlayImage.applyFilters()
 			logoCanvas.requestRenderAll()
+			reRenderBG()
 		} else {
 			var color = $("#jerseyColor").spectrum("get");
 			var overlayImage = logoCanvas.item(0);
+			group.forEach(function(o) {
+				o.visible = false;
+			})
+			overlayImage.filters[0]['color'] = color.toHexString();
 			overlayImage.applyFilters()
 			logoCanvas.requestRenderAll()
+			reRenderBG()
 		}
 	})
+
+	$("#camoSelect").on("change",function(e) {
+		const digi = $(this).val() == "digi" ? true : false;
+		const camo = $(this).val() == "camo" ? true : false;
+		if (digi == true) {
+			$("#camoBaseColor").spectrum("set", below.getObjects('path').find(o => o.id === 'digiCamoBase').fill)
+			$("#camoLayer1Color").spectrum("set", below.getObjects('path').find(o => o.id === 'digiCamoLayer1').fill)
+			$("#camoLayer2Color").spectrum("set", below.getObjects('path').find(o => o.id === 'digiCamoLayer2').fill)
+		} else {
+			$("#camoBaseColor").spectrum("set", below.getObjects('path').find(o => o.id === 'camoBase').fill)
+			$("#camoLayer1Color").spectrum("set", below.getObjects('path').find(o => o.id === 'camoLayer1').fill)
+			$("#camoLayer2Color").spectrum("set", below.getObjects('path').find(o => o.id === 'camoLayer2').fill)
+		}
+		var overlayImage = logoCanvas.item(0);
+		overlayImage.filters[0]['color'] = $("#camoBaseColor").spectrum("get").toHexString();
+		overlayImage.applyFilters()
+		below.getObjects('path').forEach(function(o) {
+			if (o.id.substring(0,4) == "digi") {
+				o.visible = digi
+			}
+			if (o.id.substring(0,4) == "camo") {
+				o.visible = camo
+			}
+			
+		})
+		reRenderBG()
+		logoCanvas.requestRenderAll()
+	})
 	
-	$(".camoBaseSelector").each(function() {
+	$(".camoSelector").each(function() {
 		var color = $(this).attr('id');
 		var change = false;
+		const base = $(this).hasClass("camoBaseSelector");
 		if (color == 'transparent') {
 			color = null;
 		}
@@ -1417,12 +1463,9 @@
 			show: function(color) {
 				var original_color = color;
 				$(this).data('changed', false);
-				var overlayImage = logoCanvas.item(0);
-				overlayImage.filters[0]['color'] = color.toHexString();
-				overlayImage.applyFilters()
-				logoCanvas.requestRenderAll()
 			},
 			move: function(color) {
+				change = true;
 				if (color == null) {
 					var colorX = "transparent";
 				} else {
@@ -1430,17 +1473,23 @@
 				}
 				$(this).data('changed', true);
 				var id = $(this).data('element');
-				var objects = below.getObjects();
+				if ($("#camoSelect").val() == "digi") {
+					var objects = digiGroup
+				} else {
+					var objects = camoGroup
+				}
 				for (x in objects) {
-					if (objects[x].id == id) {
-						objects[x].setFill(colorX);
+					if (objects[x].id.substring(objects[x].id.length - 5) == id.substring(id.length - 5)) {
+						objects[x].set("fill", colorX);	
 					} 						
 				}
 				reRenderBG();
-				var overlayImage = logoCanvas.item(0);
-				overlayImage.filters[0]['color'] = color.toHexString();
-				overlayImage.applyFilters()
-				logoCanvas.requestRenderAll()
+				if (base) {
+					var overlayImage = logoCanvas.item(0);
+					overlayImage.filters[0]['color'] = color.toHexString();
+					overlayImage.applyFilters()
+					logoCanvas.requestRenderAll()
+				}			
 			},
 			change: function(color) {
 				change = true;
@@ -1451,19 +1500,26 @@
 				}
 				$(this).data('changed', true);
 				var id = $(this).data('element');
-				var objects = below.getObjects();
+				if ($("#camoSelect").val() == "digi") {
+					var objects = digiGroup
+				} else {
+					var objects = camoGroup
+				}
 				for (x in objects) {
-					if (objects[x].id == id) {
-						objects[x].setFill(colorX);
+					if (objects[x].id.substring(objects[x].id.length - 5) == id.substring(id.length - 5)) {
+						objects[x].set("fill", colorX);	
 					} 						
 				}
 				reRenderBG();
-				var overlayImage = logoCanvas.item(0);
-				overlayImage.filters[0]['color'] = color.toHexString();
-				overlayImage.applyFilters()
-				logoCanvas.requestRenderAll()
+				if (base) {
+					var overlayImage = logoCanvas.item(0);
+					overlayImage.filters[0]['color'] = color.toHexString();
+					overlayImage.applyFilters()
+					logoCanvas.requestRenderAll()
+				}	
 			},
 			hide: function(color) {
+				change = true;
 				if (color == null) {
 					var colorX = "transparent";
 				} else {
@@ -1471,17 +1527,23 @@
 				}
 				$(this).data('changed', true);
 				var id = $(this).data('element');
-				var objects = below.getObjects();
+				if ($("#camoSelect").val() == "digi") {
+					var objects = digiGroup
+				} else {
+					var objects = camoGroup
+				}
 				for (x in objects) {
-					if (objects[x].id == id) {
-						objects[x].setFill(colorX);
+					if (objects[x].id.substring(objects[x].id.length - 5) == id.substring(id.length - 5)) {
+						objects[x].set("fill", colorX);	
 					} 						
 				}
 				reRenderBG();
-				var overlayImage = logoCanvas.item(0);
-				overlayImage.filters[0]['color'] = color.toHexString();
-				overlayImage.applyFilters()
-				logoCanvas.requestRenderAll()
+				if (base) {
+					var overlayImage = logoCanvas.item(0);
+					overlayImage.filters[0]['color'] = color.toHexString();
+					overlayImage.applyFilters()
+					logoCanvas.requestRenderAll()
+				}	
 			}
 		})
 	})
@@ -1561,7 +1623,6 @@
 				}
 				$(this).data('changed', true);
 				var id = $(this).data('element');
-				console.log(id)
 				var objects = below.getObjects();
 				for (x in objects) {
 					if (objects[x].get('type') == "group") {
@@ -1575,7 +1636,7 @@
 					} else {
 						if (objects[x].id == id) {
 							if (objects[x].get('type') == "path-group") {
-								objects[x].setFill(colorX);
+								objects[x].set("fill", colorX);	
 							} else {
 								objects[x].set("fill", colorX);	
 							}
@@ -1637,7 +1698,7 @@
 					} else {
 						if (objects[x].id == id) {
 							if (objects[x].get('type') == "path-group") {
-								objects[x].setFill(colorX);
+								objects[x].set("fill", colorX);	
 							} else {
 								objects[x].set("fill", colorX);	
 							}
@@ -1745,7 +1806,7 @@
 					} else {
 						if (objects[x].id == id) {
 							if (objects[x].get('type') == "path-group") {
-								objects[x].setFill(colorX);
+								objects[x].set("fill", colorX);	
 							} else {
 								objects[x].set("fill", colorX);	
 							}
@@ -3209,6 +3270,11 @@
 				});
 				below.add(tmp);
 				below.moveTo(tmp, o.z);
+				if (tmp.id.substring(0,4) == "digi") {
+					digiGroup.push(tmp)
+				} else {
+					camoGroup.push(tmp)
+				}
 			})
 		})
 
