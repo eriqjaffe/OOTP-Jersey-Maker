@@ -3510,7 +3510,7 @@
 				top: -5,
 				left: -5,
 				selectable: false,
-				name: 'overlayImage',
+				id: 'overlayImage',
 				evented: false
 			});
 			oImg.filters.push(new fabric.Image.filters.BlendColor({
@@ -4010,11 +4010,17 @@
 			$(".textOption").each(function() {
 				$(this).prop( "disabled", false );
 			})
+			console.log($("#warpEffect").val())
+			if ($("#warpEffect").val() == "none") {
+				$("#warpAmount").prop("disabled", true)
+				$("#warpAmountDisplay").prop("disabled", true)
+			} else {
+				$("#warpAmount").prop("disabled",false);
+			}
 			$(".textColorSelector").each(function() {
 				$(this).spectrum('enable');
 			})
 			$("#warpEffect").msDropDown().data("dd").set("disabled", false);
-			$("#warpAmount").prop("disabled",false);
 		} else {
 			state = false;
 			$(".textOption").each(function() {
@@ -4675,39 +4681,68 @@
 		var value = selected.data('value');
 		$("#warpAmount").val(value);
 		$("#warpAmountDisplay").val(value);
-		console.log($(this).val())
 		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
 		switch ($(this).val()) {
 			case "none":
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", 0)
 				logoCanvas.renderAll();
 				break;
 			case "skewUp":
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", amount)
 				logoCanvas.renderAll();
 				break;
 			case "skewDown":
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", amount)
 				logoCanvas.renderAll();
 				break;
 			case "skewLeft":
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				g.set("skewY", 0)
 				g.set("skewX", amount)
 				logoCanvas.renderAll();
 				break;
 			case "skewRight":
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				g.set("skewY", 0)
 				g.set("skewX", amount)
 				logoCanvas.renderAll();
 				break;
-			defaut:
+			default:
 				g.set("skewX", 0)
 				g.set("skewY", 0)
 				logoCanvas.renderAll();
@@ -4755,7 +4790,7 @@
 				g.set("skewX", amount)
 				logoCanvas.renderAll();
 				break;
-			defaut:
+			default:
 				g.set("skewX", 0)
 				g.set("skewY", 0)
 				logoCanvas.renderAll();
@@ -4803,7 +4838,7 @@
 				g.set("skewX", amount)
 				logoCanvas.renderAll();
 				break;
-			defaut:
+			default:
 				g.set("skewX", 0)
 				g.set("skewY", 0)
 				logoCanvas.renderAll();
@@ -4819,69 +4854,56 @@
 		wordmarkTextStroke1.transformMatrix = [1, 0, 0, 1, 0, 0];
 		wordmarkTextStroke2.transformMatrix = [1, 0, 0, 1, 0, 0];
 		logoCanvas.renderAll();
+		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
 		if ($("#warpEffect").val() == "none") {
 			$("#warpAmount").val("0");
 			$("#warpAmountDisplay").val("0");
-			var objects = logoCanvas.getObjects("image");
-			for (x in objects) {
-				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
+			logoCanvas.getObjects("image").forEach(function(o) {
+				console.log(o)
+				if (o.get('name') == "warpedText") {
+					logoCanvas.remove(o);
 				}
-			}
-			var objects = logoCanvas.getObjects("group");
-			for (x in objects) {
-				if (objects[x].id == "wordmark") {
-					var tmp = objects[x].getObjects();
-					for (i in tmp) {
-						tmp[i].transformMatrix = [1, 0, 0, 1, 0, 0];
-						tmp[i].transformMatrix = [1, 0, 0, 1, 0, 0];
-						tmp[i].transformMatrix = [1, 0, 0, 1, 0, 0];
-						tmp[i].set("left", 0)
-						tmp[i].set("top", 0)
-						tmp[i].scaleX = 1;
-						tmp[i].scaleY = 1;
-					}
-					objects[x].visible = true;
-				}
-			}
+			});
+			g.set("skewX", 0)
+			g.set("skewY", 0)
 			logoCanvas.renderAll();
 			warp = false;
 		}
 		
 		if (warp == true) {	
 			$("#overlay").css("display","inline-block");
-			var objects = logoCanvas.getObjects();
-			for (x in objects) {
-				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
+			var obj = logoCanvas.getObjects().forEach(function(o) {
+				if (o.id == "warpedText") {
+					logoCanvas.remove(o);
 				}
-			}
-			for (x in objects) {
-				if (objects[x].id == "wordmark") {
-					var tmp = objects[x].getObjects();
-					for (i in tmp) {
-						tmp[i].set("left",0);
-						tmp[i].set("top",0);
-					}
-					objects[x].visible = true;
+				if (o.id == "wordmark") {
+					o.getObjects().forEach(function(q) {
+						q.set("left",0);
+						q.set("top",0);
+					});
+					o.set("visible",true)
 				}
-			}
-
+			})
 			logoCanvas.renderAll();
 			warpCanvas.clear()
-			warpCanvas.add(wordmarkTextStroke2);
-			warpCanvas.add(wordmarkTextStroke1);
-			warpCanvas.add(wordmarkText);
-			var tmpObjects = warpCanvas.getObjects()
-			for (x in tmpObjects) {
-				tmpObjects[x].scaleX = wordmark.scaleX;
-				tmpObjects[x].scaleY = wordmark.scaleY;
-				if (tmpObjects[x].text != $("#wordmarkTextBox").val()) {
-					tmpObjects[x].text = $("#wordmarkTextBox").val();
+			var grp = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
+			g.getObjects().forEach(function(o) {
+				o.clone(function(cloned) {
+    				warpCanvas.add(cloned)
+				});
+			})
+			warpCanvas.getObjects().forEach(function(o) {
+				console.log(o)
+				o.set("scaleX", wordmark.scaleX)
+				o.set("scaleY", wordmark.scaleY)
+				//o.scaleY = wordmark.scaleY;
+				if (o.text != $("#wordmarkTextBox").val()) {
+					o.set("text", $("#wordmarkTextBox").val())
 				}
-				tmpObjects[x].setLeft(256);
-				tmpObjects[x].setTop(256);
-			}
+				o.set("left",256)
+				o.set("top",256)
+			})
+
 			warpCanvas.renderAll();
 		
 			var theImage = warpCanvas.toDataURL();
@@ -4908,7 +4930,7 @@
 							borderColor: 'red',
 							cornerColor: 'yellow',
 							cornerSize: 12,
-							name: 'warpedText',
+							id: 'warpedText',
 							transparentCorners: false
 						});
 						
@@ -4922,12 +4944,11 @@
 							wmTop = image.getBoundingRect()['top'];
 						});
 						
-						var objects = logoCanvas.getObjects();
-						for (x in objects) {
-							if (objects[x].id == "wordmark") {
-								objects[x].visible = false;
+						logoCanvas.getObjects().forEach(function(o) {
+							if (o.id == "wordmark") {
+								o.set("visible", false)
 							}
-						}
+						});
 
 						logoCanvas.add(image);
 						logoCanvas.renderAll();
