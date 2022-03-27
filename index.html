@@ -41,6 +41,7 @@
 			prefColorFormat = "hex";
 		}
 		const camoArr = [{"name":"camoBase","fill":"#4a551e","z":16},{"name":"camoLayer1","fill":"#052503","z":17},{"name":"camoLayer2","fill":"#beb585","z":18},{"name":"digiCamoBase","fill":"#9a8b62","z":19},{"name":"digiCamoLayer1","fill":"#372900","z":20},{"name":"digiCamoLayer2","fill":"#736632","z":21}]
+		var camoColors = {camoBase: "#4a551e", camoLayer1: "#052503", camoLayer2: "#beb585", digiCamoBase: "#9a8b62", digiCamoLayer1: "#372900", digiCamoLayer2: "#736632"}
 		var validFonts = ['Acme','AthleticGothic','AthleticGothicShadow','BeavertonScript','Berkshire_Swash','Cantora_One','CaxtonRoman','Chela_One','Circus','Condiment','Cookie','Courgette','Croissant_One','Damion','Engagement','RawlingsFancyBlock','Germania_One','Graduate','Grand_Hotel','Jockey_One','Kansas','Kaushan_Script','Leckerli_One','Lily_Script_One','Lobster','Lobster_Two','Metal_Mania','Miniver','Molle','New_Rocker','Norican','OldEnglish','Oleo_Script','Oleo_Script_Swash_Caps','Pacifico','Pirata_One','Playball','ProFullBlock','RichardsonFancyBlock','Rubik_One','Rum_Raisin','Satisfy','Seymour_One','spl28','TiffanyRegular','Trade_Winds','Tuscan','UnifrakturCook','UnifrakturMaguntia','Vibur','Viga','Wellfleet','Wendy_One','Yellowtail']
 		var fontSources = {Acme: "Acme-Regular.ttf",athletic_gothicregular: "athletic_gothic-webfont.ttf",athletic_gothic_shadowregular: "athletic_gothic_shadow-webfont.ttf",beaverton_scriptregular: "beaverton_script-webfont.ttf",'"Berkshire Swash"': "BerkshireSwash-Regular.ttf",'"Cantora One"': "CantoraOne-Regular.ttf",caxton_romanregular: "caxton_roman-webfont.ttf",'"Chela One"': "ChelaOne-Regular.ttf",russell_circusregular: "circus-webfont.ttf",Condiment: "Condiment-Regular.ttf",Cookie: "Cookie-Regular.ttf",Courgette: "Courgette-Regular.ttf",'"Croissant One"': "CroissantOne-Regular.ttf",Damion: "Damion-Regular.ttf",Engagement: "Engagement-Regular.ttf",rawlings_fancy_blockregular: "rawlingsfancyblock-regular-webfont.ttf",'"Germania One"': "GermaniaOne-Regular.ttf",Graduate: "Graduate-Regular.ttf",'"Grand Hotel"': "GrandHotel-Regular.ttf",'"Jockey One"': "JockeyOne-Regular.ttf",kansasregular: "tuscan-webfont.ttf",'"Kaushan Script"': "KaushanScript-Regular.ttf",'"Leckerli One"': "LeckerliOne-Regular.ttf",'"Lily Script One"': "LilyScriptOne-Regular.ttf",Lobster: "Lobster-Regular.ttf",'"Lobster Two"': "LobsterTwo-Regular.ttf",'"Metal Mania"': "MetalMania-Regular.ttf",Miniver: "Miniver-Regular.ttf",'Molle,italic': "Molle-Regular.ttf",'"New Rocker"': "NewRocker-Regular.ttf",Norican: "Norican-Regular.ttf",rawlings_old_englishmedium: "rawlingsoldenglish-webfont.ttf",'"Oleo Script"': "OleoScript-Regular.ttf",'"Oleo Script Swash Caps"': "OleoScriptSwashCaps-Regular.ttf",Pacifico: "Pacifico.ttf",'"Pirata One"': "PirataOne-Regular.ttf",Playball: "Playball-Regular.ttf",pro_full_blockregular: "pro_full_block-webfont.ttf",richardson_fancy_blockregular: "richardson_fancy_block-webfont.ttf",'"Rubik One"': "RubikOne-Regular.ttf",'"Rum Raisin"': "RumRaisin-Regular.ttf",Satisfy: "Satisfy-Regular.ttf",'"Seymour One"': "SeymourOne-Regular.ttf",spl28scriptregular: "spl28script-webfont.ttf",ua_tiffanyregular: "tiffany-webfont.ttf",'"Trade Winds"': "TradeWinds-Regular.ttf",mlb_tuscan_newmedium: "mlb_tuscan_new-webfont.ttf",UnifrakturCook: "UnifrakturCook-Bold.ttf",UnifrakturMaguntia: "UnifrakturMaguntia-Book.ttf",Vibur: "Vibur-Regular.ttf",Viga: "Viga-Regular.ttf",Wellfleet: "Wellfleet-Regular.ttf",'"Wendy One"': "WendyOne-Regular.ttf",Yellowtail: "Yellowtail-Regular.ttf"};
 		var fontFamilies = {Acme: "Acme",athletic_gothicregular: "AthleticGothic",athletic_gothic_shadowregular: "AthleticGothicShadow",beaverton_scriptregular: "BeavertonScript",'Berkshire Swash': "Berkshire_Swash",'Cantora One': "Cantora_One",caxton_romanregular: "CaxtonRoman",'Chela One': "Chela_One",russell_circusregular: "Circus",Condiment: "Comdiment",Cookie: "Coookie",Courgette: "Courgette",'Croissant One': "Croissant_one",Damion: "Damion",Engagement: "Engagement",rawlings_fancy_blockregular: "RawlingsFancyBlock",'Germania One': "Germania_One",Graduate: "Graduate",'Grand Hotel': "Grand_Hotel",'Jockey One': "Jockey_One",kansasregular: "Kansas",'Kaushan Script': "Kaushan_Script",'Leckerli One': "Leckerli_One",'Lily Script One': "Lily_Script_One",Lobster: "Lobster",'Lobster Two': "Lobster_Two",'Metal Mania': "Metal_Mania",Miniver: "Miniver",'Molle,italic': "Molle",'New Rocker': "New_Rocker",Norican: "Norican",rawlings_old_englishmedium: "OldEnglish",'Oleo Script': "Oleo_Script",'Oleo Script Swash Caps': "Oleo_Script_Swash_Caps",Pacifico: "Pacifico",'Pirata One': "Pirata_One",Playball: "Playball",pro_full_blockregular: "ProFullBlock",richardson_fancy_blockregular: "RichardsonFancyBlock",'Rubik One': "Rubik_One",'Rum Raisin': "Rum_Raisin",Satisfy: "Satisfy",'Seymour One': "Seymour_One",spl28scriptregular: "spl28",ua_tiffanyregular: "TiffanyRegular",'Trade Winds': "Trade_Winds",mlb_tuscan_newmedium: "Tuscan",UnifrakturCook: "UnifrakturCook",UnifrakturMaguntia: "UnifrakturMaguntia",Vibur: "Vibur",Viga: "Viga",Wellfleet: "Wellfleet",'Wendy One': "Wendy_One",Yellowtail: "Yellowtail"};
@@ -1114,7 +1115,10 @@
 	
 	var textureFJS = new fabric.Canvas('fabricTexture',{enableRetinaScaling:false});
 
-	var below = new fabric.StaticCanvas('below',{enableRetinaScaling:false});
+	var below = new fabric.StaticCanvas('below',{
+		enableRetinaScaling: false,
+		preserveObjectStacking: true
+	});
 	
 	var aboveCanvas = new fabric.StaticCanvas('above',{selection:false,enableRetinaScaling:false});
 	aboveCanvas.controlsAboveOverlay = true;
@@ -1172,7 +1176,7 @@
 			} else {
 				state = false;
 			}
-			$(this).parent().parent().find(".selector, .camoBaseSelector, .makerSelector, .swashSelector").each(function(e) {
+			$(this).parent().parent().find(".selector, .camoSelector, .makerSelector, .swashSelector").each(function(e) {
 				if (state == true) {
 					$(this).spectrum('enable');
 				} else {
@@ -1389,6 +1393,7 @@
 	})
 	
 	$(".camoToggle").on("click",function() {
+		below.bringToFront(undershirtGroup)
 		const group = ($("#camoSelect").val() == "digi") ? digiGroup : camoGroup;
 		if ($(this).is(':checked')) {
 			var object = $(this).parent().parent().find(".camoBaseSelector");
@@ -1401,6 +1406,9 @@
 			overlayImage.applyFilters()
 			logoCanvas.requestRenderAll()
 			reRenderBG()
+			$(".camoSelector").each(function() {
+				$(this).spectrum("enable")
+			})
 		} else {
 			var color = $("#jerseyColor").spectrum("get");
 			var overlayImage = logoCanvas.item(0);
@@ -1411,6 +1419,9 @@
 			overlayImage.applyFilters()
 			logoCanvas.requestRenderAll()
 			reRenderBG()
+			$(".camoSelector").each(function() {
+				$(this).spectrum("disable")
+			})
 		}
 	})
 
@@ -1418,18 +1429,19 @@
 		const digi = $(this).val() == "digi" ? true : false;
 		const camo = $(this).val() == "camo" ? true : false;
 		if (digi == true) {
-			$("#camoBaseColor").spectrum("set", below.getObjects('path').find(o => o.id === 'digiCamoBase').fill)
-			$("#camoLayer1Color").spectrum("set", below.getObjects('path').find(o => o.id === 'digiCamoLayer1').fill)
-			$("#camoLayer2Color").spectrum("set", below.getObjects('path').find(o => o.id === 'digiCamoLayer2').fill)
+			$("#camoBaseColor").spectrum("set", below.getObjects('image').find(o => o.id === 'digiCamoBase').filters[0]['color'])
+			$("#camoLayer1Color").spectrum("set", below.getObjects('image').find(o => o.id === 'digiCamoLayer1').filters[0]['color'])
+			$("#camoLayer2Color").spectrum("set", below.getObjects('image').find(o => o.id === 'digiCamoLayer2').filters[0]['color'])
 		} else {
-			$("#camoBaseColor").spectrum("set", below.getObjects('path').find(o => o.id === 'camoBase').fill)
-			$("#camoLayer1Color").spectrum("set", below.getObjects('path').find(o => o.id === 'camoLayer1').fill)
-			$("#camoLayer2Color").spectrum("set", below.getObjects('path').find(o => o.id === 'camoLayer2').fill)
+			$("#camoBaseColor").spectrum("set", below.getObjects('image').find(o => o.id === 'camoBase').filters[0]['color'])
+			$("#camoLayer1Color").spectrum("set", below.getObjects('image').find(o => o.id === 'camoLayer1').filters[0]['color'])
+			$("#camoLayer2Color").spectrum("set", below.getObjects('image').find(o => o.id === 'camoLayer2').filters[0]['color'])
 		}
 		var overlayImage = logoCanvas.item(0);
 		overlayImage.filters[0]['color'] = $("#camoBaseColor").spectrum("get").toHexString();
 		overlayImage.applyFilters()
-		below.getObjects('path').forEach(function(o) {
+		below.getObjects('image').forEach(function(o) {
+			console.log(o.id)
 			if (o.id.substring(0,4) == "digi") {
 				o.visible = digi
 			}
@@ -1461,6 +1473,7 @@
 			palette: [ ],
 			color: initialColors[$(this).attr('id')],
 			show: function(color) {
+				console.log($(this).attr('id'))
 				var original_color = color;
 				$(this).data('changed', false);
 			},
@@ -1480,9 +1493,12 @@
 				}
 				for (x in objects) {
 					if (objects[x].id.substring(objects[x].id.length - 5) == id.substring(id.length - 5)) {
-						objects[x].set("fill", colorX);	
+						objects[x].filters[0]['color'] = color.toHexString();
+						objects[x].applyFilters()
+						below.requestRenderAll()
 					} 						
 				}
+				
 				reRenderBG();
 				if (base) {
 					var overlayImage = logoCanvas.item(0);
@@ -1507,7 +1523,9 @@
 				}
 				for (x in objects) {
 					if (objects[x].id.substring(objects[x].id.length - 5) == id.substring(id.length - 5)) {
-						objects[x].set("fill", colorX);	
+						objects[x].filters[0]['color'] = color.toHexString();
+						objects[x].applyFilters()
+						below.requestRenderAll()
 					} 						
 				}
 				reRenderBG();
@@ -1534,7 +1552,9 @@
 				}
 				for (x in objects) {
 					if (objects[x].id.substring(objects[x].id.length - 5) == id.substring(id.length - 5)) {
-						objects[x].set("fill", colorX);	
+						objects[x].filters[0]['color'] = color.toHexString();
+						objects[x].applyFilters()
+						below.requestRenderAll()
 					} 						
 				}
 				reRenderBG();
@@ -1626,7 +1646,6 @@
 				var id = $(this).data('element');
 				below.getObjects().forEach(function(o) {
 					if (o.id == id) {
-						console.log(o.id)
 						if (o.get('type') == "image") {
 							o.filters[0]['color'] = color.toHexString();
 							o.applyFilters()
@@ -1694,7 +1713,6 @@
 				var id = $(this).data('element');
 				below.getObjects().forEach(function(o) {
 					if (o.id == id) {
-						console.log(o.id)
 						if (o.get('type') == "image") {
 							o.filters[0]['color'] = color.toHexString();
 							o.applyFilters()
@@ -3392,7 +3410,26 @@
 		below.add(butterflyColor);
 		
  		camoArr.forEach(function(o) {
-			fabric.loadSVGFromURL('./images/jm_'+o.name+'.svg',function(svg,options) {
+			console.log(o.name)
+			tmp = new fabric.Image.fromURL('./images/jm_'+o.name+'.png', function(oImg) {
+				oImg.id = o.name;
+				oImg.visible = false;
+				oImg.filters.push(new fabric.Image.filters.BlendColor({
+					color: o.fill,
+					mode: 'tint',
+					alpha: 1.0
+				}))
+			oImg.applyFilters()
+			below.add(oImg)
+			//below.moveTo(oImg, o.z);
+			console.log(o.name)
+			if (o.name.substring(0,4) == "digi") {
+				digiGroup.push(oImg)
+			} else {
+				camoGroup.push(oImg)
+			}
+		})
+			/* fabric.loadSVGFromURL('./images/jm_'+o.name+'.svg',function(svg,options) {
 				var tmp = fabric.util.groupSVGElements(svg,options);
 				tmp.set('sourcePath', './images/jm_'+o.name+'.svg');
 				tmp.setOptions ({
@@ -3414,7 +3451,7 @@
 				} else {
 					camoGroup.push(tmp)
 				}
-			})
+			}) */
 		})
 
 		snakeskinColor = new fabric.Image.fromURL('./images/jm_snakeskin.png', function(oImg) {
@@ -3429,39 +3466,6 @@
 			below.add(oImg)
 			below.moveTo(oImg, 52);
 		})
-
-		undershirtGroup = new fabric.Group([],{
-			top: 0,
-			left: 0,
-			width: 512,
-			height: 512,
-			originX: 'center',
-			originY: 'center',
-			id: 'undershirtGroup',
-			visible: true
-		})
-
-		undershirtColor = new fabric.Image.fromURL('./images/undershirt.png', function(oImg) {
-			oImg.id = "undershirtColor";
-			oImg.visible = true;
-			oImg.filters.push(new fabric.Image.filters.BlendColor({
-  				color: initialColors['undershirtColor'],
-				mode: 'tint',
-  				alpha: 1.0
-			}))
-			oImg.sendToBack();
-			oImg.applyFilters()
-			undershirtGroup.add(oImg)
-		})
-
-		undershirtShadow = new fabric.Image.fromURL('./images/undershirt_shadow.png', function(oImg) {
-			oImg.id = "undershirtShadow";
-			oImg.visible = true
-			undershirtGroup.add(oImg)
-			oImg.bringToFront()
-		})
-
-		below.add(undershirtGroup)
 
 		aboveCanvas.add(widePlacketPipingInnerColor);
 		aboveCanvas.add(widePlacketPipingMiddleColor);
@@ -3834,6 +3838,40 @@
 		logoCanvas.add(swash5Group);
 		logoCanvas.add(swash6Group);
 		logoCanvas.add(wordmark);
+
+		undershirtGroup = new fabric.Group([],{
+			top: 0,
+			left: 0,
+			width: 512,
+			height: 512,
+			originX: 'center',
+			originY: 'center',
+			id: 'undershirtGroup',
+			visible: true
+		})
+
+		undershirtColor = new fabric.Image.fromURL('./images/undershirt.png', function(oImg) {
+			oImg.id = "undershirtColor";
+			oImg.visible = true;
+			oImg.filters.push(new fabric.Image.filters.BlendColor({
+  				color: initialColors['undershirtColor'],
+				mode: 'tint',
+  				alpha: 1.0
+			}))
+			oImg.sendToBack();
+			oImg.applyFilters()
+			undershirtGroup.add(oImg)
+		})
+
+		undershirtShadow = new fabric.Image.fromURL('./images/undershirt_shadow.png', function(oImg) {
+			oImg.id = "undershirtShadow";
+			oImg.visible = true
+			undershirtGroup.add(oImg)
+			oImg.bringToFront()
+		})
+
+		below.add(undershirtGroup)
+		below.bringToFront(undershirtGroup)
 		
 		// add the texture
 		var img = new Image;      // First create the image...
@@ -5600,6 +5638,9 @@
 		exportMeta.jerseyPanelButtonOpacity = parseInt($("#jerseyPanelButtonOpacity").val())
 		exportMeta.sleeveLength = $("#sleeveType").val()
 		exportMeta.camoType = $("#camoSelect").val()
+		exportMeta.camoBaseColor = $("#camoBaseColor").val()
+		exportMeta.camoLayer1Color = $("#camoLayer1Color").val()
+		exportMeta.camoLayer2Color = $("#camoLayer2Color").val()
 		exportMeta.texture = $("#textureSelect").val()
 		exportMeta.makersMark = $("#makersMarkSelect").val()
 		exportMeta.makersMarkFill = $("#makersMarkColor").spectrum("get").toHexString()
@@ -5675,7 +5716,8 @@
 				customFonts.splice(0, customFonts.length)
 				const data = JSON.parse(response)
 				customTextureBase = data.customTexture;
-
+				var camoVisible = false;
+				var digiCamoVisible = false;
 /* 				exportMeta.team = $("#teamName").val()
 		exportMeta.start = parseInt($("#startYear").val())
 		exportMeta.end = parseInt($("#endYear").val())
@@ -5712,8 +5754,12 @@
 				$("#jerseyPanelButtonOpacity").val(data.jerseyPanelButtonOpacity)
 				$("#jerseyPanelButtonOpacitySpan").html(data.jerseyPanelButtonOpacity)
 				$("#swashCombo").val(data.swashStyle)
+				$("#camoBaseColor").spectrum("set",data.camoBaseColor)
+				$("#camoLayer1Color").spectrum("set",data.camoLayer1Color)
+				$("#camoLayer2Color").spectrum("set",data.camoLayer2Color)
 				//$("#makersMarkSide").val(data.makersMarkSide)
 				$("#makersMarkColor").spectrum("set", data.makersMarkFill)
+				$("#camoSelect").val(data.camoType)
 				if (data.customFonts.length > 0) {
 					for (x in data.customFonts) {
 						const loadedFont = data.customFonts[x]
@@ -5745,6 +5791,12 @@
 						$("#"+object.id).spectrum('disable');
 					}
 					switch (object.id) {
+						case "camoBase":
+							camoVisible = object.visible;
+							break;
+						case "digiCamoBase":
+							digiCamoVisible = object.visible;
+							break;
 						case "jerseyPanelStrokeColor":				
 							if (object.visible) {
 								$("."+object.id+"Check").prop('disabled', false);
@@ -5792,6 +5844,19 @@
 						case "snakeskinColor":
 							console.log("Oh i found it I guess")
 							break;
+					}
+					if (camoVisible || digiCamoVisible) {
+						$("#camoCheck").prop("checked",true)
+						$("#camoSelect").prop("disabled",false)
+						$(".camoSelector").each(function() {
+							$(this).spectrum("enable")
+						})
+					} else {
+						$("#camoCheck").prop("checked",false)
+						$("#camoSelect").prop("disabled",true)
+						$(".camoSelector").each(function() {
+							$(this).spectrum("disable")
+						})
 					}
 				})
 				below.renderAll()
