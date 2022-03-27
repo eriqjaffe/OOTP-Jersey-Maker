@@ -800,10 +800,10 @@
 										</select>
 									</td>
 									<td style="width:65%;">
-										<input type="range" class="range" class="textOption" id="warpAmount" value="0" min="1" max="100" style="width:100%;" disabled>
+										<input type="range" class="range" class="textOption warpAmount" id="warpAmount" value="0" min="1" max="100" style="width:100%;" disabled>
 									</td>
 									<td style="width:15%; text-align:right;">
-										<input type="number" class="textOption" style="width:50px; text-align:center;" id="warpAmountDisplay" val="0" min="1" max="100">
+										<input type="number" class="textOption warpAmount" style="width:50px; text-align:center;" id="warpAmountDisplay" val="0" min="1" max="100">
 									</td>
 								</tr>
 								<tr><td colspan="3" style="text-align:center; font-size:.8em;">Text effects may take a moment or two to process - be patient!</td></tr>
@@ -1134,7 +1134,6 @@
 	var logoCanvas = new fabric.Canvas('guides',{enableRetinaScaling:false});
 
 	$(document).ready(function() {
-		console.log(camoColors)
 		$(".accordion .accord-header").click(function() {
 			if($(this).next("div").is(":visible")){
 				$(this).next("div").slideUp("fast");
@@ -4010,7 +4009,6 @@
 			$(".textOption").each(function() {
 				$(this).prop( "disabled", false );
 			})
-			console.log($("#warpEffect").val())
 			if ($("#warpEffect").val() == "none") {
 				$("#warpAmount").prop("disabled", true)
 				$("#warpAmountDisplay").prop("disabled", true)
@@ -4756,36 +4754,63 @@
 		var selected = $("#warpEffect").find('option:selected');
 		selected.data('value',$(this).val());
 		$("#warpAmountDisplay").val($(this).val());
+		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
 		switch ($("#warpEffect").val()) {
 			case "none":
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", 0)
 				logoCanvas.renderAll();
 				break;
 			case "skewUp":
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
-				var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
 				g.set("skewX", 0)
 				g.set("skewY", amount)
 				logoCanvas.renderAll();
 				break;
 			case "skewDown":
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
-				var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
 				g.set("skewX", 0)
 				g.set("skewY", amount)
 				logoCanvas.renderAll();
 				break;
 			case "skewLeft":
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
-				var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
 				g.set("skewY", 0)
 				g.set("skewX", amount)
 				logoCanvas.renderAll();
 				break;
 			case "skewRight":
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
-				var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
 				g.set("skewY", 0)
 				g.set("skewX", amount)
 				logoCanvas.renderAll();
@@ -4799,41 +4824,67 @@
 		}	
 	})
 
-	$("#warpAmountDisplay").on("change",function() {		
-		console.log($(this).val())
+	$("#warpAmountDisplay").on("change",function() {
 		var selected = $("#warpEffect").find('option:selected');
 		selected.data('value',$(this).val());
 		$("#warpAmount").val($(this).val());
+		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
 		switch ($("#warpEffect").val()) {
 			case "none":
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", 0)
 				logoCanvas.renderAll();
 				break;
 			case "skewUp":
-				var amount = (parseInt($(this).val())/100)*-45;
-				var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
+				var amount = (parseInt($("#warpAmount").val())/100)*-45;
 				g.set("skewX", 0)
 				g.set("skewY", amount)
 				logoCanvas.renderAll();
 				break;
 			case "skewDown":
-				var amount = (parseInt($(this).val())/100)*45;
-				var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
+				var amount = (parseInt($("#warpAmount").val())/100)*45;
 				g.set("skewX", 0)
 				g.set("skewY", amount)
 				logoCanvas.renderAll();
 				break;
 			case "skewLeft":
-				var amount = (parseInt($(this).val())/100)*45;
-				var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
+				var amount = (parseInt($("#warpAmount").val())/100)*45;
 				g.set("skewY", 0)
 				g.set("skewX", amount)
 				logoCanvas.renderAll();
 				break;
 			case "skewRight":
-				var amount = (parseInt($(this).val())/100)*-45;
-				var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
+				var amount = (parseInt($("#warpAmount").val())/100)*-45;
 				g.set("skewY", 0)
 				g.set("skewX", amount)
 				logoCanvas.renderAll();
@@ -4893,7 +4944,6 @@
 				});
 			})
 			warpCanvas.getObjects().forEach(function(o) {
-				console.log(o)
 				o.set("scaleX", wordmark.scaleX)
 				o.set("scaleY", wordmark.scaleY)
 				//o.scaleY = wordmark.scaleY;
