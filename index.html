@@ -1103,6 +1103,13 @@
 	var imLeft = 256
 	var imTop = 256;
 
+	fabric.Object.prototype.set({
+    	borderColor: 'red',
+		cornerColor: 'yellow',
+		cornerSize: 12,
+		transparentCorners: true
+	});
+
 	var spinnerOptions = {lines: 13, length: 28, width: 14, radius: 42, scale: 2, corners: 1, color: '#103959', opacity: 0.25, rotate: 0, direction: 1, speed: 1, trail: 60, fps: 20, zIndex: 2e9, className: 'spinner', top: '50%', left: '50%', shadow: false, hwaccel: false, position: 'absolute'}
     var target = document.getElementById('overlay');
     var spinner = new Spinner(spinnerOptions).spin(target);
@@ -1230,131 +1237,90 @@
     $("#fontTypeCombo").on("change",function() {
 		var style = $(this).val();
 		var font_family = $("."+style).css("font-family");
+		console.log(font_family)
 		var objects = logoCanvas.getObjects("group");
-		var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
-		g._objects[0].set("fontFamily", font_family)
-		g._objects[1].set("fontFamily", font_family)
-		g._objects[2].set("fontFamily", font_family)
+		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
+		g.getObjects().forEach(function(o) {
+			o.set("fontFamily", "Yellowtail")
+			o.set("fontFamily", font_family)
+		})
+		logoCanvas.renderAll()
 		$(this).removeClass().addClass(style);
 		switch ($("#warpEffect").val()) {
+			case "none":
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
+				g.set("skewX", 0)
+				g.set("skewY", 0)
+				logoCanvas.renderAll();
+				break;
 			case "skewUp":
-			var amount = (parseInt($("#warpAmount").val())/100)*-1;
-			var objects = logoCanvas.getObjects();
-			for (x in objects) {
-				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
-				}
-				if (objects[x].id == "wordmark") {
-					objects[x].getObjects().forEach(function(o) {
-						o.transformMatrix = [1, amount, 0, 1, 0, 0];
-						o.transformMatrix = [1, amount, 0, 1, 0, 0];
-						o.transformMatrix = [1, amount, 0, 1, 0, 0];					
-						o.setLeft(0);
-						o.setTop(0);
-					});
-					objects[x].visible = true;
-				}
-			}
+				var amount = (parseInt($("#warpAmount").val())/100)*-45;
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
+				g.set("skewX", 0)
+				g.set("skewY", amount)
+				logoCanvas.renderAll();
+				break;
+			case "skewDown":
+				var amount = (parseInt($("#warpAmount").val())/100)*45;
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
+				g.set("skewX", 0)
+				g.set("skewY", amount)
+				logoCanvas.renderAll();
+				break;
+			case "skewLeft":
+				var amount = (parseInt($("#warpAmount").val())/100)*45;
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
+				g.set("skewY", 0)
+				g.set("skewX", amount)
+				logoCanvas.renderAll();
+				break;
+			case "skewRight":
+				var amount = (parseInt($("#warpAmount").val())/100)*-45;
+				logoCanvas.getObjects('image').forEach(function(o) {
+					if (o.id == 'warpedText') {
+						logoCanvas.remove(o)
+					}
+				})
+				g.set("visible", true)
+				g.set("skewY", 0)
+				g.set("skewX", amount)
+				logoCanvas.renderAll();
+				break;
+			default:
+				g.set("skewX", 0)
+				g.set("skewY", 0)
+				logoCanvas.renderAll();
+				warpText();
+				break;
 		}
 		logoCanvas.renderAll();
-		/* if ($("#warpEffect").val() == "skewUp") {
-			var amount = (parseInt($("#warpAmount").val())/100)*-1;
-			var objects = logoCanvas.getObjects();
-			for (x in objects) {
-				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
-				}
-				if (objects[x].id == "wordmark") {
-					var tmp = objects[x].getObjects();
-					for (i in tmp) {
-						tmp[i].transformMatrix = [1, amount, 0, 1, 0, 0];
-						tmp[i].transformMatrix = [1, amount, 0, 1, 0, 0];
-						tmp[i].transformMatrix = [1, amount, 0, 1, 0, 0];					
-						tmp[i].set("left",0);
-						tmp[i].set("top",0);
-					}
-					objects[x].visible = true;
-				}
-			}
-			logoCanvas.renderAll();
-		} else if ($("#warpEffect").val() == "skewDown") {
-			var amount = parseInt($("#warpAmount").val())/100;
-			var objects = logoCanvas.getObjects();
-			for (x in objects) {
-				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
-				}
-				if (objects[x].id == "wordmark") {
-					var tmp = objects[x].getObjects();
-					for (i in tmp) {
-						tmp[i].transformMatrix = [1, amount, 0, 1, 0, 0];
-						tmp[i].transformMatrix = [1, amount, 0, 1, 0, 0];
-						tmp[i].transformMatrix = [1, amount, 0, 1, 0, 0];					
-						tmp[i].set("left",0);
-						tmp[i].set("top",0);
-					}
-					objects[x].visible = true;
-				}
-			}
-			logoCanvas.renderAll();
-		} else if ($("#warpEffect").val() == "skewLeft") {
-			var amount = parseInt($("#warpAmount").val())/100;
-			var objects = logoCanvas.getObjects();
-			for (x in objects) {
-				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
-				}
-				if (objects[x].id == "wordmark") {
-					var tmp = objects[x].getObjects();
-					for (i in tmp) {
-						tmp[i].transformMatrix = [1, 0, amount, 1, 0, 0];
-						tmp[i].transformMatrix = [1, 0, amount, 1, 0, 0];
-						tmp[i].transformMatrix = [1, 0, amount, 1, 0, 0];					
-						tmp[i].set("left",0);
-						tmp[i].set("top",0);
-					}
-					objects[x].visible = true;
-				}
-			}
-			logoCanvas.renderAll();
-		} else if ($("#warpEffect").val() == "skewRight") {
-			var amount = (parseInt($("#warpAmount").val())/100)*-1;
-			wordmarkText.transformMatrix = [1, 0, amount, 1, 0, 0];
-			wordmarkTextStroke1.transformMatrix = [1, 0, amount, 1, 0, 0];
-			wordmarkTextStroke2.transformMatrix = [1, 0, amount, 1, 0, 0];
-			var objects = logoCanvas.getObjects();
-			for (x in objects) {
-				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
-				}
-				if (objects[x].id == "wordmark") {
-					var tmp = objects[x].getObjects();
-					for (i in tmp) {
-						tmp[i].transformMatrix = [1, 0, amount, 1, 0, 0];
-						tmp[i].transformMatrix = [1, 0, amount, 1, 0, 0];
-						tmp[i].transformMatrix = [1, 0, amount, 1, 0, 0];					
-						tmp[i].set("left",0);
-						tmp[i].set("top",0);
-					}
-					objects[x].visible = true;
-				}
-			}	
-			logoCanvas.renderAll();
-		} else {
-			warpText();
-		} */
 	})
 	
 	$("#wordmarkTextBox").on("change",function() {
-		var objects = logoCanvas.getObjects("group");
-		for (x in objects) {
-			if (objects[x].id == "wordmark") {
-				var subObjects = objects[x].getObjects();
-				for (y in subObjects) {
-					subObjects[y].text = $(this).val();
-				}
-			}
-		}
+		var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
+		g.getObjects().forEach(function(o) {
+			o.set("text",$("#wordmarkTextBox").val())
+		})
 		logoCanvas.renderAll();
 		if ($("#warpEffect").val().indexOf("arc") > -1 || $("#warpEffect").val().indexOf("bilinear") > -1) {
 			warpText();
@@ -1917,112 +1883,6 @@
 				reRenderBG();
 				aboveCanvas.renderAll();
 				logoCanvas.renderAll();
-				/* change = true;
-				if (color == null) {
-					var colorX = "transparent";
-				} else {
-					colorX = color.toHexString();
-				}
-				$(this).data('changed', true);
-				var id = $(this).data('element');
-				var objects = below.getObjects();
-				for (x in objects) {
-					if (objects[x].get('type') == "group") {
-						var groupObjects = objects[x].getObjects();
-						for(y in groupObjects){
-							if (groupObjects[y].id == id) {
-								groupObjects[y].set("fill", colorX);
-								groupObjects[y].set("stroke", colorX);
-							}
-						}
-					} else {
-						if (objects[x].id == id) {
-							if (objects[x].get('type') == "path-group") {
-								objects[x].set("fill", colorX);	
-							} else {
-								objects[x].set("fill", colorX);	
-							}
-							
-						}  						
-					} 
-				}
-				objects = aboveCanvas.getObjects();
-				for (x in objects) {
-					if (objects[x].get('type') == "group") {
-						var groupObjects = objects[x].getObjects();
-						for(y in groupObjects){
-							if (groupObjects[y].id == id) {
-								groupObjects[y].set("fill", colorX);
-								groupObjects[y].set("stroke", colorX);
-							}
-						}
-					} else {
-						if (objects[x].id == id) {
-							objects[x].set("fill", colorX);;
-						} 						
-					}
-				}
-				objects = logoCanvas.getObjects();
-				for (x in objects) {
-					if (objects[x].get('type') == "group") {
-						var groupObjects = objects[x].getObjects();
-						for(y in groupObjects){
-							if (groupObjects[y].id == id) {
-								groupObjects[y].set("fill", colorX);
-								groupObjects[y].set("stroke", colorX);
-							}
-						}
-					} 
-				}
-				if ($(this).hasClass("sleeve")) {
-					var link = $(this).data("link");
-					$("#"+link+"Color").spectrum("set",color);
-					var objects = below.getObjects();
-					for (x in objects) {
-						if (objects[x].id == link) {
-							objects[x].set("fill", colorX);
-							objects[x].set("stroke", colorX);
-						}
-					}
-				}
-				if ($(this).hasClass("textColorSelector")) {
-					if ($("#warpEffect").val() == "skewUp") {
-						var amount = (parseInt($("#warpAmount").val())/100)*-1;
-						wordmarkText.transformMatrix = [1, amount, 0, 1, 0, 0];
-						wordmarkTextStroke1.transformMatrix = [1, amount, 0, 1, 0, 0];
-						wordmarkTextStroke2.transformMatrix = [1, amount, 0, 1, 0, 0];
-						var objects = logoCanvas.getObjects();
-						for (x in objects) {
-							if (objects[x].get('name') == "warpedText") {
-								logoCanvas.remove(objects[x]);
-							}
-							if (objects[x].id == "wordmark") {
-								objects[x].visible = true;
-							}
-						}
-						logoCanvas.renderAll();
-					} else if ($("#warpEffect").val() == "skewDown") {
-						var amount = parseInt($("#warpAmount").val())/100;
-						wordmarkText.transformMatrix = [1, amount, 0, 1, 0, 0];
-						wordmarkTextStroke1.transformMatrix = [1, amount, 0, 1, 0, 0];
-						wordmarkTextStroke2.transformMatrix = [1, amount, 0, 1, 0, 0];
-						var objects = logoCanvas.getObjects();
-						for (x in objects) {
-							if (objects[x].get('name') == "warpedText") {
-								logoCanvas.remove(objects[x]);
-							}
-							if (objects[x].id == "wordmark") {
-								objects[x].visible = true;
-							}
-						}
-						logoCanvas.renderAll();
-					} else {
-						warpText();
-					}
-				}
-				reRenderBG();
-				aboveCanvas.renderAll();
-				logoCanvas.renderAll(); */
 			}
 		})
 	})
@@ -3196,8 +3056,6 @@
 			originX: 'center',
 			originY: 'center',
 			textAlign: 'center',
-			left: 355,
-			top: 390,
 			centeredScaling: true,
 			centeredRotation: true,
 			id: 'wordmarkText',
@@ -3212,8 +3070,6 @@
 			originX: 'center',
 			originY: 'center',
 			textAlign: 'center',
-			left: 355,
-			top: 390,
 			centeredScaling: true,
 			centeredRotation: true,
 			stroke: initialColors["wordmarkTextStroke1Color"],
@@ -3229,8 +3085,6 @@
 			originX: 'center',
 			originY: 'center',
 			textAlign: 'center',
-			left: 355,
-			top: 390,
 			centeredScaling: true,
 			centeredRotation: true,
 			stroke: initialColors["wordmarkTextStroke2Color"],
@@ -3242,7 +3096,11 @@
 		
 		wordmark = new fabric.Group ([wordmarkTextStroke2, wordmarkTextStroke1, wordmarkText])
 		wordmark.set({
+			originX: 'center',
+			originY: 'center',
 			visible:false,
+			left: 357,
+			top: 382,
 			id:'wordmark',
 			borderColor: 'red',
 			cornerColor: 'yellow',
@@ -3776,7 +3634,7 @@
 		makersMark2 = new fabric.Group([logo_adidas, logo_asics, logo_demarini, logo_macron, logo_majestic, logo_majestic_2, logo_maxim, logo_mizuno, logo_new_balance, logo_nike, logo_puma, logo_rawlings, logo_rawlings_2, logo_reebok, logo_rbk, logo_russell, logo_spalding_2, logo_ssk, logo_umbro, logo_under_armour, logo_wilson], {
 			id: 'makersMark2',
 			visible: false,
-			selectable: false,
+			selectable: true,
 		})
 
   		/* logosArr.forEach(function(logo) {
@@ -4072,7 +3930,7 @@
 				}
 			} 
 		}
-				if ($("#warpEffect").val() == "skewUp") {
+		if ($("#warpEffect").val() == "skewUp") {
 			var amount = (parseInt($("#warpAmount").val())/100)*-1;
 			wordmarkText.transformMatrix = [1, amount, 0, 1, 0, 0];
 			wordmarkTextStroke1.transformMatrix = [1, amount, 0, 1, 0, 0];
@@ -4468,6 +4326,12 @@
 		$("#selectedImageDiv").css("display","none");
 		$("#fileName").html("");
 		$("#tipContainer").html("");
+		makersMark2 = new fabric.Group([logo_adidas, logo_asics, logo_demarini, logo_macron, logo_majestic, logo_majestic_2, logo_maxim, logo_mizuno, logo_new_balance, logo_nike, logo_puma, logo_rawlings, logo_rawlings_2, logo_reebok, logo_rbk, logo_russell, logo_spalding_2, logo_ssk, logo_umbro, logo_under_armour, logo_wilson], {
+			id: 'makersMark2',
+			visible: false,
+			selectable: true,
+		})
+		logoCanvas.add(makersMark2)
 	})
 	
 	document.getElementById('uploadedTexture').onchange = function handleImage(e) {
@@ -4970,8 +4834,8 @@
 					imgObj.onload = function () {
 						var image = new fabric.Image(imgObj);
 						image.set({
-							originX: 'left',
-							originY: 'top',
+							originX: 'center',
+							originY: 'center',
 							left: wordmark.get("left"),
 							top: wordmark.get("top"),
 							perPixelTargetFind: true,
@@ -5071,6 +4935,24 @@
 			$(".removeColor, .replaceColor").each(function(e) {
 				$(this).data("x",imageX);
 				$(this).data("y",imageY);
+			})
+		}
+	})
+
+	logoCanvas.on("selection:created",function(e) {
+		if (e.selected[0].id == 'makersMark2') {
+			console.log("you got it")
+			e.selected[0].getObjects().forEach(function(o) {
+				if (o.visible) {
+					console.log(o.id)
+					logoCanvas.setActiveObject(o)
+				}
+			})
+			var items = e.selected[0].getObjects()
+			e.selected[0].destroy()
+			logoCanvas.remove(e.selected[0])
+			items.forEach(function(o) {
+				logoCanvas.add(o)
 			})
 		}
 	})
@@ -5633,7 +5515,7 @@
 	$("#saveJersey").on("click",function(e) {
 
 		//console.log(below.toDatalessJSON())
-		console.log(camoColors)
+		console.log(customFonts)
 		
 		exportMeta.team = $("#teamName").val()
 		exportMeta.start = parseInt($("#startYear").val())
@@ -5660,6 +5542,8 @@
 		exportMeta.makersMarkFill = $("#makersMarkColor").spectrum("get").toHexString()
 		exportMeta.swashStyle = $("#swashCombo").val()
 		exportMeta.selectedFont = $("#fontTypeCombo").val()
+		exportMeta.warpEffect = $("#warpEffect").val()
+		exportMeta.warpAmount = $("#warpAmount").val()
 		exportMeta.customFonts = customFonts;
 		//exportMeta.customTexture = customTextureBase;
 
@@ -5734,23 +5618,6 @@
 				customTextureBase = data.customTexture;
 				var camoVisible = false;
 				var digiCamoVisible = false;
-/* 				exportMeta.team = $("#teamName").val()
-		exportMeta.start = parseInt($("#startYear").val())
-		exportMeta.end = parseInt($("#endYear").val())
-		exportMeta.type = $("#jerseyType").val()
-		exportMeta.buttonOpacity = parseInt($("#buttonOpacity").val())
-		exportMeta.flapButtonOpacity = parseInt($("#flapButtonOpacity").val())
-		exportMeta.shield1ButtonOpacity = parseInt($("#shield1ButtonOpacity").val())
-		exportMeta.shield2ButtonOpacity = parseInt($("#shield2ButtonOpacity").val())
-		exportMeta.jerseyPanelButtonOpacity = parseInt($("#jerseyPanelButtonOpacity").val())
-		exportMeta.sleeveLength = $("#sleeveType").val()
-		exportMeta.camoType = $("#camoSelect").val()
-		exportMeta.texture = $("#textureSelect").val()
-		exportMeta.makersMark = $("#makersMarkSelect").val()
-		exportMeta.makersMarkFill = $("#makersMarkColor").spectrum("get").toHexString()
-		exportMeta.swashStyle = $("#swashCombo").val()
-		exportMeta.selectedFont = $("#fontTypeCombo").val() */
-
 
 				$("#teamName").val(data.team)
 				$("#startYear").val(data.start)
@@ -5769,7 +5636,10 @@
 				$("#shield2ButtonOpacitySpan").html(data.shield2ButtonOpacity)
 				$("#jerseyPanelButtonOpacity").val(data.jerseyPanelButtonOpacity)
 				$("#jerseyPanelButtonOpacitySpan").html(data.jerseyPanelButtonOpacity)
-				$("#swashCombo").val(data.swashStyle)
+				$("#swashCombo").val(data.swashStyle).trigger('change')
+				$("#warpEffect").val(data.warpEffect).trigger('change')
+				$("#warpAmount").val(data.warpAmount)
+				$("#warpAmountDisplay").val(data.warpAmount)
 				$("#camoBaseColor").spectrum("set",data.camoBaseSelectorColor)
 				$("#camoLayer1Color").spectrum("set",data.camoLayer1SelectorColor)
 				$("#camoLayer2Color").spectrum("set",data.camoLayer2SelectorColor)
@@ -5790,7 +5660,7 @@
 						customFonts.push(loadedFont)
 					}	
 				}
-				const selectedFont = (validFonts.includes(data.selectedFont)) ? data.selectedFont : "Graduate";
+				const selectedFont = (validFonts.includes(data.selectedFont)) ? data.selectedFont : "Leckerli One";
 				var anyTextVisible = false;
 				textureFJS.clear();
 				logoCanvas.clear();
@@ -5892,11 +5762,49 @@
 				})
 				aboveCanvas.renderAll()
 
-
 				logoCanvas.loadFromJSON(data.canvas.logo, logoCanvas.renderAll.bind(logoCanvas), function(o, object) {
 					$("#"+object.id+"Check").prop("checked",object.visible)
-					if (object.id == 'wordmark') {
-						console.log(object)
+					if (object.id == data.swashStyle) {
+						$("#swashCheck").prop("checked",object.visible).triggerHandler('click');
+						object.getObjects('path').forEach(function(o) {
+							if (o.id.slice(-6) == "Stroke") {
+								$("#swashStrokeColor").spectrum("set",o.fill)
+							}
+							if (o.id.slice(-4) == "Fill") {
+								$("#swashFillColor").spectrum("set",o.fill)
+							}
+						})
+					}
+					if (object.id == 'wordmark' || object.id == 'warpedText') {
+						$("#textLogoCheck").prop("checked",object.visible).triggerHandler('click');
+						if (object.id == 'warpedText') {
+							var myfont = new FontFaceObserver(data.selectedFont)
+							myfont.load()
+								.then(function() {
+									o.set("fontFamily", (validFonts.includes(data.selectedFont)) ? o.fontFamily : "Leckerli One")
+									logoCanvas.renderAll();
+									$("#fontTypeCombo").val(data.selectedFont)
+									$("#fontTypeCombo").removeClass().addClass(data.familyName);
+									$("#fontTypeCombo").trigger('change')
+								}).catch(function(e) {
+									console.log(e)
+								});
+						} else {
+							object.getObjects().forEach(function(o) {
+							var myfont = new FontFaceObserver(data.selectedFont)
+							myfont.load()
+								.then(function() {
+									o.set("fontFamily", (validFonts.includes(data.selectedFont)) ? o.fontFamily : "Leckerli One")
+									logoCanvas.renderAll();
+									$("#fontTypeCombo").val(data.selectedFont)
+									$("#fontTypeCombo").removeClass().addClass(data.familyName);
+									$("#fontTypeCombo").trigger('change')
+								}).catch(function(e) {
+									console.log(e)
+								});
+							})
+						}
+						
 					}
 					if (object.id == 'makersMark2') {
 						$("#makersMarkCheck").prop("checked",object.visible)
@@ -6080,48 +5988,31 @@
 			type: "GET",
 			url: "http://127.0.0.1:"+port+"/customFont",
 			success: function(data) {
-				//console.log(data)
+				customFonts.push(data)
 				$("head").prepend("<style>@font-face {\n   font-family: '"+data.familyName+"';\n   src: url('"+data.fontData+"') format('truetype');\n}\n."+data.familyName+" { font-family: '"+data.familyName+"'; font-size: 1.1em;}\n</style>");
 				var style = data.familyName;
-				console.log(style)
 				var font_family = $("."+style).css("font-family");
-				console.log(font_family)
-				var objects = logoCanvas.getObjects("group");
+				const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
 				var myfont = new FontFaceObserver(data.familyName)
 				myfont.load()
 					.then(function() {
 					// when font is loaded, use it.
-							for (x in objects) {
-							if (objects[x].id == "wordmark") {
-								var tmp = objects[x].getObjects();
-								for (i in tmp) {
-									//console.log(tmp[i].fontFamily)
-									tmp[i].fontFamily = data.familyName;
-									//console.log(tmp[i].fontFamily)
-								}
-							}
-						}
+						g.getObjects().forEach(function(o) {
+							o.fontFamily = data.familyName;
+						})
 						logoCanvas.renderAll();
 						var optgroup = $("<optgroup class='"+data.familyName+"'>");
 						optgroup.append("<option value='"+data.familyName+"'>"+data.fontName+"</option>")
 						$("#fontTypeCombo").append(optgroup)
 						$("#fontTypeCombo").children().remove("optgroup[class='alegreya']");
-						//optgroup = $("<optgroup class='alegreya'>");
-						//optgroup.append("<option value='custom'>Custom Font</option>")
-						//$("#fontTypeCombo").append(optgroup)
 						$("#fontTypeCombo").val(data.familyName)
 						$("#fontTypeCombo").removeClass().addClass(data.familyName);
-						$("#fontTypeCombo").change()
+						$("#fontTypeCombo").trigger('change')
+						console.log(customFonts)
 					}).catch(function(e) {
 						console.log(e)
 						alert('font loading failed ' + data.familyName);
 					});
-				
-				//wordmarkText.fontFamily = font_family;
-				//wordmarkTextStroke1.fontFamily = font_family;
-				//wordmarkTextStroke2.fontFamily = font_family;
-				//logoCanvas.renderAll();
-				//$(this).removeClass().addClass(style);
 			}
 		})
 	})
