@@ -21,7 +21,7 @@ const server = app2.listen(0, () => {
 const store = new Store();
 
 const preferredColorFormat = store.get("preferredColorFormat", "hex")
-const preferredTexture = store.get("preferredTexture", "texture")
+const preferredTexture = store.get("preferredTexture", "default_jersey_texture")
 
 app2.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 
@@ -377,6 +377,13 @@ app2.get("/customFont", (req, res) => {
 	})
 })
 
+app2.post('/setPreference', (req, res) => {
+	const pref = req.body.pref;
+	const val = req.body.val;
+	store.set(pref, val)
+	res.end()
+});
+
 function getExtension(filename) {
 	var ext = path.extname(filename||'').split('.');
 	return ext[ext.length - 1];
@@ -442,24 +449,9 @@ const createWindow = () => {
 			{ role: 'togglefullscreen' }
 			]
 		},
-		// { role: 'windowMenu' }
+		// { role: 'windowMenu' }	
 		{
-			label: 'Window',
-			submenu: [
-			{ role: 'minimize' },
-			{ role: 'zoom' },
-			...(isMac ? [
-				{ type: 'separator' },
-				{ role: 'front' },
-				{ type: 'separator' },
-				{ role: 'window' }
-			] : [
-				{ role: 'close' }
-			])
-			]
-		},
-		{
-			role: 'help',
+			label: 'About',
 			submenu: [
 			{
 				click: () => mainWindow.webContents.send('about','click'),
@@ -504,8 +496,8 @@ const createWindow = () => {
 	});
   
     // Open the DevTools.
-	mainWindow.maximize()
-    mainWindow.webContents.openDevTools()
+	//mainWindow.maximize()
+    //mainWindow.webContents.openDevTools()
   }
 
   app.whenReady().then(() => {
