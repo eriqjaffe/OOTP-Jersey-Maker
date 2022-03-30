@@ -16,9 +16,12 @@
   },
   "license": "ISC",
   "dependencies": {
+    "archiver": "^5.3.0",
+    "electron-store": "^8.0.1",
     "express": "^4.17.1",
     "imagemagick-cli": "^0.5.0",
     "jimp": "^0.16.1",
+    "node-font2base64": "^0.7.1",
     "ttfinfo": "^0.2.0"
   },
   "packageManager": "yarn@3.1.0",
