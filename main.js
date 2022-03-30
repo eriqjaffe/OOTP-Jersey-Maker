@@ -59,7 +59,7 @@ app2.post('/saveJersey', (req, res) => {
 	const output = fs.createWriteStream(tempDir + '/'+req.body.name+'.zip');
 
 	output.on('close', function() {
-		fs.writeFileSync(app.getPath('downloads') + '/' + req.body.name+'.jrs', json)
+		//fs.writeFileSync(app.getPath('downloads') + '/' + req.body.name+'.jrs', json)
 		var data = fs.readFileSync(tempDir + '/'+req.body.name+'.zip');
 		var saveOptions = {
 		  defaultPath: app.getPath('downloads') + '/' + req.body.name+'.zip',
