@@ -35,13 +35,11 @@
 		rainbowShoulder3Color:"#FA4616",
 		rainbowShoulder4Color:"#FFCD00"}
 		var buttonOpacity = 50;
-		var defaultTexture = "default_jersey_texture.png";
+		const prefColorFormat = params.get('preferredColorFormat')
+		const prefTexture = params.get('preferredTexture')
+		var defaultTexture = prefTexture+".png";
 		var customTextureBase = "";
 
-		var prefColorFormat = $.localStorage.getItem('jerseymaker.colorFormat');
-		if (!prefColorFormat) {
-			prefColorFormat = "hex";
-		}
 		const camoArr = [{"name":"camoBase","fill":"#4a551e","z":16},{"name":"camoLayer1","fill":"#052503","z":17},{"name":"camoLayer2","fill":"#beb585","z":18},{"name":"digiCamoBase","fill":"#9a8b62","z":19},{"name":"digiCamoLayer1","fill":"#372900","z":20},{"name":"digiCamoLayer2","fill":"#736632","z":21}]
 		var camoColors = {camoBase: "#4a551e", camoLayer1: "#052503", camoLayer2: "#beb585", digiCamoBase: "#9a8b62", digiCamoLayer1: "#372900", digiCamoLayer2: "#736632"}
 		var validFonts = ['Acme','AthleticGothic','AthleticGothicShadow','BeavertonScript','Berkshire_Swash','Cantora_One','CaxtonRoman','Chela_One','Circus','Condiment','Cookie','Courgette','Croissant_One','Damion','Engagement','RawlingsFancyBlock','Germania_One','Graduate','Grand_Hotel','Jockey_One','Kansas','Kaushan_Script','Leckerli_One','Lily_Script_One','Lobster','Lobster_Two','Metal_Mania','Miniver','Molle','New_Rocker','Norican','OldEnglish','Oleo_Script','Oleo_Script_Swash_Caps','Pacifico','Pirata_One','Playball','ProFullBlock','RichardsonFancyBlock','Rubik_One','Rum_Raisin','Satisfy','Seymour_One','spl28','TiffanyRegular','Trade_Winds','Tuscan','UnifrakturCook','UnifrakturMaguntia','Vibur','Viga','Wellfleet','Wendy_One','Yellowtail']
@@ -1008,17 +1006,30 @@
 								</tr>
 							</table>
 						</div>
-						<div class="accord-header inactive-header">Options</div>
+						<div class="accord-header inactive-header">Preferences</div>
 						<div class="accord-content">
 							<table style="width:100%;">
 								<tr>
 									<td class="checkCell">&nbsp;</td>
 									<td>Preferred Color Format:</td>
 									<td style="text-align:right;">
-										<select id="colorFormat" style="width:100px;">
+										<select class='preferenceSelect' id="preferredColorFormat" style="width:100px;">
 											<option value="hex">Hex</option>
 											<option value="rgb">RGB</option>
 											<option value="hsl">HSL</option>
+										</select>
+									</td>
+									<td class="checkCell">&nbsp;</td>
+									<td>Preferred Texture:</td>
+									<td style="text-align:right;">
+										<select class='preferenceSelect' id="preferredTexture" style="width:100px;">
+											<option value="default_jersey_texture">Default</option>
+											<option value="jm_modern_2">Modern #2</option>
+											<option value="jm_flannel">Flannel #1</option>
+											<option value="jm_flannel_2">Flannel #2</option>
+											<option value="jm_baggy_flannel">Baggy</option>
+											<option value="jm_mesh_texture">Mesh</option>
+											<option value="jm_reds1">Reds 1 / skyballer455</option>
 										</select>
 									</td>
 								</tr>
@@ -1143,6 +1154,9 @@
 	var logoCanvas = new fabric.Canvas('guides',{enableRetinaScaling:false});
 
 	$(document).ready(function() {
+		$("#textureSelect").val(defaultTexture)
+		$("#preferredColorFormat").val(prefColorFormat)
+		$("#preferredTexture").val(prefTexture)
 		$(".accordion .accord-header").click(function() {
 			if($(this).next("div").is(":visible")){
 				$(this).next("div").slideUp("fast");
@@ -1336,7 +1350,6 @@
 		showPalette: true,
 		showButtons: true,
 		showSelectionPalette: true,
-		localStorageKey: "spectrum.jerseymaker",
 		palette: [ ],
 		color: initialColors["jerseyColor"],
 		show: function(color) {
@@ -1456,7 +1469,6 @@
 			showButtons: true,
 			allowEmpty: true,
 			showSelectionPalette: true,
-			localStorageKey: "spectrum.jerseymaker",
 			palette: [ ],
 			color: initialColors[$(this).attr('id')],
 			show: function(color) {
@@ -1622,7 +1634,7 @@
 			showButtons: true,
 			allowEmpty: true,
 			showSelectionPalette: true,
-			localStorageKey: "spectrum.jerseymaker",
+			//localstorageKey: "spectrum.jerseymaker",
 			palette: [ ],
 			color: initialColors['undershirtColor'],
 			show: function(color) {
@@ -1665,7 +1677,7 @@
 			showButtons: true,
 			allowEmpty: true,
 			showSelectionPalette: true,
-			localStorageKey: "spectrum.jerseymaker",
+			//localstorageKey: "spectrum.jerseymaker",
 			palette: [ ],
 			color: initialColors[$(this).attr('id')],
 			show: function(color) {
@@ -1887,7 +1899,7 @@
 			showPalette: true,
 			showButtons: true,
 			showSelectionPalette: true,
-			localStorageKey: "spectrum.jerseymaker",
+			//localstorageKey: "spectrum.jerseymaker",
 			palette: [ ],
 			color: initialColors[$(this).attr('id')],
 			show: function(color) {
@@ -1982,7 +1994,7 @@
 			showPalette: true,
 			showButtons: true,
 			showSelectionPalette: true,
-			localStorageKey: "spectrum.jerseymaker",
+			//localstorageKey: "spectrum.jerseymaker",
 			palette: [ ],
 			color: initialColors[$(this).attr('id')],
 			show: function(color) {
@@ -2017,7 +2029,7 @@
 		showPalette: true,
 		showButtons: true,
 		showSelectionPalette: true,
-		localStorageKey: "spectrum.jerseymaker",
+		//localstorageKey: "spectrum.jerseymaker",
 		palette: [ ],
 		color: "#FF0000"
 	})
@@ -5250,16 +5262,34 @@
 	$.fn.hasData = function(key) {
   		return (typeof $(this).data(key) != 'undefined');
 	};
-	
-	$("#colorFormat").on("change",function(e) {
-		$.localStorage.setItem('jerseymaker.color_format', $(this).val());
-		$("#jerseyColor").spectrum("option", "preferredFormat", $(this).val());
-		$(".selector").spectrum("option", "preferredFormat", $(this).val());
-		$(".camoBaseSelector").spectrum("option", "preferredFormat", $(this).val());
-		$(".swashSelector").spectrum("option", "preferredFormat", $(this).val());
-		$(".makerSelector").spectrum("option", "preferredFormat", $(this).val());
-		$(".colorSelector").spectrum("option", "preferredFormat", $(this).val());
-	});
+
+	$(".preferenceSelect").on("change",function(e) {
+		const pref = $(this).attr("id")
+		const val = $(this).val()
+		switch (pref) {
+			case "preferredColorFormat":
+				$("#jerseyColor").spectrum("option", "preferredFormat", $(this).val());
+				$(".selector").spectrum("option", "preferredFormat", $(this).val());
+				$(".camoBaseSelector").spectrum("option", "preferredFormat", $(this).val());
+				$(".swashSelector").spectrum("option", "preferredFormat", $(this).val());
+				$(".makerSelector").spectrum("option", "preferredFormat", $(this).val());
+				$(".colorSelector").spectrum("option", "preferredFormat", $(this).val());
+				break;
+			case "preferredTexture":
+				$("#textureSelect").val(val+".png");
+				$("#textureSelect").trigger("change")
+				//reRenderBG()
+				break;
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "http://127.0.0.1:"+port+"/setPreference",
+			data: {pref:pref,val:val},
+			success: function(result) {
+			}
+		})
+	})
 	
 	function getDataUri(url, callback) {
 		var image = new Image();
