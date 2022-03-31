@@ -1,9 +1,9 @@
 /*@import url('http://fonts.googleapis.com/css?family=Quicksand:400,700');*/
-@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700|Lobster|Pacifico|Kaushan+Script|Courgette|Lobster+Two|Playball|Satisfy|Cookie|Damion|Berkshire+Swash|Oleo+Script|Yellowtail|Lily+Script+One|Grand+Hotel|Leckerli+One|Norican|Engagement|Graduate|Oleo+Script+Swash+Caps|UnifrakturMaguntia|Vibur|Trade+Winds|Condiment|Wellfleet|UnifrakturCook:700|Miniver|Pirata+One|Molle:400italic|New+Rocker|Germania+One|Chela+One|Croissant+One|Metal+Mania|Rubik+Mono+One|Rubik+One|Seymour+One|Rum+Raisin|Wendy+One|Cantora+One|Acme|Jockey+One|Viga|Alegreya+Sans+SC:400,700);
+@import url(https://fonts.googleapis.com/css?family=Quicksand:400,700|Lobster|Pacifico|Kaushan+Script|Courgette|Lobster+Two|Playball|Satisfy|Cookie|Damion|Berkshire+Swash|Oleo+Script|Yellowtail|Lily+Script+One|Grand+Hotel|Leckerli+One|Norican|Engagement|Graduate|Oleo+Script+Swash+Caps|UnifrakturMaguntia|Vibur|Trade+Winds|Condiment|Wellfleet|UnifrakturCook:700|Miniver|Pirata+One|Molle:400italic|New+Rocker|Germania+One|Chela+One|Croissant+One|Metal+Mania|Rubik+Mono+One|Rubik+One|Seymour+One|Rum+Raisin|Wendy+One|Cantora+One|Acme|Jockey+One|Viga|Alegreya+Sans+SC:400,700|Rowdies|Maiden+Orange|BenchNine);
 
 
 body {
-	font-family: 'Alegreya Sans SC', sans-serif;
+	font-family: 'BenchNine', sans-serif;
 	font-size: 1em;
 	background-image: url("../images/jersey_bg.jpg");
 	background-repeat: no-repeat;
@@ -12,16 +12,16 @@ body {
 }
 
 .button {
-	font-family: 'Alegreya Sans SC', sans-serif;
+	font-family: 'BenchNine', sans-serif;
 	font-weight: bold;
 }
 
 input {
-	font-family: 'Alegreya Sans SC', sans-serif;
+	font-family: 'BenchNine', sans-serif;
 }
 
 select {
-	font-family: 'Alegreya Sans SC', sans-serif;
+	font-family: 'BenchNine', sans-serif;
 }
 
 table {
@@ -41,10 +41,10 @@ td {
 	text-align: center;
 }
 .header {
-	font-family: "Leckerli One", sans-serif;
+	font-family: "Rowdies", sans-serif;
 	color:#FFFFFF;
 	font-size:3em;
-	font-size:2.5vw;
+	font-size:2vw;
 	color: white;
 	-webkit-text-stroke: 1px black;
 	text-shadow:
@@ -144,14 +144,14 @@ td {
 .accord-content { display: none; }
 
 .question {
-	font-family: "Leckerli One", sans-serif;
+	font-family: "Rowdies", sans-serif;
 	color:#000000;
 	margin-top:10px;
 	display:inline-block;
 }
 
 .answer {
-	font-family: 'Alegreya Sans SC', sans-serif;
+	font-family: 'BenchNine', sans-serif;
 	width:95%;
 	float:right;
 	margin-top:5px;
@@ -448,7 +448,7 @@ legend {
 .col {
 	display: block;
 	float:left;
-	margin: 1% 0 1% 5%;
+	margin: 1% 0 1% 1.6%;
 }
 .col:first-child { margin-left: 0; }
 
@@ -458,48 +458,19 @@ legend {
 .group:after { clear:both;}
 .group { zoom:1; /* For IE 6/7 */ }
 
-/*  GRID OF TWO  */
-.span_2_of_2 {
-	width: 100%;
-}
-.span_1_of_2 {
-	width: 45%;
-}
-
-/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
-
-@media only screen and (max-width: 480px) {
-	.col { 
-		margin: 1% 0 1% 0%;
-	}
-}
-
-@media only screen and (max-width: 480px) {
-	.span_2_of_2, .span_1_of_2 { width: 100%; }
-}
-
-/*  GRID OF FOUR  */
-.span_4_of_4 {
-	width: 100%;
-}
-.span_3_of_4 {
-	width: 74.6%;
-}
-.span_2_of_4 {
-	width: 49.2%;
-}
-.span_1_of_4 {
-	width: 23.8%;
-}
+/*  GRID OF THREE  */
+.span_3_of_3 { width: 100%; }
+.span_2_of_3 { width: 66.13%; }
+.span_1_of_3 { width: 32.26%; }
 
 /*  GO FULL WIDTH BELOW 480 PIXELS */
 @media only screen and (max-width: 480px) {
 	.col {  margin: 1% 0 1% 0%; }
-	.span_1_of_4, .span_2_of_4, .span_3_of_4, .span_4_of_4 { width: 100%; }
+	.span_3_of_3, .span_2_of_3, .span_1_of_3 { width: 100%; }
 }
 
 .colorSquare {
-	font-family: 'Alegreya Sans SC', sans-serif;
+	font-family: 'BenchNine', sans-serif;
 	border: 1px solid #CCCCCC;
 	-moz-border-radius: 3px;  
 	border-radius: 3px;  

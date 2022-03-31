@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <html>
 <head>
-	<title>OOTP Jersey Maker</title>
+	<title>OOTP23 Jersey Maker</title>
 	<link rel="icon" type="image/png" href="./images/jm_favicon.png">
 	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 	<script type="text/javascript" src="./scripts/jquery-1.11.3.min.js"></script>
@@ -37,7 +37,7 @@
 		var buttonOpacity = 50;
 		const prefColorFormat = params.get('preferredColorFormat')
 		const prefTexture = params.get('preferredTexture')
-		var defaultTexture = prefTexture+".png";
+		var defaultTexture = "ootp23_texture_wide.png";
 		var customTextureBase = "";
 
 		const camoArr = [{"name":"camoBase","fill":"#4a551e","z":16},{"name":"camoLayer1","fill":"#052503","z":17},{"name":"camoLayer2","fill":"#beb585","z":18},{"name":"digiCamoBase","fill":"#9a8b62","z":19},{"name":"digiCamoLayer1","fill":"#372900","z":20},{"name":"digiCamoLayer2","fill":"#736632","z":21}]
@@ -54,24 +54,24 @@
 <body>
 
 <div class="title">
-	<span class="header">Welcome To The OOTP Jersey Maker!</span>
+	<span class="header">Welcome To The OOTP23 Jersey Maker!</span>
 </div>
 <div id="page">
-	<div style="width: 1100px; margin:0 auto;">
+	<div style="width: 1600px; margin:0 auto;">
 		<div class="section group" style="position:relative;">
-			<div class="col span_1_of_2" style="float:left;">
+			<div class="col span_2_of_3" style="float:left;">
 				<div id="hiddenContainer" style="display:none;">
-					<canvas id="fabricTexture" width="512" height="512"></canvas>
-					<canvas id="textWarp" width="512" height="512"></canvas>
-					<canvas id="below" width="512" height="512"></canvas>
-					<canvas id="texture" width="512" height="512"></canvas>
-					<canvas id="final" width="512" height="512"></canvas>
+					<canvas id="fabricTexture" width="1024" height="512"></canvas>
+					<canvas id="textWarp" width="1024" height="512"></canvas>
+					<canvas id="below" width="1024" height="512"></canvas>
+					<canvas id="texture" width="1024" height="512"></canvas>
+					<canvas id="final" width="1024" height="512"></canvas>
 				</div>
-				<div id="canvasContainer" style="width:512px; height:575px;">
+				<div id="canvasContainer" style="width:1024px; height:575px;">
 					<div id="overlay" class="sample"></div>
-					<canvas id="composite" width="512" height="512" style="position:absolute; top:10; left:10; z-index:1;"></canvas>
-					<canvas id="above" width="512" height="512" style="position:absolute; top:10; left:10; z-index:2;"></canvas>
-					<canvas id="guides" width="512" height="512" style="position:absolute; top:10; left:10; z-index:3;"></canvas>
+					<canvas id="composite" width="1024" height="512" style="position:absolute; top:10; left:10; z-index:1;"></canvas>
+					<canvas id="above" width="1024" height="512" style="position:absolute; top:10; left:10; z-index:2;"></canvas>
+					<canvas id="guides" width="1024" height="512" style="position:absolute; top:10; left:10; z-index:3;"></canvas>
 					<div id="tipContainer" style="height:60px; padding-top:5px; font-weight:bold;"></div>
 					<div id="donateContainer" style="width:512px; height: 50px; text-align:right; padding-top:10px">
 						<a href="https://www.paypal.com/donate?business=UTTZRPAMBFCWA&no_recurring=1&currency_code=USD" target="_blank">
@@ -80,7 +80,7 @@
 					</div>	
 				</div>
 			</div>
-			<div class="col span_1_of_2" style="float:right; max-height:500px;">
+			<div class="col span_1_of_3" style="float:right; max-height:500px;">
 			<div id="text">
 				<form id="saveCanvas" action="./scripts/savecanvas.php" method="post" target="_blank">
 					<div class="accordion">
@@ -108,6 +108,13 @@
 								</tr>	
 							<table>
 							<table style="width:100%;">
+								<tr class="color_tr">
+									<td><input type="checkbox" id="gridToggle" class="gridToggle" data-canvas="guideCanvas" checked></td>
+									<td><label>Grid (Will Be Hidden On Export)</label></td>
+									<td style="text-align:right;">
+										
+									</td>
+								</tr>
 								<tr class="color_tr">
 									<td>&nbsp;</td>
 									<td><label>Jersey Color: </label></td>
@@ -173,7 +180,7 @@
 									<td><label>Jersey Back: </label></td>
 									<td style="text-align:right;"><input class="selector" type="text" id="jerseyBackColor" data-element="jerseyBackColor"></td>
 								</tr>
-								<tr class="color_tr">
+								<!--<tr class="color_tr">
 									<td>&nbsp;</td>
 									<td>
 									<label>Texture: </label>
@@ -191,9 +198,9 @@
 										</select>
 										<input type="file" id="uploadedTexture" accept="image/png" style="display:none;"/>
 									</td>
-								</tr>
+								</tr>-->
 								<tr class="color_tr">
-									<td class="checkCell"><input type="checkbox" id="makersMarkCheck" class="aboveTextureToggle" data-canvas="logoCanvas" data-id="makersMark"></td>
+									<td class="checkCell"><input type="checkbox" id="makersMarkCheck" class="aboveTextureToggle" data-canvas="guideCanvas" data-id="makersMark"></td>
 									<td><label>Manufacturer's Mark: </label></td>
 									<td style="text-align:right;">
 										<select id="makersMarkSelect">
@@ -1058,7 +1065,7 @@
 	</div>
 	<div id="FAQ" class="jm-white-popup mfp-hide">
 		<div style="width:100%; text-align:center;">	
-			<span class="header" style="color:#103959!important;">About The OOTP Jersey Maker</span>
+			<span class="header" style="color:#103959!important;">About The OOTP23 Jersey Maker</span>
 		</div>
 		<div id="faqContainer" style="width:100%; height:90%; overflow:auto;">
 			<div class="question" style="margin-top:10px!important;">So what is this thing?</div><br>
@@ -1145,13 +1152,18 @@
 
 	var below = new fabric.StaticCanvas('below',{
 		enableRetinaScaling: false,
-		preserveObjectStacking: true
+		preserveObjectStacking: true,
+		backgroundColor: '#ffffff'
 	});
 	
 	var aboveCanvas = new fabric.StaticCanvas('above',{selection:false,enableRetinaScaling:false});
 	aboveCanvas.controlsAboveOverlay = true;
 
-	var logoCanvas = new fabric.Canvas('guides',{enableRetinaScaling:false});
+	var guideCanvas = new fabric.Canvas('guides',{
+		enableRetinaScaling:false,
+		selectable:false,
+		evented:false
+	});
 
 	$(document).ready(function() {
 		$("#textureSelect").val(defaultTexture)
@@ -1253,90 +1265,90 @@
     $("#fontTypeCombo").on("change",function() {
 		var style = $(this).val();
 		var font_family = $("."+style).css("font-family");
-		var objects = logoCanvas.getObjects("group");
-		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
+		var objects = guideCanvas.getObjects("group");
+		const g = guideCanvas.getObjects('group').find(o => o.id === 'wordmark')
 		g.getObjects().forEach(function(o) {
 			o.set("fontFamily", "Yellowtail")
 			o.set("fontFamily", font_family)
 		})
-		logoCanvas.renderAll()
+		guideCanvas.renderAll()
 		$(this).removeClass().addClass(style);
 		switch ($("#warpEffect").val()) {
 			case "none":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", 0)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewUp":
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewDown":
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewLeft":
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewY", 0)
 				g.set("skewX", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewRight":
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewY", 0)
 				g.set("skewX", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			default:
 				g.set("skewX", 0)
 				g.set("skewY", 0)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				warpText();
 				break;
 		}
-		logoCanvas.renderAll();
+		guideCanvas.renderAll();
 	})
 	
 	$("#wordmarkTextBox").on("change",function() {
-		var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
+		var g = guideCanvas.getObjects('group').find(o => o.id === 'wordmark')
 		g.getObjects().forEach(function(o) {
 			o.set("text",$("#wordmarkTextBox").val())
 		})
-		logoCanvas.renderAll();
+		guideCanvas.renderAll();
 		if ($("#warpEffect").val().indexOf("arc") > -1 || $("#warpEffect").val().indexOf("bilinear") > -1) {
 			warpText();
 		}
@@ -1358,38 +1370,18 @@
 		},
 		move: function(color) {
 			$(this).data('changed', true);
-			below.item(0).set("fill", color.toHexString())
-			reRenderBG();
-			var overlayImage = logoCanvas.item(0);
-			overlayImage.filters[0]['color'] = color.toHexString();
-			overlayImage.applyFilters()
-			logoCanvas.requestRenderAll()
+			below.setBackgroundColor(color.toHexString(), below.renderAll.bind(below))
+			reRenderBG()
 		},
 		change: function(color) {
 			$(this).data('changed', true);
-			below.item(0).set("fill", color.toHexString());
-			reRenderBG();
-			var overlayImage = logoCanvas.item(0);
-			overlayImage.filters[0]['color'] = color.toHexString();
-			overlayImage.applyFilters()
-			logoCanvas.requestRenderAll()
+			below.setBackgroundColor(color.toHexString(), below.renderAll.bind(below))
+			reRenderBG()
 		},
 		hide: function(color) {
-			if ($(this).data('changed')) {
-				below.item(0).set("fill", color.toHexString());
-				reRenderBG();
-				var overlayImage = logoCanvas.item(0);
-				overlayImage.filters[0]['color'] = color.toHexString();
-				overlayImage.applyFilters()
-				logoCanvas.requestRenderAll()
-			} else {
-				below.backgroundColor=original_color;
-				reRenderBG();
-				var overlayImage = logoCanvas.item(0);
-				overlayImage.filters[0]['color'] = original_color;
-				overlayImage.applyFilters()
-				logoCanvas.requestRenderAll()
-			}
+			$(this).data('changed', false);
+			below.setBackgroundColor(color.toHexString(), below.renderAll.bind(below))
+			reRenderBG()
 		}
 	})
 	
@@ -1399,26 +1391,26 @@
 		if ($(this).is(':checked')) {
 			var object = $(this).parent().parent().find(".camoBaseSelector");
 			var color = object.spectrum("get");
-			var overlayImage = logoCanvas.item(0);
+			var overlayImage = guideCanvas.item(0);
 			group.forEach(function(o) {
 				o.visible = true;
 			})
 			overlayImage.filters[0]['color'] = color.toHexString();
 			overlayImage.applyFilters()
-			logoCanvas.requestRenderAll()
+			guideCanvas.requestRenderAll()
 			reRenderBG()
 			$(".camoSelector").each(function() {
 				$(this).spectrum("enable")
 			})
 		} else {
 			var color = $("#jerseyColor").spectrum("get");
-			var overlayImage = logoCanvas.item(0);
+			var overlayImage = guideCanvas.item(0);
 			group.forEach(function(o) {
 				o.visible = false;
 			})
 			overlayImage.filters[0]['color'] = color.toHexString();
 			overlayImage.applyFilters()
-			logoCanvas.requestRenderAll()
+			guideCanvas.requestRenderAll()
 			reRenderBG()
 			$(".camoSelector").each(function() {
 				$(this).spectrum("disable")
@@ -1438,7 +1430,7 @@
 			$("#camoLayer1Color").spectrum("set", below.getObjects('image').find(o => o.id === 'camoLayer1').filters[0]['color'])
 			$("#camoLayer2Color").spectrum("set", below.getObjects('image').find(o => o.id === 'camoLayer2').filters[0]['color'])
 		}
-		var overlayImage = logoCanvas.item(0);
+		var overlayImage = guideCanvas.item(0);
 		overlayImage.filters[0]['color'] = $("#camoBaseColor").spectrum("get").toHexString();
 		overlayImage.applyFilters()
 		below.getObjects('image').forEach(function(o) {
@@ -1451,7 +1443,7 @@
 			
 		})
 		reRenderBG()
-		logoCanvas.requestRenderAll()
+		guideCanvas.requestRenderAll()
 	})
 	
 	$(".camoSelector").each(function() {
@@ -1519,10 +1511,10 @@
 				
 				reRenderBG();
 				if (base) {
-					var overlayImage = logoCanvas.item(0);
+					var overlayImage = guideCanvas.item(0);
 					overlayImage.filters[0]['color'] = color.toHexString();
 					overlayImage.applyFilters()
-					logoCanvas.requestRenderAll()
+					guideCanvas.requestRenderAll()
 				}			
 			},
 			change: function(color) {
@@ -1568,10 +1560,10 @@
 				}
 				reRenderBG();
 				if (base) {
-					var overlayImage = logoCanvas.item(0);
+					var overlayImage = guideCanvas.item(0);
 					overlayImage.filters[0]['color'] = color.toHexString();
 					overlayImage.applyFilters()
-					logoCanvas.requestRenderAll()
+					guideCanvas.requestRenderAll()
 				}	
 			},
 			hide: function(color) {
@@ -1617,10 +1609,10 @@
 				}
 				reRenderBG();
 				if (base) {
-					var overlayImage = logoCanvas.item(0);
+					var overlayImage = guideCanvas.item(0);
 					overlayImage.filters[0]['color'] = color.toHexString();
 					overlayImage.applyFilters()
-					logoCanvas.requestRenderAll()
+					guideCanvas.requestRenderAll()
 				}	
 			}
 		})
@@ -1736,7 +1728,7 @@
 						} 						
 					}
 				});
-				logoCanvas.getObjects().forEach(function(o) {
+				guideCanvas.getObjects().forEach(function(o) {
 					if (o.get('type') == "group") {
 						o.getObjects().forEach(function(q) {
 							if (q.id == id) {
@@ -1752,7 +1744,7 @@
 				});
 				reRenderBG();
 				aboveCanvas.renderAll();
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 			},
 			change: function(color) {
 				change = true;
@@ -1803,7 +1795,7 @@
 						} 						
 					}
 				});
-				logoCanvas.getObjects().forEach(function(o) {
+				guideCanvas.getObjects().forEach(function(o) {
 					if (o.get('type') == "group") {
 						o.getObjects().forEach(function(q) {
 							if (q.id == id) {
@@ -1819,7 +1811,7 @@
 				});
 				reRenderBG();
 				aboveCanvas.renderAll();
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 			},
 			hide: function(color) {
 				change = true;
@@ -1870,7 +1862,7 @@
 						} 						
 					}
 				});
-				logoCanvas.getObjects().forEach(function(o) {
+				guideCanvas.getObjects().forEach(function(o) {
 					if (o.get('type') == "group") {
 						o.getObjects().forEach(function(q) {
 							if (q.id == id) {
@@ -1886,7 +1878,7 @@
 				});
 				reRenderBG();
 				aboveCanvas.renderAll();
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 			}
 		})
 	})
@@ -1910,7 +1902,7 @@
 				var type = $(this).attr("id");
 				$(this).data('changed', true);
 				var id = $("#swashCombo").val();
-				objects = logoCanvas.getObjects();
+				objects = guideCanvas.getObjects();
 				for (x in objects) {
 					if (objects[x].get('type') == "group") {
 						if (objects[x].id.indexOf("swash") > -1) {
@@ -1929,13 +1921,13 @@
 						} 					
 					}
 				}
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 			},
 			change: function(color) {
 				var type = $(this).attr("id");
 				$(this).data('changed', true);
 				var id = $("#swashCombo").val();
-				objects = logoCanvas.getObjects();
+				objects = guideCanvas.getObjects();
 				for (x in objects) {
 					if (objects[x].get('type') == "group") {
 						if (objects[x].id.indexOf("swash") > -1) {
@@ -1954,14 +1946,14 @@
 						} 					
 					}
 				}
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 			},
 			hide: function(color) {
 				if ($(this).data('changed')) {
 					var type = $(this).attr("id");
 					$(this).data('changed', true);
 					var id = $("#swashCombo").val();
-					objects = logoCanvas.getObjects();
+					objects = guideCanvas.getObjects();
 					for (x in objects) {
 						if (objects[x].get('type') == "group") {
 							if (objects[x].id.indexOf("swash") > -1) {
@@ -1980,7 +1972,7 @@
 							} 					
 						}
 					}
-					logoCanvas.renderAll();
+					guideCanvas.renderAll();
 				} 
 			}
 		})
@@ -2003,21 +1995,21 @@
 			},
 			move: function(color) {
 				$(this).data('changed', true);
-				var o = logoCanvas.getObjects().find(o => o.id === 'makersMark');
+				var o = guideCanvas.getObjects().find(o => o.id === 'makersMark');
 				o.set("fill", color.toHexString())
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 			},
 			change: function(color) {
 				$(this).data('changed', true);
-				var o = logoCanvas.getObjects().find(o => o.id === 'makersMark');
+				var o = guideCanvas.getObjects().find(o => o.id === 'makersMark');
 				o.set("fill", color.toHexString())
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 			},
 			hide: function(color) {
 				$(this).data('changed', true);
-				var o = logoCanvas.getObjects().find(o => o.id === 'makersMark');
+				var o = guideCanvas.getObjects().find(o => o.id === 'makersMark');
 				o.set("fill", color.toHexString())
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 			}
 		})
 	})
@@ -2033,8 +2025,81 @@
 		palette: [ ],
 		color: "#FF0000"
 	})
-	
+
 	function initializeCanvas() {
+
+		collarColor = new fabric.Path("M 1011.707 179.03516 A 99.100795 99.100795 0 0 0 931.53711 219.99219 L 931.53711 336.28125 A 99.100795 99.100795 0 0 0 1011.707 377.23828 A 99.100795 99.100795 0 0 0 1110.8066 278.13672 A 99.100795 99.100795 0 0 0 1011.707 179.03516 z",{
+			fill: initialColors['collarColor'],
+			id: 'collarColor',
+			selectable:false,
+			visible:true
+		});
+
+		rightSleeveColor = new fabric.Path("M 0 -1 L 0 12 L 0 162 L 16.75 162.13086 C 25.962496 162.20326 38.675 162.5407 45 162.88086 C 51.325 163.2209 62.8 163.15168 70.5 162.72656 C 82.083289 162.08707 86.657778 162.28399 97 163.86523 C 103.875 164.91636 110.18346 165.82707 111.01953 165.88867 C 112.0058 165.96117 114.58769 161.88579 118.37109 154.28516 L 124.20312 142.57031 L 124.05859 129.80273 C 123.97879 122.78022 123.24328 113.31247 122.42578 108.76562 C 117.06518 78.95061 116.77431 75.218868 116.29883 30 L 115.97266 -1 L 0 -1 z M 908.00586 -0.99804688 L 908.1582 13.501953 L 904.57227 29.855469 C 901.2083 45.196647 900.9461 47.674102 900.35938 69.855469 C 899.6921 95.081924 900.83527 117.8511 903.68359 136.09375 L 905.33789 146.68555 L 912.71484 151.34375 C 916.77254 153.90566 920.48376 156.00195 920.96289 156.00195 L 920.96289 156 C 921.44198 156 925.36003 153.90047 929.66797 151.33398 C 936.88879 147.03205 939.06222 146.33155 957.5 142.36523 L 977.5 138.0625 L 1000.75 138.0332 L 1024 138.00195 L 1024 -0.99804688 L 908.00586 -0.99804688 z ",{
+			fill: initialColors['rightSleeveColor'],
+			id: 'rightSleeveColor',
+			selectable:false,
+			visible:true
+		});
+
+		leftSleeveColor = new fabric.Path("M 399.94531 -1 C 400.33959 8.8916898 400.519 19.74932 400.67773 35 C 401.0998 75.551458 401.05157 76.88856 398.55273 93.5 C 397.14624 102.84998 395.23407 117.18618 394.30273 125.35938 C 392.34359 142.55239 392.27431 142.1981 401.29102 161.33789 L 406.39648 172.17773 L 414.17383 176.08789 C 421.2407 179.64106 422.98207 180.07585 433.22656 180.85742 L 433.22656 180.85547 C 439.42741 181.32851 444.57865 181.77994 444.67578 181.85742 C 444.77298 181.93492 445.99698 179.49991 447.39453 176.44727 C 452.55797 165.16882 451.93102 165.53941 468.18359 164.17383 C 476.05782 163.51222 489.13747 162.97682 497.25 162.98438 L 512 163 L 512 137 L 531.56445 137 C 550.35698 137 552.1226 137.17764 576.31445 141.50195 C 603.69739 146.39671 604.28076 146.59887 619.68555 156.54492 C 625.43648 160.25801 628.79006 162.02006 629.82422 161.86914 C 629.972 161.84646 630.07366 161.78728 630.12695 161.6875 C 631.23602 159.61605 634.30866 135.78462 634.40625 128.5 C 634.5374 118.70925 632.31805 89.683496 629.35938 62.5 C 626.01687 31.790054 624.66036 17.410835 623.98828 -1 L 512 -1 L 399.94531 -1 z ",{
+			fill: initialColors['leftSleeveColor'],
+			id: 'leftSleeveColor',
+			selectable:false,
+			visible:true
+		});
+
+		jerseyFrontColor = new fabric.Rect({
+			id: 'jerseyFrontColor',
+			top: -1,
+			left: -1,
+			height: 513,
+			width: 513,
+			fill: initialColors['jerseyFrontColor'],
+			visible: false
+		})
+
+		jerseyBackColor = new fabric.Rect({
+			id: 'jerseyBackColor',
+			top: -1,
+			left: 511,
+			height: 513,
+			width: 514,
+			fill: initialColors['jerseyBackColor'],
+			visible: false
+		})
+
+		jerseySingleHeadspoon = new fabric.Path("M 165.64453 -1 C 165.21201 3.1568199 165 7.6779894 165 12.787109 C 165 47.336079 177.25978 66.280882 213 86.957031 C 227.96041 95.611811 229.17985 96.669659 233.01758 104.34961 L 236 110.32031 L 236 284.66016 C 236 458.65079 236.00478 459 238.01172 459 C 240.01971 459 240.02232 458.73944 239.76172 283.25 L 239.5 107.5 L 237.31641 103.41992 C 233.57727 96.433462 226.97937 90.276654 218 85.396484 C 189.94056 70.146565 176.38897 55.438251 170.92773 34.300781 C 169.37464 28.289591 168.91406 23.28866 168.91406 12.5 C 168.91406 7.5328701 169.17647 3.1204899 169.63477 -1 L 165.64453 -1 z M 339.77539 -1 C 340.20014 3.4284899 340.47406 8.2059701 340.45898 14 C 340.42088 28.65826 340.2553 29.966623 337.38281 38.095703 C 333.08947 50.245803 327.96031 58.878885 320.74023 66.109375 C 314.39026 72.468455 302.80036 80.591263 293.16016 85.439453 C 286.10207 88.989063 280.02994 94.712418 276.42969 101.21094 L 273.5 106.5 L 273.80078 279.5 C 273.9659 374.64998 274.34296 454.18751 274.63867 456.25 C 274.9986 458.76032 275.6945 460 276.74414 460 C 278.16489 460 278.24306 443.67278 277.58594 286.11523 C 277.06968 162.33668 277.17249 111.06983 277.94336 108.20703 C 279.99385 100.59208 284.81368 94.900514 293.5 89.833984 C 318.55752 75.218515 327.78545 66.95611 335.19727 52.5 C 343.13649 37.0152 344.50935 31.07639 344.44336 12.5 C 344.42566 7.5077701 344.19448 3.1065999 343.81836 -1 L 339.77539 -1 z M 679.97266 -1 C 681.23317 16.101569 685.55437 26.528256 694.86523 36.310547 C 704.09276 46.005307 715.48097 52.749117 727.22461 55.472656 C 736.259 57.567868 754.06993 58.521718 771.49805 58.398438 C 788.9262 58.275149 805.97096 57.073531 813.47461 54.861328 C 827.40115 50.755571 837.17243 44.335234 845.09961 34.078125 C 853.45754 23.263672 857.34232 13.57328 858.55664 -1 L 854.61719 -1 C 853.16997 15.26946 848.18014 25.849178 837.53125 36.591797 C 829.91289 44.277186 821.92506 48.812769 811.38672 51.4375 C 802.18886 53.72837 763.06831 55.293665 746.96484 54.015625 C 730.52923 52.711234 723.74181 51.111113 714 46.246094 C 704.4906 41.497151 693.43087 30.88682 689.76953 23 C 686.48085 15.915967 684.70701 8.7533203 683.96875 -1 L 679.97266 -1 z",{
+			fill: 'black',
+			id: 'jerseySingleHeadspoon',
+			selectable:false,
+			visible:true
+		});
+
+		
+
+		
+
+		//below.add(frontRect)
+		//below.add(backRect)
+		below.add(jerseyBackColor)
+		below.add(jerseyFrontColor)
+		below.add(leftSleeveColor)
+		below.add(rightSleeveColor)
+		below.add(collarColor)
+		below.add(jerseySingleHeadspoon)
+		
+
+		guideCanvas.setOverlayImage('./images/grid_gray_wide.png', guideCanvas.renderAll.bind(guideCanvas));
+		below.renderAll();
+		reRenderBG()
+
+		below.getObjects().forEach(function(o) {
+			console.log(o)
+		})
+	}
+	
+	/* function initializeCanvas() {
 		jerseyColor = new fabric.Rect({
 			top: 0,
 			left: 0,
@@ -3272,7 +3337,7 @@
 				} else {
 					camoGroup.push(tmp)
 				}
-			}) */
+			}) 
 		})
 
 		snakeskinColor = new fabric.Image.fromURL('./images/jm_snakeskin.png', function(oImg) {
@@ -3366,19 +3431,19 @@
 				mode: 'tint',
   				alpha: 1.0
 			}))
-  			logoCanvas.add(oImg);
+  			guideCanvas.add(oImg);
 			oImg.sendToBack();
 		});
 
 		loadMakersMark($("#makersMarkSelect").find(':selected').data('top'),$("#makersMarkSelect").find(':selected').data('left'),$("#makersMarkSelect").find(':selected').data('angle'),$("#makersMarkSelect").find(':selected').data('height'));
 		
-		logoCanvas.add(swash1Group);
-		logoCanvas.add(swash2Group);
-		logoCanvas.add(swash3Group);
-		logoCanvas.add(swash4Group);
-		logoCanvas.add(swash5Group);
-		logoCanvas.add(swash6Group);
-		logoCanvas.add(wordmark);
+		guideCanvas.add(swash1Group);
+		guideCanvas.add(swash2Group);
+		guideCanvas.add(swash3Group);
+		guideCanvas.add(swash4Group);
+		guideCanvas.add(swash5Group);
+		guideCanvas.add(swash6Group);
+		guideCanvas.add(wordmark);
 
 		undershirtGroup = new fabric.Group([],{
 			top: 0,
@@ -3440,14 +3505,14 @@
 			textureFJS.renderAll();
 		})
 	}
-
+ */
 	$("#makersMarkSelect").on("change",function(e) {
 		loadMakersMark($(this).find(':selected').data('top'),$(this).find(':selected').data('left'),$(this).find(':selected').data('angle'),$(this).find(':selected').data('height'));
 	})
 
 	function loadMakersMark(top,left,angle,height) {;
-		var o = logoCanvas.getObjects().find(o => o.id === 'makersMark');
-		logoCanvas.remove(o);
+		var o = guideCanvas.getObjects().find(o => o.id === 'makersMark');
+		guideCanvas.remove(o);
 		fabric.loadSVGFromURL('./images/'+$("#makersMarkSelect").val(),function(svg,options) {
 			var makersMark = new fabric.util.groupSVGElements(svg,options);
 			makersMark.setOptions ({
@@ -3464,8 +3529,8 @@
 				visible: $("#makersMarkCheck").is(':checked')
 			});
 			makersMark.scaleToHeight(height);
-			logoCanvas.add(makersMark);
-			logoCanvas.renderAll();
+			guideCanvas.add(makersMark);
+			guideCanvas.renderAll();
 		})
 	}
 
@@ -3490,23 +3555,25 @@
 	})
 	
 	$("#recenterImage").on("click",function() {
-		var obj = logoCanvas.getActiveObject();
+		var obj = guideCanvas.getActiveObject();
 		if (obj.get('type') == "image") {
 			obj.set('left',106.5);
 			obj.set('top',284);
 			obj.setCoords();
-			logoCanvas.renderAll();
+			guideCanvas.renderAll();
 		}
 	})
 	
 	$(".belowTextureToggle").on("click",function() {
-		if ($(this).is(':checked')) {
+/* 		if ($(this).is(':checked')) {
 			state = true;
 		} else {
 			state = false;
-		}
+		} */
 		var id = $(this).data("id");
-		var objects = below.getObjects();
+		var o = below.getObjects().find(o => o.id === id);
+		o.visible = $(this).is(':checked')
+		/* var objects = below
 		for (x in objects) {
 			if (objects[x].id == id) {
 				if (state == true) {
@@ -3515,13 +3582,13 @@
 					objects[x].visible = false;
 				}
 			}
-		}
+		} */
 		reRenderBG();
 	})
 	
 	$(".markToggle").on("click",function() {
 		makersMark.visible = $(this).is(':checked');
-		logoCanvas.renderAll()
+		guideCanvas.renderAll()
 	})
 	
 	$(".multiToggle").on("click",function() {
@@ -3550,9 +3617,9 @@
 	})
 
 	$("#makersMarkCheck").on("click", function() {
-		var g = logoCanvas.getObjects().find(o => o.id === 'makersMark');
+		var g = guideCanvas.getObjects().find(o => o.id === 'makersMark');
 		g.visible = $(this).is(':checked');
-		logoCanvas.renderAll()
+		guideCanvas.renderAll()
 		reRenderBG()
 	})
 	
@@ -3563,7 +3630,7 @@
 			state = false;
 		}
 		var id = $(this).data("id");
-		var objects = logoCanvas.getObjects();
+		var objects = guideCanvas.getObjects();
 		for (x in objects) {
 			if (objects[x].id == id) {
 				if (state == true) {
@@ -3573,7 +3640,7 @@
 				}
 			} 
 		}
-		logoCanvas.renderAll();
+		guideCanvas.renderAll();
 	}) */
 	
 	$(".wordmarkToggle").on("click",function() {
@@ -3600,13 +3667,13 @@
 			$(".textColorSelector").each(function() {
 				$(this).spectrum('disable');
 			})
-			//logoCanvas.deactivateAll();
+			//guideCanvas.deactivateAll();
 			$("#tipContainer").html("");
 			$("#warpEffect").msDropDown().data("dd").set("disabled", true);
 			$("#warpAmount").prop("disabled",true);
 		}
 		var id = $(this).data("id");
-		var objects = logoCanvas.getObjects();
+		var objects = guideCanvas.getObjects();
 		for (x in objects) {
 			if (objects[x].id == id || objects[x].get('name') == "warpedText") {
 				if (state == true) {
@@ -3620,7 +3687,7 @@
 				}
 			} 
 		}
-		logoCanvas.renderAll();
+		guideCanvas.renderAll();
 	})
 	
 	$(".textToggle").on("click",function() {
@@ -3630,7 +3697,7 @@
 			state = false;
 		}
 		var id = $(this).data("id");
-		var objects = logoCanvas.getObjects();
+		var objects = guideCanvas.getObjects();
 		for (x in objects) {
 			if (objects[x].get('type') == "group") {
 				var groupObjects = objects[x].getObjects();
@@ -3650,61 +3717,61 @@
 			wordmarkText.transformMatrix = [1, amount, 0, 1, 0, 0];
 			wordmarkTextStroke1.transformMatrix = [1, amount, 0, 1, 0, 0];
 			wordmarkTextStroke2.transformMatrix = [1, amount, 0, 1, 0, 0];
-			var objects = logoCanvas.getObjects();
+			var objects = guideCanvas.getObjects();
 			for (x in objects) {
 				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
+					guideCanvas.remove(objects[x]);
 				}
 				if (objects[x].id == "wordmark") {
 					objects[x].visible = true;
 				}
 			}
-			logoCanvas.renderAll();
+			guideCanvas.renderAll();
 		} else if ($("#warpEffect").val() == "skewDown") {
 			var amount = parseInt($("#warpAmount").val())/100;
 			wordmarkText.transformMatrix = [1, amount, 0, 1, 0, 0];
 			wordmarkTextStroke1.transformMatrix = [1, amount, 0, 1, 0, 0];
 			wordmarkTextStroke2.transformMatrix = [1, amount, 0, 1, 0, 0];
-			var objects = logoCanvas.getObjects();
+			var objects = guideCanvas.getObjects();
 			for (x in objects) {
 				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
+					guideCanvas.remove(objects[x]);
 				}
 				if (objects[x].id == "wordmark") {
 					objects[x].visible = true;
 				}
 			}
-			logoCanvas.renderAll();
+			guideCanvas.renderAll();
 		} else if ($("#warpEffect").val() == "skewLeft") {
 			var amount = parseInt($("#warpAmount").val())/100;
 			wordmarkText.transformMatrix = [1, 0, amount, 1, 0, 0];
 			wordmarkTextStroke1.transformMatrix = [1, 0, amount, 1, 0, 0];
 			wordmarkTextStroke2.transformMatrix = [1, 0, amount, 1, 0, 0];
-			var objects = logoCanvas.getObjects();
+			var objects = guideCanvas.getObjects();
 			for (x in objects) {
 				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
+					guideCanvas.remove(objects[x]);
 				}
 				if (objects[x].id == "wordmark") {
 					objects[x].visible = true;
 				}
 			}
-			logoCanvas.renderAll();
+			guideCanvas.renderAll();
 		} else if ($("#warpEffect").val() == "skewRight") {
 			var amount = (parseInt($("#warpAmount").val())/100)*-1;
 			wordmarkText.transformMatrix = [1, 0, amount, 1, 0, 0];
 			wordmarkTextStroke1.transformMatrix = [1, 0, amount, 1, 0, 0];
 			wordmarkTextStroke2.transformMatrix = [1, 0, amount, 1, 0, 0];
-			var objects = logoCanvas.getObjects();
+			var objects = guideCanvas.getObjects();
 			for (x in objects) {
 				if (objects[x].get('name') == "warpedText") {
-					logoCanvas.remove(objects[x]);
+					guideCanvas.remove(objects[x]);
 				}
 				if (objects[x].id == "wordmark") {
 					objects[x].visible = true;
 				}
 			}	
-			logoCanvas.renderAll();
+			guideCanvas.renderAll();
 		} else {
 			warpText();
 		}
@@ -3793,7 +3860,7 @@
 					$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
 				})
 
-				logoCanvas.add(image);
+				guideCanvas.add(image);
 
 				imLeft = image.get('left')
 				imTop = image.get('top');
@@ -3895,7 +3962,7 @@
 					//if ((h > 300) || (w > 300)) {
 					//	image.scale(0.5);
 					//}
-					logoCanvas.add(image);
+					guideCanvas.add(image);
 					image.sendBackwards();
 					
 					//$("#fileName").html(makeid(10));
@@ -3916,7 +3983,7 @@
 			texture.drawImage(img,0,0);
 			var can3 = document.getElementById('composite');
 			var composite = can3.getContext('2d');
-			composite.clearRect(0, 0, 512, 512);
+			composite.clearRect(0, 0, 1024, 512);
 			if (Modernizr.canvasblending == true) {
 				composite.globalCompositeOperation = "multiply";
 				composite.drawImage(can, 0, 0);
@@ -3980,7 +4047,7 @@
 	} */
 	
 	$(document).keydown(function(e) {   
-		var obj = logoCanvas.getActiveObject();
+		var obj = guideCanvas.getActiveObject();
 		if (e.shiftKey) {
 			var movementDelta = 10;
 		} else {
@@ -3990,14 +4057,14 @@
 			case 107: // plus
 				if (obj.get('type') == "group" || obj.get('type') == "image") {
 					obj.bringToFront();
-					logoCanvas.renderAll();
+					guideCanvas.renderAll();
 				}
 				//return false;
 				break;
 			case 109: // minus
 				if (obj.get('type') == "group" || obj.get('type') == "image") {
 					obj.moveTo(1);
-					logoCanvas.renderAll();
+					guideCanvas.renderAll();
 				}
 				//return false;
 				break;
@@ -4006,33 +4073,33 @@
 				var a = obj.get('left') - movementDelta;
 				obj.set('left', a);
 				obj.setCoords();
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case 38:
 				e.preventDefault();
 				var a = obj.get('top') - movementDelta;
 				obj.set('top', a);
 				obj.setCoords();
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case 39:
 				e.preventDefault();
 				var a = obj.get('left') + movementDelta;
 				obj.set('left', a);
 				obj.setCoords();
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case 40:
 				e.preventDefault();
 				var a = obj.get('top') + movementDelta;
 				obj.set('top', a);
 				obj.setCoords();
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case 46: // delete
 				if (obj.get('type') == "image") {
 					$("#fileName").html("");
-					logoCanvas.remove(obj);
+					guideCanvas.remove(obj);
 					if (obj.get('name') == "warpedText") {
 						wordmark.visible = false;
 						$("#textLogoCheck").attr("checked",false);
@@ -4047,7 +4114,7 @@
 						})
 						$("#warpEffect").msDropDown().data("dd").set("disabled", true);
 					}
-					logoCanvas.renderAll();
+					guideCanvas.renderAll();
 					$("#tipContainer").html("");
 				}
 				break;
@@ -4071,7 +4138,7 @@
 		}
 	})
 
-	logoCanvas.on('object:modified', function(e) {
+	guideCanvas.on('object:modified', function(e) {
 	 	var obj = e.target;
 	 	if (obj.get('type') == "image") {
 	 		if (obj.get('name') != "warpedText") {
@@ -4090,7 +4157,7 @@
 		}
 	})
 	
-	logoCanvas.on('selection:cleared', function(e) {
+	guideCanvas.on('selection:cleared', function(e) {
 		$("#straightenObject").css("display","none");
 		if ($("#replaceColorDiv").css("display") == "block") {
 			$("#replaceColorDiv").slideToggle();
@@ -4108,7 +4175,7 @@
 		$("#tipContainer").html("");
 	})
 	
-	document.getElementById('uploadedTexture').onchange = function handleImage(e) {
+	/* document.getElementById('uploadedTexture').onchange = function handleImage(e) {
 		var reader = new FileReader();
 		reader.onload = function (event) {
 			var imgObj = new Image();
@@ -4128,7 +4195,7 @@
 		
 		reader.readAsDataURL(e.target.files[0]);
 		$("#clearTexture").css("display","inline-block");
-	}
+	} */
 
 	/* document.getElementById('uploadedTexture').onchange = function handleImage(e) {
 		var reader = new FileReader();
@@ -4225,6 +4292,14 @@
 			type: 'inline'
 		}
 	});
+
+	$("#gridToggle").on("click",function(e) {
+		if ($(this).is(':checked')) {
+			guideCanvas.setOverlayImage('./images/grid_gray_wide.png', guideCanvas.renderAll.bind(guideCanvas));
+		} else {
+			guideCanvas.setOverlayImage(null, guideCanvas.renderAll.bind(guideCanvas));
+		}
+	})
 	
 	$(".swashToggle").on("click",function(e) {
 		if ($(this).is(':checked')) {
@@ -4238,7 +4313,7 @@
 			$("#swashCombo").msDropDown().data("dd").set("disabled", true);
 		}
 		var visibleSwash = $("#swashCombo").val();
-		var objects = logoCanvas.getObjects();
+		var objects = guideCanvas.getObjects();
 		for (x in objects) {
 			if (objects[x].get('type') == "group") {
 				if (objects[x].id.indexOf("swash") > -1) {
@@ -4250,12 +4325,12 @@
 						}
 					} else {
 						objects[x].visible = false;
-						logoCanvas.renderAll();
+						guideCanvas.renderAll();
 					}
 				}
 			}
 		}
-		logoCanvas.renderAll();
+		guideCanvas.renderAll();
 	})
 	
 	$("#swashCombo").on("change",function(e) {
@@ -4265,7 +4340,7 @@
 			state = false;
 		}
 		var visibleSwash = $(this).val();
-		var objects = logoCanvas.getObjects();
+		var objects = guideCanvas.getObjects();
 		for (x in objects) {
 			if (objects[x].get('type') == "group") {
 				if (objects[x].id.indexOf("swash") > -1) {
@@ -4281,7 +4356,7 @@
 				}
 			}
 		}
-		logoCanvas.renderAll();
+		guideCanvas.renderAll();
 	})
 
 	$("#buttonOpacity").on("change",function(e) {
@@ -4339,71 +4414,71 @@
 		var value = selected.data('value');
 		$("#warpAmount").val(value);
 		$("#warpAmountDisplay").val(value);
-		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
+		const g = guideCanvas.getObjects('group').find(o => o.id === 'wordmark');
 		switch ($(this).val()) {
 			case "none":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", 0)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewUp":
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewDown":
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewLeft":
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewY", 0)
 				g.set("skewX", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewRight":
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewY", 0)
 				g.set("skewX", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			default:
 				g.set("skewX", 0)
 				g.set("skewY", 0)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				warpText();
 				break;
 		}
@@ -4414,71 +4489,71 @@
 		var selected = $("#warpEffect").find('option:selected');
 		selected.data('value',$(this).val());
 		$("#warpAmountDisplay").val($(this).val());
-		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
+		const g = guideCanvas.getObjects('group').find(o => o.id === 'wordmark');
 		switch ($("#warpEffect").val()) {
 			case "none":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", 0)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewUp":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
 				g.set("skewX", 0)
 				g.set("skewY", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewDown":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
 				g.set("skewX", 0)
 				g.set("skewY", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewLeft":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
 				g.set("skewY", 0)
 				g.set("skewX", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewRight":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
 				g.set("skewY", 0)
 				g.set("skewX", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			default:
 				g.set("skewX", 0)
 				g.set("skewY", 0)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				warpText();
 				break;
 		}	
@@ -4488,71 +4563,71 @@
 		var selected = $("#warpEffect").find('option:selected');
 		selected.data('value',$(this).val());
 		$("#warpAmount").val($(this).val());
-		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
+		const g = guideCanvas.getObjects('group').find(o => o.id === 'wordmark');
 		switch ($("#warpEffect").val()) {
 			case "none":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				g.set("skewX", 0)
 				g.set("skewY", 0)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewUp":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
 				g.set("skewX", 0)
 				g.set("skewY", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewDown":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
 				g.set("skewX", 0)
 				g.set("skewY", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewLeft":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*45;
 				g.set("skewY", 0)
 				g.set("skewX", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			case "skewRight":
-				logoCanvas.getObjects('image').forEach(function(o) {
+				guideCanvas.getObjects('image').forEach(function(o) {
 					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
+						guideCanvas.remove(o)
 					}
 				})
 				g.set("visible", true)
 				var amount = (parseInt($("#warpAmount").val())/100)*-45;
 				g.set("skewY", 0)
 				g.set("skewX", amount)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				break;
 			default:
 				g.set("skewX", 0)
 				g.set("skewY", 0)
-				logoCanvas.renderAll();
+				guideCanvas.renderAll();
 				warpText();
 				break;
 		}	
@@ -4564,27 +4639,27 @@
 		wordmarkText.transformMatrix = [1, 0, 0, 1, 0, 0];
 		wordmarkTextStroke1.transformMatrix = [1, 0, 0, 1, 0, 0];
 		wordmarkTextStroke2.transformMatrix = [1, 0, 0, 1, 0, 0];
-		logoCanvas.renderAll();
-		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
+		guideCanvas.renderAll();
+		const g = guideCanvas.getObjects('group').find(o => o.id === 'wordmark');
 		if ($("#warpEffect").val() == "none") {
 			$("#warpAmount").val("0");
 			$("#warpAmountDisplay").val("0");
-			logoCanvas.getObjects("image").forEach(function(o) {
+			guideCanvas.getObjects("image").forEach(function(o) {
 				if (o.get('name') == "warpedText") {
-					logoCanvas.remove(o);
+					guideCanvas.remove(o);
 				}
 			});
 			g.set("skewX", 0)
 			g.set("skewY", 0)
-			logoCanvas.renderAll();
+			guideCanvas.renderAll();
 			warp = false;
 		}
 		
 		if (warp == true) {	
 			$("#overlay").css("display","inline-block");
-			var obj = logoCanvas.getObjects().forEach(function(o) {
+			var obj = guideCanvas.getObjects().forEach(function(o) {
 				if (o.id == "warpedText") {
-					logoCanvas.remove(o);
+					guideCanvas.remove(o);
 				}
 				if (o.id == "wordmark") {
 					o.getObjects().forEach(function(q) {
@@ -4594,9 +4669,9 @@
 					o.set("visible",true)
 				}
 			})
-			logoCanvas.renderAll();
+			guideCanvas.renderAll();
 			warpCanvas.clear()
-			var grp = logoCanvas.getObjects('group').find(o => o.id === 'wordmark');
+			var grp = guideCanvas.getObjects('group').find(o => o.id === 'wordmark');
 			g.getObjects().forEach(function(o) {
 				o.clone(function(cloned) {
     				warpCanvas.add(cloned)
@@ -4653,14 +4728,14 @@
 							wmTop = image.getBoundingRect()['top'];
 						});
 						
-						logoCanvas.getObjects().forEach(function(o) {
+						guideCanvas.getObjects().forEach(function(o) {
 							if (o.id == "wordmark") {
 								o.set("visible", false)
 							}
 						});
 
-						logoCanvas.add(image);
-						logoCanvas.renderAll();
+						guideCanvas.add(image);
+						guideCanvas.renderAll();
 						$("#overlay").css("display","none");
 					}
 				}
@@ -4670,7 +4745,7 @@
 	}
 	
 	function isWordmarkVisible() {
-		var objects = logoCanvas.getObjects();
+		var objects = guideCanvas.getObjects();
 		for (x in objects) {
 			if (objects[x].id == "wordmark") {
 				if (objects[x].visible == false) {
@@ -4683,10 +4758,10 @@
 	}
 	
 	function removeWarpedText(restore) {
-		var objects = logoCanvas.getObjects();
+		var objects = guideCanvas.getObjects();
 		for (x in objects) {
  			if (objects[x].get('name') == "warpedText") {
-				logoCanvas.remove(objects[x]);
+				guideCanvas.remove(objects[x]);
 			}
 			if (objects[x].id == "wordmark" && restore == true) {
 				objects[x].visible = true;
@@ -4694,9 +4769,9 @@
 		}
 	}
 	
-	logoCanvas.on('mouse:move', function(e) {
-		if (logoCanvas.hoverCursor != "move") {
-			var mouse = logoCanvas.getPointer(e.e);
+	guideCanvas.on('mouse:move', function(e) {
+		if (guideCanvas.hoverCursor != "move") {
+			var mouse = guideCanvas.getPointer(e.e);
 			var x = parseInt(mouse.x);
 			var y = parseInt(mouse.y);
 			var px = guides.getImageData(x, y, 1, 1).data;
@@ -4710,17 +4785,17 @@
 		}
 	});
 	
-	logoCanvas.on("mouse:down",function(e) {
-		if (logoCanvas.hoverCursor != "move") {
+	guideCanvas.on("mouse:down",function(e) {
+		if (guideCanvas.hoverCursor != "move") {
 			$("#colorSquare").removeClass("colorSquareActive").addClass("colorSquareSelected");
-			logoCanvas.hoverCursor='move';
-			logoCanvas.off('mouse:move');
-			var object = logoCanvas.getActiveObject();
+			guideCanvas.hoverCursor='move';
+			guideCanvas.off('mouse:move');
+			var object = guideCanvas.getActiveObject();
 			var mouse = object.getLocalPointer(e.e);
 			var imageX = parseInt(mouse.x);
 			var imageY = parseInt(mouse.y);
 			$("#chosenCoordinates").html("(X:"+imageX+", Y:"+imageY+")");
-			var mouse2 = logoCanvas.getPointer(e.e);
+			var mouse2 = guideCanvas.getPointer(e.e);
 			var x = parseInt(mouse2.x);
 			var y = parseInt(mouse2.y);
 			var px = guides.getImageData(x, y, 1, 1).data;
@@ -4737,9 +4812,9 @@
 	$("#border").on("click",function(e) {
 		var action = $(this).data("action");
 		var fuzz = parseInt($("#colorFuzz").val());
-		if (logoCanvas.getActiveObject()) {
+		if (guideCanvas.getActiveObject()) {
 			$("#overlay").css("display","inline-block");
-			var object = logoCanvas.getActiveObject()
+			var object = guideCanvas.getActiveObject()
 			if (object.get('type') == "image") {
 				var pictureName = object.get('id');
 				$("#colorSquare").removeClass("colorSquareActive").removeClass("colorSquareSelected");
@@ -4792,9 +4867,9 @@
 								$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
 							})
 							
-							logoCanvas.remove(object);
-							logoCanvas.add(image);
-							logoCanvas.renderAll();
+							guideCanvas.remove(object);
+							guideCanvas.add(image);
+							guideCanvas.renderAll();
 							imLeft = image.get('left')
 							imTop = image.get('top');
 						}
@@ -4824,8 +4899,8 @@
 		var action = $(this).attr("id");
 		var color = $("#colorSquare").val();
 		var fuzz = parseInt($("#colorFuzz").val());
-		if (logoCanvas.getActiveObject()) {
-			var object = logoCanvas.getActiveObject()
+		if (guideCanvas.getActiveObject()) {
+			var object = guideCanvas.getActiveObject()
 			if (object.get('type') == "image") {
 				//$("#overlay").css("display","inline-block");
 				const pictureName = object.get('id');
@@ -4877,9 +4952,9 @@
 								$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
 							})
 							
-							logoCanvas.remove(object);
-							logoCanvas.add(image);
-							logoCanvas.renderAll();
+							guideCanvas.remove(object);
+							guideCanvas.add(image);
+							guideCanvas.renderAll();
 							imLeft = image.get('left');
 							imTop = image.get('top');
 							$("#colorSquare").val("Select Color");
@@ -4900,8 +4975,8 @@
 		var action = $(this).attr("id");
 		var color = $("#colorSquare").val();
 		var fuzz = parseInt($("#colorFuzz").val());
-		if (logoCanvas.getActiveObject()) {
-			var object = logoCanvas.getActiveObject()
+		if (guideCanvas.getActiveObject()) {
+			var object = guideCanvas.getActiveObject()
 			if (object.get('type') == "image") {
 				$("#overlay").css("display","inline-block");
 				var pictureName = object.get('id');
@@ -4954,9 +5029,9 @@
 								$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
 							})
 							
-							logoCanvas.remove(object);
-							logoCanvas.add(image);
-							logoCanvas.renderAll();
+							guideCanvas.remove(object);
+							guideCanvas.add(image);
+							guideCanvas.renderAll();
 							imLeft = image.get('left');
 							imTop = image.get('top');
 							$("#colorSquare").val("Select Color");
@@ -4988,8 +5063,8 @@
 		var color = $("#colorSquare").val();
 		var newcolor = $("#replacementColor").spectrum("get").toHexString();
 		var fuzz = parseInt($("#colorFuzz").val());
-		if (logoCanvas.getActiveObject()) {
-			var object = logoCanvas.getActiveObject()
+		if (guideCanvas.getActiveObject()) {
+			var object = guideCanvas.getActiveObject()
 			if (object.get('type') == "image") {
 				var pictureName = object.get('id');
 				$("#colorSquare").removeClass("colorSquareActive").removeClass("colorSquareSelected");
@@ -5045,9 +5120,9 @@
 								$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
 							})
 							
-							logoCanvas.remove(object);
-							logoCanvas.add(image);
-							logoCanvas.renderAll();
+							guideCanvas.remove(object);
+							guideCanvas.add(image);
+							guideCanvas.renderAll();
 							imLeft = image.get('left')
 							imTop = image.get('top');
 							//$("#infoWTF").html("imLeft: "+imLeft+"<br>imTop: "+imTop);
@@ -5061,11 +5136,11 @@
 
 	$("#colorSquare").on("click",function(e) {
 		$(this).removeClass("colorSquareSelected").addClass("colorSquareActive");
-		var object = logoCanvas.getActiveObject();
-		logoCanvas.renderAll();
-		logoCanvas.hoverCursor='url(./images/eyedropper.cur),default';
-		logoCanvas.on('mouse:move', function(e) {	
-			var mouse = logoCanvas.getPointer(e.e);
+		var object = guideCanvas.getActiveObject();
+		guideCanvas.renderAll();
+		guideCanvas.hoverCursor='url(./images/eyedropper.cur),default';
+		guideCanvas.on('mouse:move', function(e) {	
+			var mouse = guideCanvas.getPointer(e.e);
 			var x = parseInt(mouse.x);
 			var y = parseInt(mouse.y);
 			var px = guides.getImageData(x, y, 1, 1).data;
@@ -5142,13 +5217,13 @@
 	};
 	
 	$("#straightenObject").on("click",function(e) {
-		logoCanvas.getActiveObject().setAngle(0);
-		logoCanvas.renderAll();
+		guideCanvas.getActiveObject().setAngle(0);
+		guideCanvas.renderAll();
 	})
 	
 	$(".makePatch").on("click",function(e) {
 		$("#overlay").css("display","inline-block");	
-		var object = logoCanvas.getActiveObject();
+		var object = guideCanvas.getActiveObject();
 		if (object.get('type') == "image") {
 			var imageHeight = object.height;
 			var imageWidth = object.width;
@@ -5200,11 +5275,11 @@
 					object.set("scaleX",1)
 					object.set("scaleY",1)
 					object.set("angle",0)
-					logoCanvas.centerObject(object)
+					guideCanvas.centerObject(object)
 					break;
 			}
 		}
-		logoCanvas.renderAll();
+		guideCanvas.renderAll();
 		$("#overlay").css("display","none");
 	})
 	
@@ -5307,7 +5382,9 @@
 		image.src = url;
 	}
 
-	$("#saveJersey").on("click",function(e) {	
+	$("#saveJersey").on("click",function(e) {
+		// confirm("You gotta click me to continue")
+		// console.log("foooooo")
 		exportMeta.team = $("#teamName").val()
 		exportMeta.start = parseInt($("#startYear").val())
 		exportMeta.end = parseInt($("#endYear").val())
@@ -5339,9 +5416,9 @@
 		exportMeta.customTexture = customTextureBase;
 
 		const jsonExport = {
-			'above': aboveCanvas.toDatalessJSON(['id','visible','selectable','perPixelTargetFind','centeredScaling','centeredRotation','borderColor','cornerColor','cornerSize','name','transparentCorners']),
+			//'above': aboveCanvas.toDatalessJSON(['id','visible','selectable','perPixelTargetFind','centeredScaling','centeredRotation','borderColor','cornerColor','cornerSize','name','transparentCorners']),
 			'below': below.toDatalessJSON(['id','visible','selectable','perPixelTargetFind','centeredScaling','centeredRotation','borderColor','cornerColor','cornerSize','name','transparentCorners']),
-			'logo': logoCanvas.toDatalessJSON(['id','visible','selectable','perPixelTargetFind','centeredScaling','centeredRotation','borderColor','cornerColor','cornerSize','name','transparentCorners'])
+			//'logo': guideCanvas.toDatalessJSON(['id','visible','selectable','perPixelTargetFind','centeredScaling','centeredRotation','borderColor','cornerColor','cornerSize','name','transparentCorners'])
 		}
 
 		exportMeta.canvas = jsonExport
@@ -5373,22 +5450,19 @@
 		} else {
 			teamName = $("#teamName").val().replace(/[|&;$%@"<>()+,]/g, "");
 		}
-		//teamName = teamName.replace(new RegExp(' ', 'g'), "_");
-		//teamName = teamName.replace(/([^a-zA-Z0-9]+)/g, "_");
 		teamName = teamName.split(' ').join('_');
 		var fileName = "jerseys_"+teamName+"_"+$("#jerseyType").val()+yearRange;
-		logoCanvas.renderAll();
+		guideCanvas.renderAll();
 		var finalCanvas = document.getElementById('final');
 		var exportCtx = finalCanvas.getContext('2d');
 		exportCtx.clearRect(0,0,512,512);
 		exportCtx.drawImage(composite,0,0);
 		exportCtx.drawImage(can4,0,0)
 		exportCtx.drawImage(can5,0,0)
-		//new CanvasSaver('http://127.0.0.1:'+port+'/saveJersey').savePNG(document.getElementById("final"), fileName, "jersey");
 		$.ajax({
 			type: "POST",
 			url: "http://127.0.0.1:"+port+"/saveJersey",
-			data: {imgdata:finalCanvas.toDataURL(),name:fileName,canvas:JSON.stringify(exportMeta,null,2)},
+			data: {imgdata:below.toDataURL(),name:fileName,canvas:JSON.stringify(exportMeta,null,2)},
 			success: function(result) {
 
 			}
@@ -5452,7 +5526,7 @@
 				const selectedFont = (validFonts.includes(data.selectedFont)) ? data.selectedFont : "Leckerli One";
 				var anyTextVisible = false;
 				textureFJS.clear();
-				logoCanvas.clear();
+				guideCanvas.clear();
 				below.clear();
 				below.loadFromJSON(data.canvas.below, below.renderAll.bind(below), function(o, object) {
 					//console.log(object.id)
@@ -5556,7 +5630,7 @@
 				})
 				aboveCanvas.renderAll()
 
-				logoCanvas.loadFromJSON(data.canvas.logo, logoCanvas.renderAll.bind(logoCanvas), function(o, object) {
+				guideCanvas.loadFromJSON(data.canvas.logo, guideCanvas.renderAll.bind(guideCanvas), function(o, object) {
 					$("#"+object.id+"Check").prop("checked",object.visible)
 					if (object.id == data.swashStyle) {
 						$("#swashCheck").prop("checked",object.visible).triggerHandler('click');
@@ -5576,7 +5650,7 @@
 							myfont.load()
 								.then(function() {
 									o.set("fontFamily", (validFonts.includes(data.selectedFont)) ? o.fontFamily : "Leckerli One")
-									logoCanvas.renderAll();
+									guideCanvas.renderAll();
 									$("#fontTypeCombo").val(data.selectedFont)
 									$("#fontTypeCombo").removeClass().addClass(data.familyName);
 									$("#fontTypeCombo").trigger('change')
@@ -5589,7 +5663,7 @@
 							myfont.load()
 								.then(function() {
 									o.set("fontFamily", (validFonts.includes(data.selectedFont)) ? o.fontFamily : "Leckerli One")
-									logoCanvas.renderAll();
+									guideCanvas.renderAll();
 									$("#fontTypeCombo").val(data.selectedFont)
 									$("#fontTypeCombo").removeClass().addClass(data.familyName);
 									$("#fontTypeCombo").trigger('change')
@@ -5626,9 +5700,9 @@
 							$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
 						})	
 					}
-					logoCanvas.add(object)
+					guideCanvas.add(object)
 				})
-				logoCanvas.renderAll()
+				guideCanvas.renderAll()
 
 				if (data.texture == "custom") {
 					$("#clearTexture").css("display","inline-block");
@@ -5647,7 +5721,7 @@
 	
 	$("#imgur").on("click",function(e) {
 		$("#overlay").css("display","inline-block");
-		logoCanvas.renderAll();
+		guideCanvas.renderAll();
 		
 		var finalCanvas = document.getElementById('final');
 		var exportCtx = finalCanvas.getContext('2d');
@@ -5689,7 +5763,7 @@
 				$("head").prepend("<style>@font-face {\n   font-family: '"+data.familyName+"';\n   src: url('"+data.fontData+"') format('truetype');\n}\n."+data.familyName+" { font-family: '"+data.familyName+"'; font-size: 1.1em;}\n</style>");
 				var style = data.familyName;
 				var font_family = $("."+style).css("font-family");
-				const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
+				const g = guideCanvas.getObjects('group').find(o => o.id === 'wordmark')
 				var myfont = new FontFaceObserver(data.familyName)
 				myfont.load()
 					.then(function() {
@@ -5697,7 +5771,7 @@
 						g.getObjects().forEach(function(o) {
 							o.fontFamily = data.familyName;
 						})
-						logoCanvas.renderAll();
+						guideCanvas.renderAll();
 						var optgroup = $("<optgroup class='"+data.familyName+"'>");
 						optgroup.append("<option value='"+data.familyName+"'>"+data.fontName+"</option>")
 						$("#fontTypeCombo").append(optgroup)

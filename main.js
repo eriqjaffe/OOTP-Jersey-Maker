@@ -13,6 +13,7 @@ const url = require('url');
 const archiver = require('archiver')
 const font2base64 = require("node-font2base64")
 const Store = require("electron-store")
+const sharp = require('sharp');
 
 const server = app2.listen(0, () => {
 	console.log(`Server running on port ${server.address().port}`);
@@ -55,8 +56,58 @@ app2.get("/uploadImage", (req, res) => {
 app2.post('/saveJersey', (req, res) => {
 	const buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
 	const json = Buffer.from(req.body.canvas, 'utf-8')
+	
+	createFile(buffer)
 
-	const output = fs.createWriteStream(tempDir + '/'+req.body.name+'.zip');
+	async function createFile(buffer) {
+		const front = await sharp(buffer)
+			.extract({ left: 0, top: 0, width: 512, height: 512 })
+			.toBuffer()
+			//.toFile(app.getPath('downloads') + '/' + req.body.name+'_front.png', function(err) {
+				// Extract a region of the input image, saving in the same format.
+			//});
+
+		const back = await sharp(buffer)
+			.extract({ left: 512, top: 0, width: 512, height: 512 })
+			.rotate(180)
+			.toBuffer()
+			//.toFile(app.getPath('downloads') + '/' + req.body.name+'_back.png', function(err) {
+				// Extract a region of the input image, saving in the same format.
+			//});
+
+		const full = await sharp({
+			create: {
+			  width: 512,
+			  height: 1024,
+			  channels: 4,
+			  background: { r: 0, g: 0, b: 0, alpha: 0 }
+		   }
+		})
+
+			
+
+		//front.toFile(app.getPath('downloads') + '/' + req.body.name+'_front.png', function(err) {
+			// Extract a region of the input image, saving in the same format.
+		//});
+	
+		//back.toFile(app.getPath('downloads') + '/' + req.body.name+'_back.png', function(err) {
+			// Extract a region of the input image, saving in the same format.
+		//});
+
+		full
+		.composite([
+			{ input: front, gravity: 'south' },
+			{ input: back, gravity: 'north' }
+		])
+		.toFile(app.getPath('downloads') + '/' + req.body.name+'_full.png', function(err) {
+			// Extract a region of the input image, saving in the same format.
+		});
+	}
+	
+
+	
+
+	/* const output = fs.createWriteStream(tempDir + '/'+req.body.name+'.zip');
 
 	output.on('close', function() {
 		//fs.writeFileSync(app.getPath('downloads') + '/' + req.body.name+'.jrs', json)
@@ -106,12 +157,21 @@ app2.post('/saveJersey', (req, res) => {
 		throw err;
 	});
 
-	archive.pipe(output)
+	archive.pipe(output) */
 	
-	Jimp.read(buffer, (err, fir_img) => {
+	/* Jimp.read(buffer, (err, fir_img) => {
 		if(err) {
 			console.log(err);
 		} else {
+			front = fir_img.clone()
+			back = fir_img.clone()
+			front.crop(0,0,512,512).write(app.getPath('downloads') + '/' + req.body.name+'_front.png')
+			back.crop(512,0,512,512).write(app.getPath('downloads') + '/' + req.body.name+'_back.png')
+				.rotate(180)
+				.crop(1,1,512,512)
+				.contain(512,1024,Jimp.VERTICAL_ALIGN_TOP)
+				.blit(front,0,512)
+				.write(app.getPath('downloads') + '/' + req.body.name+'_full.png')
 			var watermark = fs.readFileSync(__dirname + "/images/jm_watermark.png", {encoding: 'base64'});
 			var buffer = Buffer.from(watermark, 'base64');
 				Jimp.read(buffer, (err, sec_img) => {
@@ -129,7 +189,7 @@ app2.post('/saveJersey', (req, res) => {
 					}
 				})
 			}
-		}); 
+		}); */ 
 });
 
 app2.get("/uploadJersey", (req, res) => {
@@ -392,7 +452,7 @@ function getExtension(filename) {
 const createWindow = () => {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
-      width: 1280,
+      width: 1700,
       height: 950,
 	  icon: (__dirname + '/images/jersey.png'),
       webPreferences: {

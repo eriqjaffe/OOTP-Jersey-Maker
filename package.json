@@ -1,8 +1,8 @@
 {
   "name": "jerseymaker",
-  "productName": "OOTP Jersey Maker",
+  "productName": "OOTP23 Jersey Maker",
   "version": "0.2.0",
-  "description": "OOTP Jersey Maker",
+  "description": "OOTP23 Jersey Maker",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -23,6 +23,7 @@
     "jimp": "^0.16.1",
     "node-font2base64": "^0.7.1",
     "promise-synchronizer": "^1.1.8",
+    "sharp": "^0.30.3",
     "ttfinfo": "^0.2.0"
   },
   "packageManager": "yarn@3.1.0",
