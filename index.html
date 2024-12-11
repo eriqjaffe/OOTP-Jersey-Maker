@@ -5560,37 +5560,6 @@
 
 	$("#uploadTheFont").on("click", function(e) {
 		ipcRenderer.send('custom-font', null)
-		//$("#fontTypeCombo").removeClass().addClass('alegreya');
-		/* $.ajax({
-			type: "GET",
-			url: "http://127.0.0.1:"+port+"/customFont",
-			success: function(data) {
-				customFonts.push(data)
-				$("head").prepend("<style>@font-face {\n   font-family: '"+data.familyName+"';\n   src: url('"+data.fontData+"') format('truetype');\n}\n."+data.familyName+" { font-family: '"+data.familyName+"'; font-size: 1.1em;}\n</style>");
-				var style = data.familyName;
-				var font_family = $("."+style).css("font-family");
-				const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
-				var myfont = new FontFaceObserver(data.familyName)
-				myfont.load()
-					.then(function() {
-					// when font is loaded, use it.
-						g.getObjects().forEach(function(o) {
-							o.fontFamily = data.familyName;
-						})
-						logoCanvas.renderAll();
-						var optgroup = $("<optgroup class='"+data.familyName+"'>");
-						optgroup.append("<option value='"+data.familyName+"'>"+data.fontName+"</option>")
-						$("#fontTypeCombo").append(optgroup)
-						$("#fontTypeCombo").children().remove("optgroup[class='alegreya']");
-						$("#fontTypeCombo").val(data.familyName)
-						$("#fontTypeCombo").removeClass().addClass(data.familyName);
-						$("#fontTypeCombo").trigger('change')
-					}).catch(function(e) {
-						console.log(e)
-						alert('font loading failed ' + data.familyName);
-					});
-			}
-		}) */
 	})
 
 	ipcRenderer.on('custom-font-response', (event, data) => {
