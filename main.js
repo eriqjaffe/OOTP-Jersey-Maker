@@ -255,7 +255,6 @@ app2.post('/removeAllColor', (req, res) => {
 	})
 });
 
-//app2.post('/warpText', (req, res)=> {
 ipcMain.on('warp-text', (event, arg) => {
 	var buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
 	var amount = arg.amount;
