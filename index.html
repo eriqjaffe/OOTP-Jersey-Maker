@@ -4482,7 +4482,6 @@
 		}	
 	})
 	
-	//$("#warpForm").on("submit",function(e) {
 	function warpText() {
 		var warp = true;
 		wordmarkText.transformMatrix = [1, 0, 0, 1, 0, 0];
@@ -4543,55 +4542,52 @@
 
 			theImage = theImage.substr(theImage.indexOf(',') + 1).toString();
 			
-			$.ajax({
-				type: "POST",
-				url: "http://127.0.0.1:"+port+"/warpText",
-				data: {deform: $("#warpEffect").val(), amount: $("#warpAmount").val(), imgdata: theImage},
-				success: function(data) {
-					var imgObj = new Image();
-					imgObj.src = data;
-					imgObj.onload = function () {
-						var image = new fabric.Image(imgObj);
-						image.set({
-							originX: 'center',
-							originY: 'center',
-							left: wordmark.get("left"),
-							top: wordmark.get("top"),
-							perPixelTargetFind: true,
-							centeredScaling: true,
-							centeredRotation: true,
-							borderColor: 'red',
-							cornerColor: 'yellow',
-							cornerSize: 12,
-							id: 'warpedText',
-							transparentCorners: false
-						});
-						
-						image.filters.push(new fabric.Image.filters.Resize({
-							resizeType: 'lanczos', // typo fixed
-							lanczosLobes: 2 // typo fixed
-						}));
-						
-						image.on('object:modified',function() {
-							wmLeft = image.getBoundingRect()['left'];
-							wmTop = image.getBoundingRect()['top'];
-						});
-						
-						logoCanvas.getObjects().forEach(function(o) {
-							if (o.id == "wordmark") {
-								o.set("visible", false)
-							}
-						});
-
-						logoCanvas.add(image);
-						logoCanvas.renderAll();
-						$("#overlay").css("display","none");
-					}
-				}
-			})
+			ipcRenderer.send('warp-text', {deform: $("#warpEffect").val(), amount: $("#warpAmount").val(), imgdata: theImage})
 			return false;		
 		}
 	}
+
+	ipcRenderer.on('warp-text-response', (event, data) => {
+		var imgObj = new Image();
+		imgObj.src = data;
+		imgObj.onload = function () {
+			var image = new fabric.Image(imgObj);
+			image.set({
+				originX: 'center',
+				originY: 'center',
+				left: wordmark.get("left"),
+				top: wordmark.get("top"),
+				perPixelTargetFind: true,
+				centeredScaling: true,
+				centeredRotation: true,
+				borderColor: 'red',
+				cornerColor: 'yellow',
+				cornerSize: 12,
+				id: 'warpedText',
+				transparentCorners: false
+			});
+			
+			image.filters.push(new fabric.Image.filters.Resize({
+				resizeType: 'lanczos', // typo fixed
+				lanczosLobes: 2 // typo fixed
+			}));
+			
+			image.on('object:modified',function() {
+				wmLeft = image.getBoundingRect()['left'];
+				wmTop = image.getBoundingRect()['top'];
+			});
+			
+			logoCanvas.getObjects().forEach(function(o) {
+				if (o.id == "wordmark") {
+					o.set("visible", false)
+				}
+			});
+
+			logoCanvas.add(image);
+			logoCanvas.renderAll();
+			$("#overlay").css("display","none");
+		}
+	})
 	
 	function isWordmarkVisible() {
 		var objects = logoCanvas.getObjects();

@@ -255,14 +255,15 @@ app2.post('/removeAllColor', (req, res) => {
 	})
 });
 
-app2.post('/warpText', (req, res)=> {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var amount = req.body.amount;
-	var deform = req.body.deform;
+//app2.post('/warpText', (req, res)=> {
+ipcMain.on('warp-text', (event, arg) => {
+	var buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
+	var amount = arg.amount;
+	var deform = arg.deform;
 	var width;
 	var height;
 	var cmdLine;
-	console.log(req.body.deform)
+	console.log(arg.deform)
 	Jimp.read(buffer, (err, image) => {
 		if (err) {
 			console.log(err);
@@ -299,7 +300,7 @@ app2.post('/warpText', (req, res)=> {
 									console.log(err);
 								} else {
 									image.getBase64(Jimp.AUTO, (err, ret) => {
-										res.end(ret);
+										event.sender.send('warp-text-response', ret)
 									})
 								}
 							})
@@ -314,7 +315,7 @@ app2.post('/warpText', (req, res)=> {
 									console.log(err);
 								} else {
 									image.getBase64(Jimp.AUTO, (err, ret) => {
-										res.end(ret);
+										event.sender.send('warp-text-response', ret)
 									})
 								}
 							})
@@ -323,7 +324,7 @@ app2.post('/warpText', (req, res)=> {
 					break;
 				default:
 					image.getBase64(Jimp.AUTO, (err, ret) => {
-						res.end(ret);
+						event.sender.send('warp-text-response', ret)
 					})
 					break;
 			}
@@ -334,7 +335,7 @@ app2.post('/warpText', (req, res)=> {
 						console.log(err);
 					} else {
 						image.getBase64(Jimp.AUTO, (err, ret) => {
-							res.end(ret);
+							event.sender.send('warp-text-response', ret)
 						})
 					}
 				})
