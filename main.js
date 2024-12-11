@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, Menu, shell } = require('electron')
+const { app, BrowserWindow, dialog, Menu, shell, ipcMain, ipcRenderer } = require('electron')
 const path = require('path')
 const fs = require('fs');
 const express = require('express');
@@ -25,75 +25,75 @@ const preferredTexture = store.get("preferredTexture", "default_jersey_texture")
 
 app2.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 
-app2.get("/uploadImage", (req, res) => {
+ipcMain.on('upload-image', (event, arg) => {
+	const json = {}
 	dialog.showOpenDialog(null, {
-		properties: ['openFile'],
-		filters: [
-			{ name: 'Images', extensions: ['jpg', 'png', 'gif'] }
-		]
-	  }).then(result => {
-		  if(!result.canceled) {
-			Jimp.read(result.filePaths[0], (err, image) => {
-				if (err) {
-					console.log(err);
-				} else {
-					image.getBase64(Jimp.AUTO, (err, ret) => {
-						res.json({
-							"filename": path.basename(result.filePaths[0]),
-							"image": ret
-						  });
-						res.end();
-					})
-				}
-			});
-		  }
-	  }).catch(err => {
+	properties: ['openFile'],
+	filters: [
+		{ name: 'Images', extensions: ['jpg', 'png', 'gif'] }
+	]
+	}).then(result => {
+		if(!result.canceled) {
+		Jimp.read(result.filePaths[0], (err, image) => {
+			if (err) {
+				console.log(err);
+			} else {
+				image.getBase64(Jimp.AUTO, (err, ret) => {
+					json.filename = path.basename(result.filePaths[0]),
+					json.image = ret
+					//console.log(json)
+					event.sender.send('upload-image-response', json)
+				})
+			}
+		});
+		}
+	}).catch(err => {
 		console.log(err)
-	  })
+	})
+})
+app2.get("/uploadImage", (req, res) => {
+
 })
 
-app2.post('/saveJersey', (req, res) => {
-	const buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	const json = Buffer.from(req.body.canvas, 'utf-8')
+ipcMain.on('save-jersey', (event, arg) => {
+	console.log(arg)
+	const buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
+	const json = Buffer.from(arg.canvas, 'utf-8')
 
-	const output = fs.createWriteStream(tempDir + '/'+req.body.name+'.zip');
+	const output = fs.createWriteStream(tempDir + '/'+arg.name+'.zip');
 
 	output.on('close', function() {
-		//fs.writeFileSync(app.getPath('downloads') + '/' + req.body.name+'.jrs', json)
-		var data = fs.readFileSync(tempDir + '/'+req.body.name+'.zip');
+		//fs.writeFileSync(app.getPath('downloads') + '/' + arg.name+'.jrs', json)
+		var data = fs.readFileSync(tempDir + '/'+arg.name+'.zip');
 		var saveOptions = {
-		  defaultPath: app.getPath('downloads') + '/' + req.body.name+'.zip',
+		  defaultPath: app.getPath('downloads') + '/' + arg.name+'.zip',
 		}
 		dialog.showSaveDialog(null, saveOptions).then((result) => { 
 		  if (!result.canceled) {
 			fs.writeFile(result.filePath, data, function(err) {
 			  if (err) {
-				res.end("success")
-				fs.unlink(tempDir + '/'+req.body.name+'.zip', (err) => {
+				fs.unlink(tempDir + '/'+arg.name+'.zip', (err) => {
 				  if (err) {
 					console.error(err)
 					return
 				  }
 				})
-				res.end("success")
 			  } else {
-				fs.unlink(tempDir + '/'+req.body.name+'.zip', (err) => {
+				fs.unlink(tempDir + '/'+arg.name+'.zip', (err) => {
 				  if (err) {
 					console.error(err)
 					return
 				  }
 				})
-				res.end("success")
 			  };
 			})
 		  } else {
-			fs.unlink(tempDir + '/'+req.body.name+'.zip', (err) => {
+			fs.unlink(tempDir + '/'+arg.name+'.zip', (err) => {
 			  if (err) {
 				console.error(err)
 				return
 			  }
 			})
-			res.end("success");
 		  }
 		})
 	});
@@ -114,32 +114,33 @@ app2.post('/saveJersey', (req, res) => {
 		} else {
 			var watermark = fs.readFileSync(__dirname + "/images/jm_watermark.png", {encoding: 'base64'});
 			var buffer = Buffer.from(watermark, 'base64');
-				Jimp.read(buffer, (err, sec_img) => {
-					if(err) {
-						console.log(err);
-					} else {
-						fir_img.composite(sec_img, 0, 0);
-						fir_img.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
-							const finalImage = Buffer.from(buffer);
-							archive.append(finalImage, {name: req.body.name+".png"})
-							archive.append(json, {name: req.body.name+".jrs"})
-							archive.finalize()
-							});
-						
-					}
-				})
-			}
-		}); 
-});
+			Jimp.read(buffer, (err, sec_img) => {
+				if(err) {
+					console.log(err);
+				} else {
+					fir_img.composite(sec_img, 0, 0);
+					fir_img.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
+						const finalImage = Buffer.from(buffer);
+						archive.append(finalImage, {name: arg.name+".png"})
+						archive.append(json, {name: arg.name+".jrs"})
+						archive.finalize()
+						});
+					
+				}
+			})
+		}
+	}); 
+})
 
-app2.get("/uploadJersey", (req, res) => {
+ipcMain.on('load-jersey', (event, arg) => {
 	const file = dialog.showOpenDialogSync(null, {
 		properties: ['openFile'],
 		filters: [
 			{ name: 'Jersey Files', extensions: ['jrs'] }
 		]
 	})
-	res.end(JSON.stringify(JSON.parse(fs.readFileSync(file[0]).toString())))
+
+	event.sender.send('load-jersey-response', JSON.stringify(JSON.parse(fs.readFileSync(file[0]).toString())))
 })
 
 app2.post("/removeBorder", (req, res) => {
@@ -342,7 +343,8 @@ app2.post('/warpText', (req, res)=> {
 	})
 })
 
-app2.get("/customFont", (req, res) => {
+ipcMain.on('custom-font', (event, arg) => {
+	let json = {}
 	dialog.showOpenDialog(null, {
 		properties: ['openFile'],
 		filters: [
@@ -358,16 +360,14 @@ app2.get("/customFont", (req, res) => {
 					if (err) {
 						console.log(err)
 					} else {
-						res.json({
-							"fontName": info.tables.name[1],
-							"fontStyle": info.tables.name[2],
-							"familyName": info.tables.name[6],
-							"fontFormat": ext,
-							"fontMimetype": 'font/' + ext,
-							"fontData": fontPath.href,
-							"fontBase64": dataUrl
-						});
-						res.end()
+						json.fontName = info.tables.name[1],
+						json.fontStyle = info.tables.name[2],
+						json.familyName = info.tables.name[6],
+						json.fontFormat = ext,
+						json.fontMimetype = 'font/' + ext,
+						json.fontData = fontPath.href,
+						json.fontBase64 = dataUrl
+						event.sender.send('custom-font-response', json)
 					}
 				})
 			});
@@ -377,12 +377,9 @@ app2.get("/customFont", (req, res) => {
 	})
 })
 
-app2.post('/setPreference', (req, res) => {
-	const pref = req.body.pref;
-	const val = req.body.val;
-	store.set(pref, val)
-	res.end()
-});
+ipcMain.on('set-preference', (event, arg) => {
+	store.set(arg.pref, arg.val)
+})
 
 function getExtension(filename) {
 	var ext = path.extname(filename||'').split('.');
