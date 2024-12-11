@@ -51,9 +51,6 @@ ipcMain.on('upload-image', (event, arg) => {
 		console.log(err)
 	})
 })
-app2.get("/uploadImage", (req, res) => {
-
-})
 
 ipcMain.on('save-jersey', (event, arg) => {
 	console.log(arg)
