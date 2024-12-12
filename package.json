@@ -24,8 +24,8 @@
     "ttfinfo": "^0.2.0"
   },
   "devDependencies": {
-    "electron": "^17.1.0",
-    "electron-builder": "^22.14.5"
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
   },
   "build": {
     "appId": "com.ootputilities.jerseymaker",
