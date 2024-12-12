@@ -20,6 +20,7 @@
     "@alxcube/lens-jimp": "^3.0.0",
     "archiver": "^5.3.0",
     "electron-store": "^8.0.1",
+    "fontname": "^1.0.1",
     "jimp": "0.22.12",
     "ttfinfo": "^0.2.0"
   },

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, Menu, shell, ipcMain, ipcRenderer } = require('electron')
+const { app, BrowserWindow, dialog, Menu, shell, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs');
 const Jimp = require('jimp');
@@ -10,6 +10,7 @@ const os = require('os');
 const tempDir = os.tmpdir()
 const archiver = require('archiver')
 const Store = require("electron-store")
+const fontname = require('fontname')
 
 const store = new Store();
 
