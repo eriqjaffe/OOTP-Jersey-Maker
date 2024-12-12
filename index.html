@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="./scripts/jquery.html5storage.min.js"></script>
 	<script type="text/javascript" src="./scripts/jquery.fileDownload.js"></script>
 	<script type="text/javascript" src="./scripts/fontfaceobserver.js"></script>
+	<script type="text/javascript" src="./scripts/opentype.js"></script>
 	<script>if (window.module) module = window.module;</script>
 	<link href='./scripts/jerseymaker.css' rel='stylesheet' type='text/css'>
 	<link href='./scripts/spectrum.css' rel='stylesheet' type='text/css'>
@@ -3041,8 +3042,78 @@
 			id: 'swash6Stroke',
 			fill: initialColors["swashStrokeColor"],
 		});
+
+		opentype.load("./fonts/LeckerliOne-Regular.ttf", (err,font) => {
+			if (err || !font) {
+				log.error(err)
+				return;
+			}
+
+			const path = font.getPath("Bulldogs",256,681,30)
+			const svgPath = path.toPathData(5)
+
+			wordmarkText = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				id: 'wordmarkText',
+				fill: initialColors["wordmarkTextColor"],
+				stroke: initialColors["wordmarkTextColor"],
+				strokeWidth: 0
+			})
 		
-		wordmarkText = new fabric.Text('Bulldogs',{
+			wordmarkTextStroke1 = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				stroke: initialColors["wordmarkTextStroke1Color"],
+				strokeWidth: 6,
+				strokeLineCap: "round",
+				id: 'wordmarkTextStroke1',
+				fill: initialColors["wordmarkTextStroke1Color"]
+			})
+		
+			wordmarkTextStroke2 = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				stroke: initialColors["wordmarkTextStroke2Color"],
+				strokeWidth: 10,
+				strokeLineCap: "round",
+				id: 'wordmarkTextStroke2',
+				fill: initialColors["wordmarkTextStroke2Color"]
+			})
+			
+			wordmark = new fabric.Group ([],{
+				visible: false,
+				id:'wordmark',
+				borderColor: 'red',
+				cornerColor: 'yellow',
+				cornerSize: 12,
+				transparentCorners: false,
+				originX: 'center',
+				originY: 'center',
+				visible: false,
+				description: 'Wordmark'
+			})
+
+			wordmark.addWithUpdate(wordmarkTextStroke2)
+			wordmark.addWithUpdate(wordmarkTextStroke1)
+			wordmark.addWithUpdate(wordmarkText)
+
+			logoCanvas.add(wordmark)
+		})
+		
+		/* wordmarkText = new fabric.Text('Bulldogs',{
 			fontFamily: "Leckerli One",
 			fontSize: 30,
 			originX: 'center',
@@ -3098,7 +3169,7 @@
 			cornerColor: 'yellow',
 			cornerSize: 12,
 			transparentCorners: false,
-		});
+		}); */
 		
 		swash1Group = new fabric.Group([swash1Stroke,swash1], {
 			id: 'swash1',
@@ -3379,7 +3450,7 @@
 		logoCanvas.add(swash4Group);
 		logoCanvas.add(swash5Group);
 		logoCanvas.add(swash6Group);
-		logoCanvas.add(wordmark);
+		//logoCanvas.add(wordmark);
 
 		undershirtGroup = new fabric.Group([],{
 			top: 0,
@@ -4653,6 +4724,58 @@
 			})
 		}
 	})
+
+	ipcRenderer.on('imagemagick-response', (event, data) => {
+		$("#overlay").css("display","none");
+		var object = logoCanvas.getActiveObject()
+		var pictureName = object.get('id');
+		var imgObj = new Image();
+		imgObj.src = data;
+		imgObj.onload = function () {
+			var image = new fabric.Image(imgObj);
+			image.set({
+				originX: 'center',
+				originY: 'center',
+				left: imLeft,
+				top: imTop,
+				perPixelTargetFind: true,
+				centeredScaling: true,
+				centeredRotation: true,
+				borderColor: 'red',
+				cornerColor: 'yellow',
+				cornerSize: 12,
+				id: pictureName,
+				transparentCorners: false
+			});
+			
+			image.filters.push(new fabric.Image.filters.Resize({
+				resizeType: 'lanczos',
+				lanczosLobes: 2
+			}));
+			
+			image.on('object:modified',function() {
+				imLeft = image.get('left')
+				imTop = image.get('top');
+			});
+
+			image.on('selected',function() {
+				$("#straightenObject").css("display","inline-block");
+				$("#fileName").html(image.get('id'));
+				if ($("#trimImageDiv").css("display") == "none") {
+					$("#trimImageDiv").css("display","block");
+					$("#uploadImageDiv").css("display","none");
+					$("#selectedImageDiv").css("display","block");
+				}
+				$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
+			})
+			
+			logoCanvas.remove(object);
+			logoCanvas.add(image);
+			logoCanvas.renderAll();
+			imLeft = image.get('left')
+			imTop = image.get('top');
+		}
+	})
 	
 	$("#border").on("click",function(e) {
 		var action = $(this).data("action");
@@ -4665,7 +4788,8 @@
 				$("#colorSquare").removeClass("colorSquareActive").removeClass("colorSquareSelected");
 				var theImage = object._originalElement.currentSrc;	
 				theImage = theImage.substr(theImage.indexOf(',') + 1).toString();
-				$.ajax({
+				ipcRenderer.send("remove-border", {imgdata: theImage, x: "1", y: "1", action: "removeBorder", color: "null", newcolor: "null", fuzz: fuzz, filename: pictureName})
+				/* $.ajax({
 					type: "POST",
 					url: "http://127.0.0.1:"+port+"/removeBorder",
 					data: {imgdata: theImage, x: "1", y: "1", action: "removeBorder", color: "null", newcolor: "null", fuzz: fuzz, filename: pictureName},
@@ -4719,7 +4843,7 @@
 							imTop = image.get('top');
 						}
 					}
-				})
+				}) */
 				return false;
 			}
 		}	
@@ -4907,6 +5031,7 @@
 		var y = $(this).data("y");
 		var color = $("#colorSquare").val();
 		var newcolor = $("#replacementColor").spectrum("get").toHexString();
+		newcolor = hexToRgb(newcolor)
 		var fuzz = parseInt($("#colorFuzz").val());
 		if (logoCanvas.getActiveObject()) {
 			var object = logoCanvas.getActiveObject()
@@ -4917,63 +5042,93 @@
 				var theImage = object._originalElement.currentSrc;
 
 				theImage = theImage.substr(theImage.indexOf(',') + 1).toString();
-				
-				$.ajax({
-					type: "POST",
-					url: "http://127.0.0.1:"+port+"/replaceColor",
-					data: {imgdata: theImage, x: x, y: y, action: action, color: color, newcolor: newcolor, fuzz: fuzz, filename: pictureName},
-					success: function(data) {
-					//$("#testImage").attr("src","data:image/png;base64,"+data);
-						var imgObj = new Image();
-						imgObj.src = data;
-						imgObj.onload = function () {
-							var image = new fabric.Image(imgObj);
-							image.set({
-								originX: 'center',
-								originY: 'center',
-								left: imLeft,
-								top: imTop,
-								perPixelTargetFind: true,
-								centeredScaling: true,
-								centeredRotation: true,
-								borderColor: 'red',
-								cornerColor: 'yellow',
-								cornerSize: 12,
-								id: pictureName,
-								transparentCorners: false
-							});
-							
-							image.filters.push(new fabric.Image.filters.Resize({
-								resizeType: 'lanczos',
-								lanczosLobes: 2
-							}));
-							
-							image.on('object:modified',function() {
-								imLeft = image.get('left')
-								imTop = image.get('top');
-								//$("#infoWTF").html("imLeft: "+imLeft+"<br>imTop: "+imTop);
-							});
 
-							image.on('selected',function() {
-								$("#straightenObject").css("display","inline-block");
-								$("#fileName").html(image.get('id'));
-								if ($("#trimImageDiv").css("display") == "none") {
-									$("#trimImageDiv").css("display","block");
-									$("#uploadImageDiv").css("display","none");
-									$("#selectedImageDiv").css("display","block");
-								}
-								$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
-							})
-							
-							logoCanvas.remove(object);
-							logoCanvas.add(image);
-							logoCanvas.renderAll();
-							imLeft = image.get('left')
-							imTop = image.get('top');
-							//$("#infoWTF").html("imLeft: "+imLeft+"<br>imTop: "+imTop);
+				const img = new Image()
+				if (action == "replaceColorRange") {
+					console.log("replace color range")
+					img.onload = function() {
+						const canvas = document.createElement('canvas');
+						const ctx = canvas.getContext('2d');
+
+						canvas.width = img.width;
+						canvas.height = img.height;
+
+						ctx.drawImage(img, 0, 0);
+
+						const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+						const pixels = imageData.data;
+						const startIndex = (y * canvas.width + x) * 4;
+						const baseColor = {
+							r: pixels[startIndex],
+							g: pixels[startIndex + 1],
+							b: pixels[startIndex + 2]
+						};
+
+						const stack = [{ x: x, y: y }];
+
+						while (stack.length) {
+							const { x, y } = stack.pop();
+							const index = (y * canvas.width + x) * 4;
+
+							if (
+								x >= 0 && x < canvas.width &&
+								y >= 0 && y < canvas.height &&
+								isColorMatch(pixels, index, baseColor, color, fuzz)
+							) {
+								pixels[index] = newcolor.r;
+								pixels[index + 1] = newcolor.g;
+								pixels[index + 2] = newcolor.b;
+
+								stack.push({ x: x + 1, y: y });
+								stack.push({ x: x - 1, y: y });
+								stack.push({ x: x, y: y + 1 });
+								stack.push({ x: x, y: y - 1 });
+							}
 						}
+
+						ctx.putImageData(imageData, 0, 0);
+
+						ipcRenderer.send('replace-color', canvas.toDataURL())
+					};
+					img.src = object._originalElement.currentSrc
+				} else {
+					console.log("replace all color")
+					img.onload = function() {
+						const canvas = document.createElement('canvas');
+						const ctx = canvas.getContext('2d');
+
+						canvas.width = img.width;
+						canvas.height = img.height;
+
+						ctx.drawImage(img, 0, 0);
+
+						const pixelData = ctx.getImageData(x, y, 1, 1).data; // Get pixel data at coordinates (x, y)
+						const color = { r: pixelData[0], g: pixelData[1], b: pixelData[2] }; // Extract RGB values from pixel data
+
+						// Continue with your existing code...
+						const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+						const pixels = imageData.data;
+
+						for (let i = 0; i < pixels.length; i += 4) {
+							const r = pixels[i];
+							const g = pixels[i + 1];
+							const b = pixels[i + 2];
+							const a = pixels[i + 3];
+
+							if (isColorWithinTolerance({ r, g, b }, color, fuzz)) {
+								pixels[i] = newcolor.r;
+								pixels[i + 1] = newcolor.g;
+								pixels[i + 2] = newcolor.b;
+							}
+						}
+
+						ctx.putImageData(imageData, 0, 0);
+
+						ipcRenderer.send('replace-color', canvas.toDataURL())
+						return false;
 					}
-				})
+					img.src = object._originalElement.currentSrc;
+				}
 				return false;
 			}
 		}	
@@ -5595,5 +5750,45 @@
 	}
 		return result;
 	}
+
+function isColorWithinTolerance(pixelColor, targetColor, tolerance) {
+	const dr = Math.abs(pixelColor.r - targetColor.r);
+	const dg = Math.abs(pixelColor.g - targetColor.g);
+	const db = Math.abs(pixelColor.b - targetColor.b);
+
+	return (dr <= tolerance && dg <= tolerance && db <= tolerance);
+}
+
+function isColorMatch(pixels, index, baseColor, targetColor, tolerance) {
+	const dr = Math.abs(baseColor.r - pixels[index]);
+	const dg = Math.abs(baseColor.g - pixels[index + 1]);
+	const db = Math.abs(baseColor.b - pixels[index + 2]);
+
+	return (dr + dg + db) / 3 <= tolerance;
+}
+
+function isColorMatchAlpha(pixels, index, baseColor, targetColor, tolerance) {
+	const dr = Math.abs(baseColor.r - pixels[index]);
+	const dg = Math.abs(baseColor.g - pixels[index + 1]);
+	const db = Math.abs(baseColor.b - pixels[index + 2]);
+	const da = Math.abs(baseColor.a - pixels[index + 3]); // Include alpha channel difference
+
+	return (dr + dg + db + da) / 4 <= tolerance
+}
+
+function hexToRgb(hex) {
+	// Remove '#' if present
+	hex = hex.replace(/^#/, '');
+
+	// Parse hex values
+	const bigint = parseInt(hex, 16);
+
+	// Extract RGB components
+	const r = (bigint >> 16) & 255;
+	const g = (bigint >> 8) & 255;
+	const b = bigint & 255;
+
+	return { r, g, b };
+}
 </script>
 </html>

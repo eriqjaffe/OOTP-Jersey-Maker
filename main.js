@@ -140,58 +140,31 @@ ipcMain.on('load-jersey', (event, arg) => {
 	event.sender.send('load-jersey-response', JSON.stringify(JSON.parse(fs.readFileSync(file[0]).toString())))
 })
 
-app2.post("/removeBorder", (req, res) => {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var fuzz = parseInt(req.body.fuzz);
+//app2.post("/removeBorder", (req, res) => {
+ipcMain.on('remove-border', (event, arg) => {
+	var buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
+	var fuzz = parseInt(arg.fuzz);
 	Jimp.read(buffer, (err, image) => {
 		if (err) {
 			console.log(err);
 		} else {
-			image.write(tempDir+"/temp.png");
-			imagemagickCli.exec('magick convert -trim -fuzz '+fuzz+'% '+tempDir+'/temp.png '+tempDir+'/temp.png').then(({ stdout, stderr }) => {
-				Jimp.read(tempDir+"/temp.png", (err, image) => {
-					if (err) {
-						console.log(err);
-					} else {
-						image.getBase64(Jimp.AUTO, (err, ret) => {
-							res.end(ret);
-						})
-					}
-				})
+			image.autocrop()
+			image.getBase64(Jimp.AUTO, (err, ret) => {
+				console.log(ret)
+				event.sender.send('imagemagick-response', ret)
 			})
 		}
 	})
 })
 
-app2.post("/replaceColor", (req, res) => {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var x = parseInt(req.body.x);
-	var y = parseInt(req.body.y);
-	var color = req.body.color;
-	var newcolor = req.body.newcolor;
-	var action = req.body.action;
-	var fuzz = parseInt(req.body.fuzz);
-	var cmdString;
+ipcMain.on('replace-color', (event, arg) => {	
+	var buffer = Buffer.from(arg.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
 	Jimp.read(buffer, (err, image) => {
 		if (err) {
 			console.log(err);
 		} else {
-			image.write(tempDir+"/temp.png");
-			if (action == "replaceColorRange") {
-				cmdString = 'magick convert '+tempDir+'/temp.png -fuzz '+fuzz+'% -fill '+newcolor+' -draw "color '+x+','+y+' floodfill" '+tempDir+'/temp.png';		
-			} else {
-				cmdString = 'magick convert '+tempDir+'/temp.png -fuzz '+fuzz+'% -fill '+newcolor+' -opaque '+color+' '+tempDir+'/temp.png';	
-			}
-			imagemagickCli.exec(cmdString).then(({ stdout, stderr }) => {
-				Jimp.read(tempDir+"/temp.png", (err, image) => {
-					if (err) {
-						console.log(err);
-					} else {
-						image.getBase64(Jimp.AUTO, (err, ret) => {
-							res.end(ret);
-						})
-					}
-				})
+			image.getBase64(Jimp.AUTO, (err, ret) => {
+				event.sender.send('imagemagick-response', ret)
 			})
 		}
 	})
