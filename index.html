@@ -1253,6 +1253,7 @@
 		let jerseyDropdown = new MsDropdown(document.getElementById("fontTypeCombo"), {visibleRows: 6})
 		let swashDropdown = new MsDropdown(document.getElementById("swashCombo"), {visibleRows: 5})
 		let warpDropdown = new MsDropdown(document.getElementById("warpEffect"), {visibleRows: 8})
+		$(".ms-dd").addClass("disabled")
 		if ($(".wordmarkToggle").is(':checked')) {
 			$(".textOption").each(function() {
 				$(this).prop( "disabled", false );
@@ -1403,7 +1404,6 @@
 
 			logoCanvas.renderAll()
 
-			console.log(data)
 			if (newFont) {
 				var thumbText = font.getPath("ABC 123", 0, 0, 96)
 				var outPath = thumbText.toPathData(5)
@@ -1415,8 +1415,8 @@
 				})
 
 				//refreshDropdowns("jersey",data,foo)
-				//data.thumb = thumb.toDataURL()
-				//customFonts.push(data)
+				data.thumb = thumb.toDataURL()
+				customFonts.push(data)
 
 				const dropdown = document.getElementById("fontTypeCombo").msDropdown;
 
@@ -3760,6 +3760,7 @@
 			$(".textColorSelector").each(function() {
 				$(this).spectrum('enable');
 			})
+			$(".ms-dd").removeClass("disabled")
 			//$("#warpEffect").msDropDown().data("dd").set("disabled", false);
 		} else {
 			state = false;
@@ -3773,6 +3774,7 @@
 			$("#tipContainer").html("");
 			//$("#warpEffect").msDropDown().data("dd").set("disabled", true);
 			$("#warpAmount").prop("disabled",true);
+			$(".ms-dd").addClass("disabled")
 		}
 		var id = $(this).data("id");
 		var objects = logoCanvas.getObjects();
@@ -4148,6 +4150,7 @@
 	});
 	
 	$("#textLogoCheck").on("change",function() { 
+		console.log("hello world")
 		if ($(this).is(':checked')) {
 			$("#capText").attr("disabled",false);
 		} else {
