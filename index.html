@@ -1326,8 +1326,16 @@
 	initializeCanvas();
 	
     $("#fontTypeCombo").on("change",function() {
-		
-		opentype.load($("#fontTypeCombo").val(), (err,font) => {
+		wordmarkChange($(this).val(), false)
+	})
+	
+	$("#wordmarkTextBox").on("input",function() {
+		wordmarkChange($("#fontTypeCombo").val())
+	})
+
+	function wordmarkChange(data,newFont) {
+		let val = (data.fontPath == undefined) ? data : data.fontPath;
+		opentype.load(val, (err,font) => {
 			if (err || !font) {
 				console.log(err)
 				return;
@@ -1393,7 +1401,7 @@
 
 			logoCanvas.renderAll()
 
-			/* if (newFont) {
+			if (newFont) {
 				var thumbText = font.getPath("ABC 123", 0, 0, 96)
 				var outPath = thumbText.toPathData(5)
 
@@ -1404,101 +1412,11 @@
 				})
 
 				refreshDropdowns("jersey",data,foo)
-			} */
+			}
 
 			$("#warpEffect").trigger("change")
 		})
-		/* var style = $(this).val();
-		var font_family = $("."+style).css("font-family");
-		var objects = logoCanvas.getObjects("group");
-		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
-		g.getObjects().forEach(function(o) {
-			o.set("fontFamily", "Yellowtail")
-			o.set("fontFamily", font_family)
-		})
-		logoCanvas.renderAll()
-		$(this).removeClass().addClass(style);
-		switch ($("#warpEffect").val()) {
-			case "none":
-				logoCanvas.getObjects('image').forEach(function(o) {
-					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
-					}
-				})
-				g.set("visible", true)
-				g.set("skewX", 0)
-				g.set("skewY", 0)
-				logoCanvas.renderAll();
-				break;
-			case "skewUp":
-				var amount = (parseInt($("#warpAmount").val())/100)*-45;
-				logoCanvas.getObjects('image').forEach(function(o) {
-					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
-					}
-				})
-				g.set("visible", true)
-				g.set("skewX", 0)
-				g.set("skewY", amount)
-				logoCanvas.renderAll();
-				break;
-			case "skewDown":
-				var amount = (parseInt($("#warpAmount").val())/100)*45;
-				logoCanvas.getObjects('image').forEach(function(o) {
-					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
-					}
-				})
-				g.set("visible", true)
-				g.set("skewX", 0)
-				g.set("skewY", amount)
-				logoCanvas.renderAll();
-				break;
-			case "skewLeft":
-				var amount = (parseInt($("#warpAmount").val())/100)*45;
-				logoCanvas.getObjects('image').forEach(function(o) {
-					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
-					}
-				})
-				g.set("visible", true)
-				g.set("skewY", 0)
-				g.set("skewX", amount)
-				logoCanvas.renderAll();
-				break;
-			case "skewRight":
-				var amount = (parseInt($("#warpAmount").val())/100)*-45;
-				logoCanvas.getObjects('image').forEach(function(o) {
-					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
-					}
-				})
-				g.set("visible", true)
-				g.set("skewY", 0)
-				g.set("skewX", amount)
-				logoCanvas.renderAll();
-				break;
-			default:
-				g.set("skewX", 0)
-				g.set("skewY", 0)
-				logoCanvas.renderAll();
-				warpText();
-				break;
-		}
-		logoCanvas.renderAll(); */
-	})
-	
-	$("#wordmarkTextBox").on("change",function() {
-		var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
-		g.getObjects().forEach(function(o) {
-			o.set("text",$("#wordmarkTextBox").val())
-		})
-		logoCanvas.renderAll();
-		if ($("#warpEffect").val().indexOf("arc") > -1 || $("#warpEffect").val().indexOf("bilinear") > -1) {
-			warpText();
-		}
-		
-	})
+	}
 	
 	$("#jerseyColor").spectrum({
 		showInput: true,
@@ -5785,7 +5703,7 @@
 
 	ipcRenderer.on('custom-font-response', (event, data) => {
 		console.log(data)
-		customFonts.push(data)
+		/* customFonts.push(data)
 		$("head").prepend("<style>@font-face {\n   font-family: '"+data.familyName+"';\n   src: url('"+data.fontData+"') format('truetype');\n}\n."+data.familyName+" { font-family: '"+data.familyName+"'; font-size: 1.1em;}\n</style>");
 		var style = data.familyName;
 		var font_family = $("."+style).css("font-family");
@@ -5808,7 +5726,7 @@
 			}).catch(function(e) {
 				console.log(e)
 				alert('font loading failed ' + data.familyName);
-			});
+			}); */
 	})
 
 	function makeid(length) {

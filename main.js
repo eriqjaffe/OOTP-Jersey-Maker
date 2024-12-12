@@ -1,6 +1,7 @@
 const { app, BrowserWindow, dialog, Menu, shell, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs');
+const url = require('url');
 const Jimp = require('jimp');
 const { distortUnwrap } = require('@alxcube/lens')
 require('@alxcube/lens-jimp');
@@ -16,6 +17,10 @@ const store = new Store();
 
 const preferredColorFormat = store.get("preferredColorFormat", "hex")
 const preferredTexture = store.get("preferredTexture", "default_jersey_texture")
+const userFontsFolder = path.join(app.getPath('userData'),"fonts")
+if (!fs.existsSync(userFontsFolder)) {
+    fs.mkdirSync(userFontsFolder);
+}
 
 ipcMain.on('upload-image', (event, arg) => {
 	const json = {}
@@ -348,6 +353,51 @@ ipcMain.on('warp-text', (event, arg) => {
 
 ipcMain.on('custom-font', (event, arg) => {
 	let json = {}
+	const options = {
+		defaultPath: store.get("uploadFontPath", app.getPath('desktop')),
+		properties: ['openFile'],
+		filters: [
+			{ name: 'Fonts', extensions: ['ttf', 'otf'] }
+		]
+	}
+	dialog.showOpenDialog(null, options).then(result => {
+		if(!result.canceled) {
+			store.set("uploadFontPath", path.dirname(result.filePaths[0]))
+			const filePath = path.join(userFontsFolder,path.basename(result.filePaths[0]))
+			try {
+				const fontMeta = fontname.parse(fs.readFileSync(result.filePaths[0]))[0];
+				var ext = getExtension(result.filePaths[0])
+				var fontPath = url.pathToFileURL(result.filePaths[0])
+				json.status = "ok"
+				json.fontName = fontMeta.fullName
+				json.fontStyle = fontMeta.fontSubfamily
+				json.familyName = fontMeta.fontFamily
+				json.fontFormat = ext
+				json.fontMimetype = 'font/' + ext
+				json.fontData = fontPath.href
+				json.fontPath = filePath
+				fs.copyFileSync(result.filePaths[0], filePath)
+				event.sender.send('custom-font-response', json)
+			} catch (err) {
+				json.status = "error"
+				json.fontName = path.basename(result.filePaths[0])
+				json.fontPath = result.filePaths[0]
+				json.message = err
+				event.sender.send('custom-font-response', json)
+				fs.unlinkSync(result.filePaths[0])
+			}
+		} else {
+			json.status = "cancelled"
+			event.sender.send('custom-font-response', json)
+			log.info("User cancelled custom font dialog")
+		}
+	}).catch(err => {
+		console.log(err)
+		json.status = "error",
+		json.message = err
+		event.sender.send('custom-font-response', json)
+	})
+	/* let json = {}
 	dialog.showOpenDialog(null, {
 		properties: ['openFile'],
 		filters: [
@@ -377,7 +427,7 @@ ipcMain.on('custom-font', (event, arg) => {
 		}
 	}).catch(err => {
 		console.log(err)
-	})
+	}) */
 })
 
 ipcMain.on('set-preference', (event, arg) => {
