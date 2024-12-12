@@ -16,10 +16,11 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@alxcube/lens": "^2.0.1",
+    "@alxcube/lens-jimp": "^3.0.0",
     "archiver": "^5.3.0",
     "electron-store": "^8.0.1",
-    "imagemagick-cli": "^0.5.0",
-    "jimp": "^0.16.1",
+    "jimp": "0.22.12",
     "node-font2base64": "^0.7.1",
     "ttfinfo": "^0.2.0"
   },

@@ -1,16 +1,14 @@
 const { app, BrowserWindow, dialog, Menu, shell, ipcMain, ipcRenderer } = require('electron')
 const path = require('path')
 const fs = require('fs');
-//const express = require('express');
 const Jimp = require('jimp');
-const imagemagickCli = require('imagemagick-cli');
+const { distortUnwrap } = require('@alxcube/lens')
+require('@alxcube/lens-jimp');
 const ttfInfo = require('ttfinfo');
 const isMac = process.platform === 'darwin'
 const os = require('os');
 const tempDir = os.tmpdir()
-//const app2 = express()const url = require('url');
 const archiver = require('archiver')
-//const font2base64 = require("node-font2base64")
 const Store = require("electron-store")
 
 const store = new Store();
@@ -163,92 +161,189 @@ ipcMain.on('replace-color', (event, arg) => {
 })
 
 ipcMain.on('warp-text', (event, arg) => {
-	var buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var amount = arg.amount;
-	var deform = arg.deform;
-	var width;
-	var height;
-	var cmdLine;
-	console.log(arg.deform)
-	Jimp.read(buffer, (err, image) => {
-		if (err) {
-			console.log(err);
-		} else {
-			image.autocrop();
-			image.write(tempDir+"/temp.png");
-			width = image.bitmap.width;
-			height = image.bitmap.height;
-			console.log(width +'x'+height)
-			switch (deform) {
-				case "arch":
-					cmdLine = 'magick convert -background transparent -wave -'+amount+'x'+width*2+' -trim +repage '+tempDir+'/temp.png '+tempDir+'/'+deform+'.png'
-					break;
-				case "arc":
-					cmdLine = 'magick convert '+tempDir+'/temp.png -virtual-pixel Background -background transparent -distort Arc '+amount+' -trim +repage '+tempDir+'/'+deform+'.png'
-					break;
-				case "bilinearUp":
-					console.log(amount)
-					console.log(((100-amount)*0.01));
-					var y2=height*((100-amount)*0.01)
-					cmdLine = 'magick convert '+tempDir+'/temp.png -virtual-pixel transparent -interpolate Spline -distort BilinearForward "0,0 0,0 0,'+height+' 0,'+height+' '+width+',0 '+width+',0 '+width+','+height+' '+width+','+y2+'" '+tempDir+'/'+deform+'.png'
-					break;
-				case "bilinearDown":
-					console.log(amount)
-					console.log(((100-amount)*0.01));
-					var y2=height*((100-amount)*0.01)
-					cmdLine = 'magick convert '+tempDir+'/temp.png -virtual-pixel transparent -interpolate Spline -distort BilinearForward "0,0 0,0 0,'+height+' 0,'+y2+' '+width+',0 '+width+',0 '+width+','+height+' '+width+','+height+'" '+tempDir+'/'+deform+'.png'
-					break;
-				case "archUp":
-					imagemagickCli.exec('magick convert '+tempDir+'/temp.png -gravity west -background transparent -extent '+width*2+'x'+height+' '+tempDir+'/temp.png').then(({stdout, stderr }) => {
-						imagemagickCli.exec('magick convert -background transparent -wave -'+amount*2+'x'+width*4+' -trim +repage '+tempDir+'/temp.png '+tempDir+'/'+deform+'.png').then(({ stdout, stderr }) => {
-							Jimp.read(tempDir+'/'+deform+'.png', (err, image) => {
-								if (err) {
-									console.log(err);
-								} else {
-									image.getBase64(Jimp.AUTO, (err, ret) => {
-										event.sender.send('warp-text-response', ret)
-									})
-								}
-							})
-						})
-					})
-					break;
-				case "archDown":
-					imagemagickCli.exec('magick convert '+tempDir+'/temp.png -gravity east -background transparent -extent '+width*2+'x'+height+' '+tempDir+'/temp.png').then(({stdout, stderr }) => {
-						imagemagickCli.exec('magick convert -background transparent -wave -'+amount*2+'x'+width*4+' -trim +repage '+tempDir+'/temp.png '+tempDir+'/'+deform+'.png').then(({ stdout, stderr }) => {
-							Jimp.read(tempDir+'/'+deform+'.png', (err, image) => {
-								if (err) {
-									console.log(err);
-								} else {
-									image.getBase64(Jimp.AUTO, (err, ret) => {
-										event.sender.send('warp-text-response', ret)
-									})
-								}
-							})
-						})
-					})
-					break;
-				default:
-					image.getBase64(Jimp.AUTO, (err, ret) => {
-						event.sender.send('warp-text-response', ret)
-					})
-					break;
-			}
-			console.log(cmdLine);
-			imagemagickCli.exec(cmdLine).then(({ stdout, stderr }) => {
-				Jimp.read(tempDir+'/'+deform+'.png', (err, image) => {
-					if (err) {
-						console.log(err);
-					} else {
-						image.getBase64(Jimp.AUTO, (err, ret) => {
-							event.sender.send('warp-text-response', ret)
-						})
+	let buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
+	let amount = arg.amount;
+	let deform = arg.deform;
+	try {
+		switch (deform) {
+			case "arch":
+				arch()
+				async function arch() {
+					try {
+						let image = await Jimp.read(buffer);
+						const newImage = new Jimp(image.bitmap.width, image.bitmap.height);
+						image.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx) {
+							const radians = x / image.bitmap.width * 360 * Math.PI / 180;
+							const offsetY = (amount * -1) * Math.cos(radians);
+							const newY = y + offsetY;
+						
+							const yFloor = Math.floor(newY);
+							const yCeil = Math.ceil(newY);
+							const yWeight = newY - yFloor;
+						
+							const clampedYFloor = Math.max(0, Math.min(image.bitmap.height - 1, yFloor));
+							const clampedYCeil = Math.max(0, Math.min(image.bitmap.height - 1, yCeil));
+						
+							const colorFloor = Jimp.intToRGBA(image.getPixelColor(x, clampedYFloor));
+							const colorCeil = Jimp.intToRGBA(image.getPixelColor(x, clampedYCeil));
+						
+							const r = colorFloor.r * (1 - yWeight) + colorCeil.r * yWeight;
+							const g = colorFloor.g * (1 - yWeight) + colorCeil.g * yWeight;
+							const b = colorFloor.b * (1 - yWeight) + colorCeil.b * yWeight;
+							const a = colorFloor.a * (1 - yWeight) + colorCeil.a * yWeight;
+						
+							const interpolatedColor = Jimp.rgbaToInt(r, g, b, a);
+							newImage.setPixelColor(interpolatedColor, x, y);
+						});
+						newImage.autocrop()
+						let b64 = await newImage.getBase64Async(Jimp.AUTO)
+						event.sender.send('warp-text-response', b64)
+					} catch (error) {
+						console.error('Error applying wave effect:', error);
+						return null;
 					}
+				}
+				break;
+			case "arc":
+				arc()
+				async function arc() {
+					let image = await Jimp.read(buffer)
+					image.autocrop()
+					let result = await distortUnwrap(image, "Arc", [parseInt(amount)])
+					let tempImg = await new Jimp(result.bitmap.width*4, result.bitmap.height*4)
+					await tempImg.blit(result, 5, 5)
+					await tempImg.autocrop()
+					let b64 = await tempImg.getBase64Async(Jimp.AUTO)
+					event.sender.send('warp-text-response', b64)
+				}
+				break;
+			case "bilinearUp":
+				bilinearUp()
+				async function bilinearUp() {
+					let image = await Jimp.read(buffer)
+					await image.autocrop()
+					const y2=image.bitmap.height*((100-amount)*0.01)
+					const controlPoints = [1.5,0,0,0,0,0,image.bitmap.height,0,image.bitmap.height,image.bitmap.width,0,image.bitmap.width,0,image.bitmap.width,image.bitmap.height,image.bitmap.width,y2]
+					const result = await distortUnwrap(image, "Polynomial", controlPoints)
+					const tempImg = await new Jimp(result.bitmap.width*4, result.bitmap.height*4)
+					await tempImg.blit(result, 5, 5)
+					await tempImg.autocrop()
+					let b64 = await tempImg.getBase64Async(Jimp.AUTO)
+					event.sender.send('warp-text-response', b64)
+				}
+				break;
+			case "bilinearDown":
+				bilinearDown()
+				async function bilinearDown() {
+					let image = await Jimp.read(buffer)
+					await image.autocrop()
+					const y2=image.bitmap.height*((100-amount)*0.01)
+					const controlPoints = [1.5,0,0,0,0,0,image.bitmap.height,0,y2,image.bitmap.width,0,image.bitmap.width,0,image.bitmap.width,image.bitmap.height,image.bitmap.width,image.bitmap.height]
+					const result = await distortUnwrap(image, "Polynomial", controlPoints)
+					const tempImg = await new Jimp(result.bitmap.width*4, result.bitmap.height*4)
+					await tempImg.blit(result, 5, 5)
+					await tempImg.autocrop()
+					let b64 = await tempImg.getBase64Async(Jimp.AUTO)
+					event.sender.send('warp-text-response', b64)
+				}
+				break;
+			case "archUp":
+				archUp()
+				async function archUp() {
+					try {
+						let image = await Jimp.read(buffer);
+						const tempImage = new Jimp(image.bitmap.width * 2, image.bitmap.height)
+						tempImage.blit(image, 0, 0, 0, 0, image.bitmap.width, image.bitmap.height);
+						const newImage = new Jimp(image.bitmap.width, image.bitmap.height);
+						tempImage.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx) {
+							const radians = (x * 180) / image.bitmap.width * Math.PI / 180;
+							const offsetY = (amount * -1) * Math.cos(radians);
+							const newY = y + offsetY;
+						
+							const yFloor = Math.floor(newY);
+							const yCeil = Math.ceil(newY);
+							const yWeight = newY - yFloor;
+						
+							const clampedYFloor = Math.max(0, Math.min(image.bitmap.height - 1, yFloor));
+							const clampedYCeil = Math.max(0, Math.min(image.bitmap.height - 1, yCeil));
+						
+							const colorFloor = Jimp.intToRGBA(image.getPixelColor(x, clampedYFloor));
+							const colorCeil = Jimp.intToRGBA(image.getPixelColor(x, clampedYCeil));
+						
+							const r = colorFloor.r * (1 - yWeight) + colorCeil.r * yWeight;
+							const g = colorFloor.g * (1 - yWeight) + colorCeil.g * yWeight;
+							const b = colorFloor.b * (1 - yWeight) + colorCeil.b * yWeight;
+							const a = colorFloor.a * (1 - yWeight) + colorCeil.a * yWeight;
+						
+							const interpolatedColor = Jimp.rgbaToInt(r, g, b, a);
+							newImage.setPixelColor(interpolatedColor, x, y);
+						});
+						
+						newImage.autocrop();
+						
+						let b64 = await newImage.getBase64Async(Jimp.AUTO)
+						event.sender.send('warp-text-response', b64)
+					} catch (error) {
+						console.error('Error applying wave effect:', error);
+						return null;
+					}
+				}
+				break;
+			case "archDown":
+				archDown()
+				async function archDown() {
+					try {
+						let image = await Jimp.read(buffer);
+						const tempImage = new Jimp(image.bitmap.width * 2, image.bitmap.height)
+						tempImage.blit(image, image.bitmap.width, 0, 0, 0, image.bitmap.width, image.bitmap.height);
+						const newImage = new Jimp(image.bitmap.width, image.bitmap.height);
+						tempImage.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx) {
+							const radians = (x * 180) / image.bitmap.width * Math.PI / 180;
+							const offsetY = amount * Math.cos(radians);
+							const newY = y + offsetY;
+						
+							const yFloor = Math.floor(newY);
+							const yCeil = Math.ceil(newY);
+							const yWeight = newY - yFloor;
+						
+							const clampedYFloor = Math.max(0, Math.min(image.bitmap.height - 1, yFloor));
+							const clampedYCeil = Math.max(0, Math.min(image.bitmap.height - 1, yCeil));
+						
+							const colorFloor = Jimp.intToRGBA(image.getPixelColor(x, clampedYFloor));
+							const colorCeil = Jimp.intToRGBA(image.getPixelColor(x, clampedYCeil));
+						
+							const r = colorFloor.r * (1 - yWeight) + colorCeil.r * yWeight;
+							const g = colorFloor.g * (1 - yWeight) + colorCeil.g * yWeight;
+							const b = colorFloor.b * (1 - yWeight) + colorCeil.b * yWeight;
+							const a = colorFloor.a * (1 - yWeight) + colorCeil.a * yWeight;
+						
+							const interpolatedColor = Jimp.rgbaToInt(r, g, b, a);
+							newImage.setPixelColor(interpolatedColor, x, y);
+						});						
+						newImage.autocrop()
+						let b64 = await newImage.getBase64Async(Jimp.AUTO)
+						event.sender.send('warp-text-response', b64)
+					} catch (error) {
+						console.error('Error applying wave effect:', error);
+						return null;
+					}
+				}
+				break;
+			default:
+				Jimp.read(buffer, (err, image) => {
+					image.getBase64(Jimp.AUTO, (err, ret) => {
+						event.sender.send('warp-text-response', b64)
+					})
 				})
-			})
+				break;		
 		}
-	})
-})
+	} catch (err) {
+		console.log(err)
+		image.getBase64(Jimp.AUTO, (err, ret) => {
+			event.sender.send('warp-text-response', b64)
+		})
+	}
+})	
 
 ipcMain.on('custom-font', (event, arg) => {
 	let json = {}
