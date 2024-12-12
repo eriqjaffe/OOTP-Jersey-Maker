@@ -5,7 +5,6 @@ const url = require('url');
 const Jimp = require('jimp');
 const { distortUnwrap } = require('@alxcube/lens')
 require('@alxcube/lens-jimp');
-const ttfInfo = require('ttfinfo');
 const isMac = process.platform === 'darwin'
 const os = require('os');
 const tempDir = os.tmpdir()
