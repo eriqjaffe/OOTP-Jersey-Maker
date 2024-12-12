@@ -12,13 +12,14 @@
 	<script type="text/javascript" src="./scripts/canvassaver.js"></script>
 	<script type="text/javascript" src="./scripts/modernizr.custom.68502.js"></script>
 	<script type="text/javascript" src="./scripts/jquery.magnific-popup.min.js"></script>
-	<script type="text/javascript" src="./scripts/jquery.dd.min.js"></script>
+	<script type="text/javascript" src="./scripts/dd.min.js"></script>
 	<script type="text/javascript" src="./scripts/jquery.range-min.js"></script>
 	<script type="text/javascript" src="./scripts/jquery.mousewheel.min.js"></script>
 	<script type="text/javascript" src="./scripts/spin.min.js"></script>
 	<script type="text/javascript" src="./scripts/jquery.html5storage.min.js"></script>
 	<script type="text/javascript" src="./scripts/jquery.fileDownload.js"></script>
 	<script type="text/javascript" src="./scripts/fontfaceobserver.js"></script>
+	<script type="text/javascript" src="./scripts/opentype.js"></script>
 	<script>if (window.module) module = window.module;</script>
 	<link href='./scripts/jerseymaker.css' rel='stylesheet' type='text/css'>
 	<link href='./scripts/spectrum.css' rel='stylesheet' type='text/css'>
@@ -27,7 +28,8 @@
 	<link href='./scripts/dd.css' rel='stylesheet' type='text/css'>
 	<link href='./scripts/jquery.range.css' rel='stylesheet' type='text/css'>
 	<script>
-		const params = new URLSearchParams(window.location.search)
+		const { ipcRenderer } = require('electron')
+ 		const params = new URLSearchParams(window.location.search)
 		const port = params.get('port')
 
 		var initialColors = {jerseyColor:"#FFFFFF",jerseyFrontColor:"#008800",jerseyBackColor:"#880000",buttonPadFillColor:"transparent",buttonPadColor:"#000000",collarColor:"#103959",leftSleeveColor:"#FFFFFF",rightSleeveColor:"#FFFFFF",leftSleeveLongColor:"#FFFFFF",rightSleeveLongColor:"#FFFFFF",pinstripesColor:"#000000",pinstripesStrokeColor:"transparent",undershirtColor:"#103959",sleeveSeamAngledColor:"#0202f0",sleeveSeamAngledStrokeColor:"#000000",racingStripeLargeColor:"#ff0000",racingStripeSmallColor:"#00FF00",sleeveSeamXLColor:"#971717",sleeveSeamXLStrokeColor:"#000000",smallTopShouldersColor:"#999999",smallTopShouldersStrokeColor:"#000000",bigTopShouldersColor:"#00FF00",bigTopShouldersStrokeColor:"#000000",sidePanelSmallColor:"#FF0000",sidePanelSmallStrokeColor:"#0000FF",sidePanelSmallRoundedColor:"#0000FF",sidePanelSmallRoundedStrokeColor:"#FF0000",sidePanelLargeRoundedColor:"#00FF00",sidePanelLargeRoundedStrokeColor:"yellow",sidePanelVColor:"yellow",sidePanelVStrokeColor:"#00FF00",arcedStripeColor:"#003399",placketPipingInnerColor:"#FF0000",placketPipingMiddleColor:"#00FF00",placketPipingOuterColor:"#0000FF",widePlacketPipingInnerColor:"#FF0000",widePlacketPipingMiddleColor:"#00FF00",widePlacketPipingOuterColor:"#0000FF",tequilaSunrise1Color:"#ef7212",tequilaSunrise2Color:"#ffcf00",tequilaSunrise3Color:"#ff7900",tequilaSunrise4Color:"#d70039",sleevePipingInnerColor:"#FF0000",sleevePipingMiddleColor:"#FFFFFF",sleevePipingOuterColor:"#0000FF",thinCuffInnerColor:"#FF0000",thinCuffMiddleColor:"#FFFFFF",thinCuffOuterColor:"#0000FF",sleeveCuffInnerColor:"#FF0000",sleeveCuffMiddleColor:"#FFFFFF",sleeveCuffOuterColor:"#0000FF",shoulderPipingInnerColor:"#FF0000",shoulderPipingMiddleColor:"#FFFFFF",shoulderPipingOuterColor:"#0000FF",swashFillColor:"#000000",swashStrokeColor:"#FF0000",wordmarkTextColor:"#103959",wordmarkTextStroke1Color:"#FFFFFF",wordmarkTextStroke2Color:"#FF0000",beachBlanketTopColor:"#FF0000",beachBlanketMiddleColor:"#0000FF",beachBlanketBottomColor:"#FF0000",vNeckThinInnerColor:"#FF0000",vNeckThinMiddleColor:"#FFFFFF",vNeckThinOuterColor:"#0000FF",vNeckOffsetInnerColor:"#FF0000",vNeckOffsetMiddleColor:"#FFFFFF",vNeckOffsetOuterColor:"#0000FF",vNeckThickInnerColor:"#FF0000",vNeckThickMiddleColor:"#FFFFFF",vNeckThickOuterColor:"#0000FF",buttonsColor:"#FFFFFF",camoBaseColor:"#4a551e",camoLayer1Color:"#052503",camoLayer2Color:"#beb585",digiCamoBaseColor:"#9a8b62",digiCamoLayer1Color:"#372900",digiCamoLayer2Color:"#736632",butterflyColor:"#103959",cadetCollarColor:"#FF0000",fullCollarColor:"#00FF00",neckCollarColor:"#0000FF",sunCollar1Color:"#FF0000",sunCollar2Color:"#00FF00",buttonDownCollarColor:"#00FFFF",jerseyFlapColor:"#191970",jerseyFlapTrimColor:"#800000",jerseyFlapButtonsColor:"#FFFFFF",jerseyShield1WideStrokeColor:"#FF0000",jerseyShield1WideColor:"#0000FF",jerseyShield1InnerStrokeColor:"#000000",jerseyShield1InnerColor:"#00FF00",jerseyShield1ButtonsColor:"#FFFFFF",jerseyShield2StrokeColor:"#FF0000",jerseyShield2InnerColor:"#0000FF",jerseyShield2ButtonsColor:"#FFFFFF",jerseyPanelStrokeColor:"#FF0000",jerseyPanelFillColor:"#00FF00",jerseyPanelButtonColor:"#FFFFFF",bowTie1Color:"#0000FF",bowTie2Color:"#FF0000",tieColor:"#272A26",pocketFillColor:"#fffdd0",xLacesColor:"#0000FF",vLacesColor:"#FF0000",hockeyLacesColor:"#CFCFCF",suspendersColor:"#228b22",nikeHornsColor:"#FF9933",shoulderLoops1Color:"#6600CC",shoulderLoops2Color:"#339933",ncaaShoulderColor:"#996633",makersMarkColor:"#000000",snakeskinColor:"#A41E20",rainbowShoulder1Color:"#041E42",
@@ -45,6 +47,7 @@
 		var validFonts = ['Acme','AthleticGothic','AthleticGothicShadow','BeavertonScript','Berkshire_Swash','Cantora_One','CaxtonRoman','Chela_One','Circus','Condiment','Cookie','Courgette','Croissant_One','Damion','Engagement','RawlingsFancyBlock','Germania_One','Graduate','Grand_Hotel','Jockey_One','Kansas','Kaushan_Script','Leckerli_One','Lily_Script_One','Lobster','Lobster_Two','Metal_Mania','Miniver','Molle','New_Rocker','Norican','OldEnglish','Oleo_Script','Oleo_Script_Swash_Caps','Pacifico','Pirata_One','Playball','ProFullBlock','RichardsonFancyBlock','Rubik_One','Rum_Raisin','Satisfy','Seymour_One','spl28','TiffanyRegular','Trade_Winds','Tuscan','UnifrakturCook','UnifrakturMaguntia','Vibur','Viga','Wellfleet','Wendy_One','Yellowtail']
 		var fontSources = {Acme: "Acme-Regular.ttf",athletic_gothicregular: "athletic_gothic-webfont.ttf",athletic_gothic_shadowregular: "athletic_gothic_shadow-webfont.ttf",beaverton_scriptregular: "beaverton_script-webfont.ttf",'"Berkshire Swash"': "BerkshireSwash-Regular.ttf",'"Cantora One"': "CantoraOne-Regular.ttf",caxton_romanregular: "caxton_roman-webfont.ttf",'"Chela One"': "ChelaOne-Regular.ttf",russell_circusregular: "circus-webfont.ttf",Condiment: "Condiment-Regular.ttf",Cookie: "Cookie-Regular.ttf",Courgette: "Courgette-Regular.ttf",'"Croissant One"': "CroissantOne-Regular.ttf",Damion: "Damion-Regular.ttf",Engagement: "Engagement-Regular.ttf",rawlings_fancy_blockregular: "rawlingsfancyblock-regular-webfont.ttf",'"Germania One"': "GermaniaOne-Regular.ttf",Graduate: "Graduate-Regular.ttf",'"Grand Hotel"': "GrandHotel-Regular.ttf",'"Jockey One"': "JockeyOne-Regular.ttf",kansasregular: "tuscan-webfont.ttf",'"Kaushan Script"': "KaushanScript-Regular.ttf",'"Leckerli One"': "LeckerliOne-Regular.ttf",'"Lily Script One"': "LilyScriptOne-Regular.ttf",Lobster: "Lobster-Regular.ttf",'"Lobster Two"': "LobsterTwo-Regular.ttf",'"Metal Mania"': "MetalMania-Regular.ttf",Miniver: "Miniver-Regular.ttf",'Molle,italic': "Molle-Regular.ttf",'"New Rocker"': "NewRocker-Regular.ttf",Norican: "Norican-Regular.ttf",rawlings_old_englishmedium: "rawlingsoldenglish-webfont.ttf",'"Oleo Script"': "OleoScript-Regular.ttf",'"Oleo Script Swash Caps"': "OleoScriptSwashCaps-Regular.ttf",Pacifico: "Pacifico.ttf",'"Pirata One"': "PirataOne-Regular.ttf",Playball: "Playball-Regular.ttf",pro_full_blockregular: "pro_full_block-webfont.ttf",richardson_fancy_blockregular: "richardson_fancy_block-webfont.ttf",'"Rubik One"': "RubikOne-Regular.ttf",'"Rum Raisin"': "RumRaisin-Regular.ttf",Satisfy: "Satisfy-Regular.ttf",'"Seymour One"': "SeymourOne-Regular.ttf",spl28scriptregular: "spl28script-webfont.ttf",ua_tiffanyregular: "tiffany-webfont.ttf",'"Trade Winds"': "TradeWinds-Regular.ttf",mlb_tuscan_newmedium: "mlb_tuscan_new-webfont.ttf",UnifrakturCook: "UnifrakturCook-Bold.ttf",UnifrakturMaguntia: "UnifrakturMaguntia-Book.ttf",Vibur: "Vibur-Regular.ttf",Viga: "Viga-Regular.ttf",Wellfleet: "Wellfleet-Regular.ttf",'"Wendy One"': "WendyOne-Regular.ttf",Yellowtail: "Yellowtail-Regular.ttf"};
 		var fontFamilies = {Acme: "Acme",athletic_gothicregular: "AthleticGothic",athletic_gothic_shadowregular: "AthleticGothicShadow",beaverton_scriptregular: "BeavertonScript",'Berkshire Swash': "Berkshire_Swash",'Cantora One': "Cantora_One",caxton_romanregular: "CaxtonRoman",'Chela One': "Chela_One",russell_circusregular: "Circus",Condiment: "Comdiment",Cookie: "Coookie",Courgette: "Courgette",'Croissant One': "Croissant_one",Damion: "Damion",Engagement: "Engagement",rawlings_fancy_blockregular: "RawlingsFancyBlock",'Germania One': "Germania_One",Graduate: "Graduate",'Grand Hotel': "Grand_Hotel",'Jockey One': "Jockey_One",kansasregular: "Kansas",'Kaushan Script': "Kaushan_Script",'Leckerli One': "Leckerli_One",'Lily Script One': "Lily_Script_One",Lobster: "Lobster",'Lobster Two': "Lobster_Two",'Metal Mania': "Metal_Mania",Miniver: "Miniver",'Molle,italic': "Molle",'New Rocker': "New_Rocker",Norican: "Norican",rawlings_old_englishmedium: "OldEnglish",'Oleo Script': "Oleo_Script",'Oleo Script Swash Caps': "Oleo_Script_Swash_Caps",Pacifico: "Pacifico",'Pirata One': "Pirata_One",Playball: "Playball",pro_full_blockregular: "ProFullBlock",richardson_fancy_blockregular: "RichardsonFancyBlock",'Rubik One': "Rubik_One",'Rum Raisin': "Rum_Raisin",Satisfy: "Satisfy",'Seymour One': "Seymour_One",spl28scriptregular: "spl28",ua_tiffanyregular: "TiffanyRegular",'Trade Winds': "Trade_Winds",mlb_tuscan_newmedium: "Tuscan",UnifrakturCook: "UnifrakturCook",UnifrakturMaguntia: "UnifrakturMaguntia",Vibur: "Vibur",Viga: "Viga",Wellfleet: "Wellfleet",'Wendy One': "Wendy_One",Yellowtail: "Yellowtail"};
+		var fontList = ["Acme", "All State", "Athletic Gothic", "Athletic Gothic Shadow", "Beaverton Script", "Berkshire Swash", "CantoraOne", "Caxton Roman", "Chela", "Russell Circus", "Condiment", "Cookie", "Courgette", "Croissant", "Damion", "Engagement", "Germania", "Graduate", "Grand Hotel", "Jockey", "Kaushan Script", "Leckerli", "Lily Script", "Lobster", "Lobster Two", "Metal Mania", "Miniver", "MLB Block", "MLB Chicago N", "McAuliffe", "Molle", "New Rocker", "Norican", "Oleo Script", "Pacifico", "Pirata", "Playball", "Pro Full Block", "Quicksand", "Rubik Mono", "Rubik", "Rum Raisin", "Satisfy", "Seymour", "Tiffany", "Trade Winds", "Kansas", "Unifraktur Cook", "Unifraktur Maguntia", "Varsity Block C", "Varsity Classic Serif A", "Varsity Classic Serif B", "Vibur", "Viga", "Wellfleet", "Wendy", "Yellowtail", "Fancy Block", "Old English", "Fancy Block 2", "SPL Script", "Varsity Classic D", "Varsity Block A", "Varsity Block B", "Varsity Block D", "Varsity Classic A", "Varsity Classic B", "Varsity Classic C"]
 		var customFonts = [];
 		var exportMeta = {}
 		const digiGroup = [];
@@ -811,7 +814,77 @@
 							<table style="width:100%;">
 								<tr>
 									<td colspan="3">
-										<select id="fontTypeCombo" class='textOption Leckerli_One' style="width:100%;">
+										<select id="fontTypeCombo" class="textOption" style="width:100%;">
+											<option data-image="./images/Acme.png" value="./fonts/Acme-Regular.ttf">Acme</option>
+											<option data-image="./images/All State.png" value="./fonts/all_state-webfont.ttf">All State</option>
+											<option data-image="./images/Athletic Gothic.png" value="./fonts/athletic_gothic-webfont.ttf">Athletic Gothic</option>
+											<option data-image="./images/Athletic Gothic Shadow.png" value="./fonts/athletic_gothic_shadow-webfont.ttf">Athletic Gothic Shadow</option>
+											<option data-image="./images/Beaverton Script.png" value="./fonts/beaverton_script-webfont.ttf">Beaverton Script</option>
+											<option data-image="./images/Berkshire Swash.png" value="./fonts/BerkshireSwash-Regular.ttf">Berkshire Swash</option>
+											<option data-image="./images/CantoraOne.png" value="./fonts/CantoraOne-Regular.ttf">CantoraOne</option>
+											<option data-image="./images/Caxton Roman.png" value="./fonts/caxton_roman-webfont.ttf">Caxton Roman</option>
+											<option data-image="./images/Chela One.png" value="./fonts/ChelaOne-Regular.ttf">Chela</option>
+											<option data-image="./images/Russell Circus.png" value="./fonts/circus-webfont.ttf">Russell Circus</option>
+											<option data-image="./images/Condiment.png" value="./fonts/Condiment-Regular.ttf">Condiment</option>
+											<option data-image="./images/Cookie.png" value="./fonts/Cookie-Regular.ttf">Cookie</option>
+											<option data-image="./images/Courgette.png" value="./fonts/Courgette-Regular.ttf">Courgette</option>
+											<option data-image="./images/Croissant One.png" value="./fonts/CroissantOne-Regular.ttf">Croissant</option>
+											<option data-image="./images/Damion.png" value="./fonts/Damion-Regular.ttf">Damion</option>
+											<option data-image="./images/Engagement.png" value="./fonts/Engagement-Regular.ttf">Engagement</option>
+											<option data-image="./images/Germania One.png" value="./fonts/GermaniaOne-Regular.ttf">Germania</option>
+											<option data-image="./images/Graduate.png" value="./fonts/Graduate-Regular.ttf">Graduate</option>
+											<option data-image="./images/Grand Hotel.png" value="./fonts/GrandHotel-Regular.ttf">Grand Hotel</option>
+											<option data-image="./images/Jockey One.png" value="./fonts/JockeyOne-Regular.ttf">Jockey</option>
+											<option data-image="./images/Kaushan Script.png" value="./fonts/KaushanScript-Regular.ttf">Kaushan Script</option>
+											<option data-image="./images/Leckerli One.png" value="./fonts/LeckerliOne-Regular.ttf" selected>Leckerli</option>
+											<option data-image="./images/Lily Script One.png" value="./fonts/LilyScriptOne-Regular.ttf">Lily Script</option>
+											<option data-image="./images/Lobster.png" value="./fonts/Lobster-Regular.ttf">Lobster</option>
+											<option data-image="./images/Lobster Two.png" value="./fonts/LobsterTwo-Regular.ttf">Lobster Two</option>
+											<option data-image="./images/Metal Mania.png" value="./fonts/MetalMania-Regular.ttf">Metal Mania</option>
+											<option data-image="./images/Miniver.png" value="./fonts/Miniver-Regular.ttf">Miniver</option>
+											<option data-image="./images/MLB Block.png" value="./fonts/MLBBlock.ttf">MLB Block</option>
+											<option data-image="./images/MLB Cubs.png" value="./fonts/MLBCubs.ttf">MLB Chicago N</option>
+											<option data-image="./images/MLB Red Sox.png" value="./fonts/MLBRedSox.ttf">McAuliffe</option>
+											<option data-image="./images/Molle.png" value="./fonts/Molle-Regular.ttf">Molle</option>
+											<option data-image="./images/New Rocker.png" value="./fonts/NewRocker-Regular.ttf">New Rocker</option>
+											<option data-image="./images/Norican.png" value="./fonts/Norican-Regular.ttf">Norican</option>
+											<option data-image="./images/Oleo Script.png" value="./fonts/OleoScript-Regular.ttf">Oleo Script</option>
+											<option data-image="./images/Pacifico.png" value="./fonts/Pacifico.ttf">Pacifico</option>
+											<option data-image="./images/Pirata One.png" value="./fonts/PirataOne-Regular.ttf">Pirata</option>
+											<option data-image="./images/Playball.png" value="./fonts/Playball-Regular.ttf">Playball</option>
+											<option data-image="./images/Pro Full Block.png" value="./fonts/pro_full_block-webfont.ttf">Pro Full Block</option>
+											<option data-image="./images/Quicksand.png" value="./fonts/Quicksand-Regular.ttf">Quicksand</option>
+											<option data-image="./images/Rubik Mono One.png" value="./fonts/RubikMonoOne-Regular.ttf">Rubik Mono</option>
+											<option data-image="./images/Rubik One.png" value="./fonts/RubikOne-Regular.ttf">Rubik</option>
+											<option data-image="./images/Rum Raisin.png" value="./fonts/RumRaisin-Regular.ttf">Rum Raisin</option>
+											<option data-image="./images/Satisfy.png" value="./fonts/Satisfy-Regular.ttf">Satisfy</option>
+											<option data-image="./images/Seymour One.png" value="./fonts/SeymourOne-Regular.ttf">Seymour</option>
+											<option data-image="./images/UA Tiffany.png" value="./fonts/tiffany-webfont.ttf">Tiffany</option>
+											<option data-image="./images/Trade Winds.png" value="./fonts/TradeWinds-Regular.ttf">Trade Winds</option>
+											<option data-image="./images/Kansas.png" value="./fonts/tuscan-webfont.ttf">Kansas</option>
+											<option data-image="./images/UnifrakturCook.png" value="./fonts/UnifrakturCook-Bold.ttf">Unifraktur Cook</option>
+											<option data-image="./images/UnifrakturMaguntia.png" value="./fonts/UnifrakturMaguntia-Book.ttf">Unifraktur Maguntia</option>
+											<option data-image="./images/Varsity Block C.png" value="./fonts/VarsityBlockC.ttf">Varsity Block C</option>
+											<option data-image="./images/Varsity Classic Serif A.png" value="./fonts/VarsityClassicSerifA.ttf">Varsity Classic Serif A</option>
+											<option data-image="./images/Varsity Classic Serif B.png" value="./fonts/VarsityClassicSerifB.ttf">Varsity Classic Serif B</option>
+											<option data-image="./images/Vibur.png" value="./fonts/Vibur-Regular.ttf">Vibur</option>
+											<option data-image="./images/Viga.png" value="./fonts/Viga-Regular.ttf">Viga</option>
+											<option data-image="./images/Wellfleet.png" value="./fonts/Wellfleet-Regular.ttf">Wellfleet</option>
+											<option data-image="./images/Wendy One.png" value="./fonts/WendyOne-Regular.ttf">Wendy</option>
+											<option data-image="./images/Yellowtail.png" value="./fonts/Yellowtail-Regular.ttf">Yellowtail</option>
+											<option data-image="./images/Rawlings Fancy Block.png" value="./fonts/rawlingsfancyblock-regular-webfont.ttf">Fancy Block</option>
+											<option data-image="./images/Rawlings Old English.png" value="./fonts/rawlingsoldenglish-webfont.ttf">Old English</option>
+											<option data-image="./images/Richardson Fancy Block.png" value="./fonts/richardson_fancy_block-webfont.ttf">Fancy Block 2</option>
+											<option data-image="./images/SPL28Script.png" value="./fonts/spl28script-webfont.ttf">SPL Script</option>
+											<option data-image="./images/VarsityClassicD.png" value="./fonts/VarsityClassicD.ttf">Varsity Classic D</option>
+											<option data-image="./images/VarsityBlockA.png" value="./fonts/VarsityBlockA.ttf">Varsity Block A</option>
+											<option data-image="./images/VarsityBlockB.png" value="./fonts/VarsityBlockB.ttf">Varsity Block B</option>
+											<option data-image="./images/VarsityBlockD.png" value="./fonts/VarsityBlockD.ttf">Varsity Block D</option>
+											<option data-image="./images/VarsityClassicA.png" value="./fonts/VarsityClassicA.ttf">Varsity Classic A</option>
+											<option data-image="./images/VarsityClassicB.png" value="./fonts/VarsityClassicB.ttf">Varsity Classic B</option>
+											<option data-image="./images/VarsityClassicC.png" value="./fonts/VarsityClassicC.ttf">Varsity Classic C</option>
+										</select>
+										<!-- <select id="fontTypeCombo" class='textOption Leckerli_One' style="width:100%;">
 											<optgroup class='Acme'>
 											<option value='Acme'>Acme</option>
 											</optgroup>
@@ -926,9 +999,9 @@
 											<optgroup class='ProFullBlock'>
 											<option value='ProFullBlock'>Pro Full Block</option>
 											</optgroup>
-											<!--<optgroup class='Quicksand'>
+											<optgroup class='Quicksand'>
 											<option value='Quicksand'>Quicksand</option>
-											</optgroup>-->
+											</optgroup>
 											<optgroup class='RichardsonFancyBlock'>
 											<option value='RichardsonFancyBlock'>Richardson Block</option>
 											</optgroup>
@@ -977,8 +1050,8 @@
 											<optgroup class='Yellowtail'>
 											<option value='Yellowtail'>Yellowtail</option>
 											</optgroup>
-										</select>
-									</td>
+										</select> -->
+									</td> 
 								</tr>
 								<tr><td colspan="3" align="center">
 									<input id="customFont" type="file" name="customFont" accept=".ttf, .otf" style="display:none;" />
@@ -1154,6 +1227,7 @@
 	var logoCanvas = new fabric.Canvas('guides',{enableRetinaScaling:false});
 
 	$(document).ready(function() {
+		ipcRenderer.send('local-font-folder', null)
 		$("#textureSelect").val(defaultTexture)
 		$("#preferredColorFormat").val(prefColorFormat)
 		$("#preferredTexture").val(prefTexture)
@@ -1175,7 +1249,11 @@
 				$(this).append($('<option />').val(i).html(i));
 			}
 		})
-		$(".msDropDown").msDropDown();
+		//$(".msDropDown").msDropDown();
+		let jerseyDropdown = new MsDropdown(document.getElementById("fontTypeCombo"), {visibleRows: 6})
+		let swashDropdown = new MsDropdown(document.getElementById("swashCombo"), {visibleRows: 5})
+		let warpDropdown = new MsDropdown(document.getElementById("warpEffect"), {visibleRows: 8})
+		$(".ms-dd").addClass("disabled")
 		if ($(".wordmarkToggle").is(':checked')) {
 			$(".textOption").each(function() {
 				$(this).prop( "disabled", false );
@@ -1183,7 +1261,7 @@
 			$(".textColorSelector").each(function() {
 				$(this).spectrum('enable');
 			})
-			$("#warpEffect").msDropDown().data("dd").set("disabled", false)
+			//$("#warpEffect").msDropDown().data("dd").set("disabled", false)
 		} else {
 			state = false;
 			$(".textOption").each(function() {
@@ -1192,7 +1270,7 @@
 			$(".textColorSelector").each(function() {
 				$(this).spectrum('disable');
 			})
-			$("#warpEffect").msDropDown().data("dd").set("disabled", true)
+			//$("#warpEffect").msDropDown().data("dd").set("disabled", true)
 		}
 		$("#buttonOpacitySpan").html(buttonOpacity);
 		$("#flapButtonOpacitySpan").html(buttonOpacity);
@@ -1241,9 +1319,9 @@
 		
 		$(".swashToggle").each(function(e) {
 			if ($(this).is(':checked')) {
-				$("#swashCombo").msDropDown().data("dd").set("disabled", false);
+				//$("#swashCombo").msDropDown().data("dd").set("disabled", false);
 			} else {
-				$("#swashCombo").msDropDown().data("dd").set("disabled", true);
+				//$("#swashCombo").msDropDown().data("dd").set("disabled", true);
 			}
 		})
 	});
@@ -1251,97 +1329,118 @@
 	initializeCanvas();
 	
     $("#fontTypeCombo").on("change",function() {
-		var style = $(this).val();
-		var font_family = $("."+style).css("font-family");
-		var objects = logoCanvas.getObjects("group");
-		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
-		g.getObjects().forEach(function(o) {
-			o.set("fontFamily", "Yellowtail")
-			o.set("fontFamily", font_family)
-		})
-		logoCanvas.renderAll()
-		$(this).removeClass().addClass(style);
-		switch ($("#warpEffect").val()) {
-			case "none":
-				logoCanvas.getObjects('image').forEach(function(o) {
-					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
-					}
-				})
-				g.set("visible", true)
-				g.set("skewX", 0)
-				g.set("skewY", 0)
-				logoCanvas.renderAll();
-				break;
-			case "skewUp":
-				var amount = (parseInt($("#warpAmount").val())/100)*-45;
-				logoCanvas.getObjects('image').forEach(function(o) {
-					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
-					}
-				})
-				g.set("visible", true)
-				g.set("skewX", 0)
-				g.set("skewY", amount)
-				logoCanvas.renderAll();
-				break;
-			case "skewDown":
-				var amount = (parseInt($("#warpAmount").val())/100)*45;
-				logoCanvas.getObjects('image').forEach(function(o) {
-					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
-					}
-				})
-				g.set("visible", true)
-				g.set("skewX", 0)
-				g.set("skewY", amount)
-				logoCanvas.renderAll();
-				break;
-			case "skewLeft":
-				var amount = (parseInt($("#warpAmount").val())/100)*45;
-				logoCanvas.getObjects('image').forEach(function(o) {
-					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
-					}
-				})
-				g.set("visible", true)
-				g.set("skewY", 0)
-				g.set("skewX", amount)
-				logoCanvas.renderAll();
-				break;
-			case "skewRight":
-				var amount = (parseInt($("#warpAmount").val())/100)*-45;
-				logoCanvas.getObjects('image').forEach(function(o) {
-					if (o.id == 'warpedText') {
-						logoCanvas.remove(o)
-					}
-				})
-				g.set("visible", true)
-				g.set("skewY", 0)
-				g.set("skewX", amount)
-				logoCanvas.renderAll();
-				break;
-			default:
-				g.set("skewX", 0)
-				g.set("skewY", 0)
-				logoCanvas.renderAll();
-				warpText();
-				break;
-		}
-		logoCanvas.renderAll();
+		wordmarkChange($(this).val(), false)
 	})
 	
-	$("#wordmarkTextBox").on("change",function() {
-		var g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
-		g.getObjects().forEach(function(o) {
-			o.set("text",$("#wordmarkTextBox").val())
-		})
-		logoCanvas.renderAll();
-		if ($("#warpEffect").val().indexOf("arc") > -1 || $("#warpEffect").val().indexOf("bilinear") > -1) {
-			warpText();
-		}
-		
+	$("#wordmarkTextBox").on("input",function() {
+		wordmarkChange($("#fontTypeCombo").val())
 	})
+
+	function wordmarkChange(data,newFont) {
+		let val = (data.fontPath == undefined) ? data : data.fontPath;
+		opentype.load(val, (err,font) => {
+			if (err || !font) {
+				console.log(err)
+				return;
+			}
+
+			const path = font.getPath($("#wordmarkTextBox").val(),256,681,30)
+			const svgPath = path.toPathData(5)
+			
+			var grp = logoCanvas.getObjects("group").find(o => o.id === "wordmark")
+
+			grp.getObjects('path').forEach(function(o) {
+				grp.removeWithUpdate(o)
+			})
+
+			wordmarkText = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				id: 'wordmarkText',
+				fill: ($("#wordmarkTextColor").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextColor").spectrum("get").toHexString(),
+				stroke: ($("#wordmarkTextColor").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextColor").spectrum("get").toHexString(),
+				strokeWidth: 0,
+				visible: $("#wordmarkTextColorCheck").is(":checked")
+			})
+		
+			wordmarkTextStroke1 = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				id: 'wordmarkTextStroke1',
+				stroke: ($("#wordmarkTextStroke1Color").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextStroke1Color").spectrum("get").toHexString(),
+				strokeWidth: 6,
+				strokeLineCap: "round",
+				fill: ($("#wordmarkTextStroke1Color").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextStroke1Color").spectrum("get").toHexString(),
+				visible: $("#wordmarkTextStroke1ColorCheck").is(":checked")
+			})
+		
+			wordmarkTextStroke2 = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				strokeLineCap: "round",
+				id: 'wordmarkTextStroke2',
+				stroke: ($("#wordmarkTextStroke2Color").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextStroke2Color").spectrum("get").toHexString(),
+				strokeWidth: 10,
+				strokeLineCap: "round",
+				fill: ($("#wordmarkTextStroke2Color").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextStroke2Color").spectrum("get").toHexString(),
+				visible: $("#wordmarkTextStroke2ColorCheck").is(":checked")
+			})
+
+			grp.addWithUpdate(wordmarkTextStroke2)
+			grp.addWithUpdate(wordmarkTextStroke1)
+			grp.addWithUpdate(wordmarkText)
+
+			logoCanvas.renderAll()
+
+			if (newFont) {
+				var thumbText = font.getPath("ABC 123", 0, 0, 96)
+				var outPath = thumbText.toPathData(5)
+
+				var thumb = new fabric.Path(outPath, {
+					fill: 'black',
+					top: 0,
+					left: 0
+				})
+
+				//refreshDropdowns("jersey",data,foo)
+				data.thumb = thumb.toDataURL()
+				customFonts.push(data)
+
+				const dropdown = document.getElementById("fontTypeCombo").msDropdown;
+
+				const displayName = (data.fontStyle == "Regular") ? data.fontName : data.fontName +" "+data.fontStyle
+
+				const idx = findIndexByText(dropdown, displayName)
+
+				if (idx == -1) {
+					dropdown.add({text:displayName, value:data.fontPath, image:thumb.toDataURL()},0)
+					dropdown.selectedIndex = 0			
+				} else {
+					dropdown.selectedIndex = idx
+				}
+				const selectedFont = $("#fontTypeCombo").val()
+				$("#fontTypeCombo").html($('#fontTypeCombo option').sort(function(x, y) {
+					return $(x).text().toLowerCase() < $(y).text().toLowerCase() ? -1 : 1;
+				}))
+				$("#fontTypeCombo").val(selectedFont)
+
+			}
+
+			$("#warpEffect").trigger("change")
+		})
+	}
 	
 	$("#jerseyColor").spectrum({
 		showInput: true,
@@ -3040,8 +3139,78 @@
 			id: 'swash6Stroke',
 			fill: initialColors["swashStrokeColor"],
 		});
+
+		opentype.load("./fonts/LeckerliOne-Regular.ttf", (err,font) => {
+			if (err || !font) {
+				log.error(err)
+				return;
+			}
+
+			const path = font.getPath("Bulldogs",256,681,30)
+			const svgPath = path.toPathData(5)
+
+			wordmarkText = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				id: 'wordmarkText',
+				fill: initialColors["wordmarkTextColor"],
+				stroke: initialColors["wordmarkTextColor"],
+				strokeWidth: 0
+			})
 		
-		wordmarkText = new fabric.Text('Bulldogs',{
+			wordmarkTextStroke1 = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				stroke: initialColors["wordmarkTextStroke1Color"],
+				strokeWidth: 6,
+				strokeLineCap: "round",
+				id: 'wordmarkTextStroke1',
+				fill: initialColors["wordmarkTextStroke1Color"]
+			})
+		
+			wordmarkTextStroke2 = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				stroke: initialColors["wordmarkTextStroke2Color"],
+				strokeWidth: 10,
+				strokeLineCap: "round",
+				id: 'wordmarkTextStroke2',
+				fill: initialColors["wordmarkTextStroke2Color"]
+			})
+			
+			wordmark = new fabric.Group ([],{
+				visible: false,
+				id:'wordmark',
+				borderColor: 'red',
+				cornerColor: 'yellow',
+				cornerSize: 12,
+				transparentCorners: false,
+				originX: 'center',
+				originY: 'center',
+				visible: false,
+				description: 'Wordmark'
+			})
+
+			wordmark.addWithUpdate(wordmarkTextStroke2)
+			wordmark.addWithUpdate(wordmarkTextStroke1)
+			wordmark.addWithUpdate(wordmarkText)
+
+			logoCanvas.add(wordmark)
+		})
+		
+		/* wordmarkText = new fabric.Text('Bulldogs',{
 			fontFamily: "Leckerli One",
 			fontSize: 30,
 			originX: 'center',
@@ -3097,7 +3266,7 @@
 			cornerColor: 'yellow',
 			cornerSize: 12,
 			transparentCorners: false,
-		});
+		}); */
 		
 		swash1Group = new fabric.Group([swash1Stroke,swash1], {
 			id: 'swash1',
@@ -3378,7 +3547,7 @@
 		logoCanvas.add(swash4Group);
 		logoCanvas.add(swash5Group);
 		logoCanvas.add(swash6Group);
-		logoCanvas.add(wordmark);
+		//logoCanvas.add(wordmark);
 
 		undershirtGroup = new fabric.Group([],{
 			top: 0,
@@ -3591,7 +3760,8 @@
 			$(".textColorSelector").each(function() {
 				$(this).spectrum('enable');
 			})
-			$("#warpEffect").msDropDown().data("dd").set("disabled", false);
+			$(".ms-dd").removeClass("disabled")
+			//$("#warpEffect").msDropDown().data("dd").set("disabled", false);
 		} else {
 			state = false;
 			$(".textOption").each(function() {
@@ -3602,8 +3772,9 @@
 			})
 			//logoCanvas.deactivateAll();
 			$("#tipContainer").html("");
-			$("#warpEffect").msDropDown().data("dd").set("disabled", true);
+			//$("#warpEffect").msDropDown().data("dd").set("disabled", true);
 			$("#warpAmount").prop("disabled",true);
+			$(".ms-dd").addClass("disabled")
 		}
 		var id = $(this).data("id");
 		var objects = logoCanvas.getObjects();
@@ -3751,58 +3922,6 @@
 		}
 	})
 	
-	document.getElementById('uploadedImg').onchange = function handleImage(e) {
-		var reader = new FileReader();
-		reader.onload = function (event) {
-			var imgObj = new Image();
-			imgObj.src = event.target.result;
-			imgObj.onload = function () {
-				
-				var image = new fabric.Image(imgObj);
-				image.set({
-					originX: 'center',
-					originY: 'center',
-					left: 256,
-					top: 256,
-					perPixelTargetFind: true,
-					centeredScaling: true,
-					centeredRotation: true,
-					borderColor: 'red',
-					cornerColor: 'yellow',
-					cornerSize: 12,
-					transparentCorners: false,
-					name: $("#uploadedImg").val().split('\\').pop()
-				});
-				image.filters.push(new fabric.Image.filters.Resize({
-					resizeType: 'lanczos', // typo fixed
-					lanczosLobes: 2 // typo fixed
-				}));
-				image.on('object:modified',function() {
-					imLeft = image.get('left')
-					imTop = image.get('top');
-				})
-
-				image.on('selected',function() {
-					$("#straightenObject").css("display","inline-block");
-					$("#fileName").html(image.get('id'));
-					if ($("#trimImageDiv").css("display") == "none") {
-						$("#trimImageDiv").css("display","block");
-						$("#uploadImageDiv").css("display","none");
-						$("#selectedImageDiv").css("display","block");
-					}
-					$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
-				})
-
-				logoCanvas.add(image);
-
-				imLeft = image.get('left')
-				imTop = image.get('top');
-			}
-			
-		}
-		reader.readAsDataURL(e.target.files[0]);
-	}
-	
 	$("#textureSelect").on("change",function() {
 		switch ($(this).val()) {
 			case null:
@@ -3829,80 +3948,55 @@
 				break;
 		}
 	})
-
-	/* $("#textureSelect").on("change",function() {
-		if ($(this).val() != "") {
-			defaultTexture = $(this).val();
-			texture.clearRect(0, 0, 512, 512);
-			reRenderBG();
-		} else {
-			$("#uploadedTexture").click();
-		}
-
-	}) */
 	
-	//$("#fakeImageButton").on("click",function() {
-		//$("#uploadedImg").click();
-	//})
-
 	$("#fakeImageButton").on("click",function() {
-		$.ajax({
-			type: "GET",
-			url: "http://127.0.0.1:"+port+"/uploadImage",
-			success: function(data) {
-				var imgObj = new Image();
-				imgObj.src = data.image;
-				imgObj.onload = function () {
-					// start fabricJS stuff
-					var image = new fabric.Image(imgObj);
-					image.set({
-						originX: 'center',
-						originY: 'center',
-						left: imLeft,
-						top: imTop,
-						perPixelTargetFind: true,
-						centeredScaling: true,
-						centeredRotation: true,
-						id: data.filename,
-						borderColor: 'red',
-						cornerColor: 'yellow',
-						cornerSize: 12,
-						transparentCorners: false
-					});
-					image.filters.push(new fabric.Image.filters.Resize({
-						resizeType: 'lanczos', // typo fixed
-						lanczosLobes: 2 // typo fixed
-					}));
-					image.on('object:modified',function() {
-						imLeft = image.get('left')
-						imTop = image.get('top');
-					})
-					image.on('selected',function() {
-						$("#straightenObject").css("display","inline-block");
-						$("#fileName").html(image.get('id'));
-						if ($("#trimImageDiv").css("display") == "none") {
-							$("#trimImageDiv").css("display","block");
-							$("#uploadImageDiv").css("display","none");
-							$("#selectedImageDiv").css("display","block");
-						}
-						$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
-					})
-					// image.on('selected',function() {
-					// 	console.log("BOOOURNS")
-					// })
-					var h = image.height;
-					var w = image.width;
-					//if ((h > 300) || (w > 300)) {
-					//	image.scale(0.5);
-					//}
-					logoCanvas.add(image);
-					image.sendBackwards();
-					
-					//$("#fileName").html(makeid(10));
-					// end fabricJS stuff
+		ipcRenderer.send('upload-image', null)
+	})
+
+	ipcRenderer.on('upload-image-response', (event, data) => {
+		var imgObj = new Image();
+		imgObj.src = data.image;
+		imgObj.onload = function () {
+			// start fabricJS stuff
+			var image = new fabric.Image(imgObj);
+			image.set({
+				originX: 'center',
+				originY: 'center',
+				left: imLeft,
+				top: imTop,
+				perPixelTargetFind: true,
+				centeredScaling: true,
+				centeredRotation: true,
+				id: data.filename,
+				borderColor: 'red',
+				cornerColor: 'yellow',
+				cornerSize: 12,
+				transparentCorners: false
+			});
+			image.filters.push(new fabric.Image.filters.Resize({
+				resizeType: 'lanczos', // typo fixed
+				lanczosLobes: 2 // typo fixed
+			}));
+			image.on('object:modified',function() {
+				imLeft = image.get('left')
+				imTop = image.get('top');
+			})
+			image.on('selected',function() {
+				$("#straightenObject").css("display","inline-block");
+				$("#fileName").html(image.get('id'));
+				if ($("#trimImageDiv").css("display") == "none") {
+					$("#trimImageDiv").css("display","block");
+					$("#uploadImageDiv").css("display","none");
+					$("#selectedImageDiv").css("display","block");
 				}
-			}
-		});
+				$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
+			})
+			var h = image.height;
+			var w = image.width;
+
+			logoCanvas.add(image);
+			image.sendBackwards();
+		}
 	})
 	
 	$("#fakeLayerButton").on("click",function() {
@@ -4036,7 +4130,7 @@
 					if (obj.get('name') == "warpedText") {
 						wordmark.visible = false;
 						$("#textLogoCheck").attr("checked",false);
-						$("#warpEffect").msDropdown().data("dd").set("selectedIndex", 0);
+						//$("#warpEffect").msDropdown().data("dd").set("selectedIndex", 0);
 						$("#warpAmount").val("0");
 						$("#warpAmountDisplay").val("0");
 						$(".textOption").each(function() {
@@ -4045,7 +4139,7 @@
 						$(".textColorSelector").each(function() {
 							$(this).spectrum('disable');
 						})
-						$("#warpEffect").msDropDown().data("dd").set("disabled", true);
+						//$("#warpEffect").msDropDown().data("dd").set("disabled", true);
 					}
 					logoCanvas.renderAll();
 					$("#tipContainer").html("");
@@ -4056,6 +4150,7 @@
 	});
 	
 	$("#textLogoCheck").on("change",function() { 
+		console.log("hello world")
 		if ($(this).is(':checked')) {
 			$("#capText").attr("disabled",false);
 		} else {
@@ -4233,9 +4328,9 @@
 			state = false;
 		}
 		if (state == true) {
-			$("#swashCombo").msDropDown().data("dd").set("disabled", false);
+			//$("#swashCombo").msDropDown().data("dd").set("disabled", false);
 		} else {
-			$("#swashCombo").msDropDown().data("dd").set("disabled", true);
+			//$("#swashCombo").msDropDown().data("dd").set("disabled", true);
 		}
 		var visibleSwash = $("#swashCombo").val();
 		var objects = logoCanvas.getObjects();
@@ -4558,7 +4653,6 @@
 		}	
 	})
 	
-	//$("#warpForm").on("submit",function(e) {
 	function warpText() {
 		var warp = true;
 		wordmarkText.transformMatrix = [1, 0, 0, 1, 0, 0];
@@ -4619,55 +4713,52 @@
 
 			theImage = theImage.substr(theImage.indexOf(',') + 1).toString();
 			
-			$.ajax({
-				type: "POST",
-				url: "http://127.0.0.1:"+port+"/warpText",
-				data: {deform: $("#warpEffect").val(), amount: $("#warpAmount").val(), imgdata: theImage},
-				success: function(data) {
-					var imgObj = new Image();
-					imgObj.src = data;
-					imgObj.onload = function () {
-						var image = new fabric.Image(imgObj);
-						image.set({
-							originX: 'center',
-							originY: 'center',
-							left: wordmark.get("left"),
-							top: wordmark.get("top"),
-							perPixelTargetFind: true,
-							centeredScaling: true,
-							centeredRotation: true,
-							borderColor: 'red',
-							cornerColor: 'yellow',
-							cornerSize: 12,
-							id: 'warpedText',
-							transparentCorners: false
-						});
-						
-						image.filters.push(new fabric.Image.filters.Resize({
-							resizeType: 'lanczos', // typo fixed
-							lanczosLobes: 2 // typo fixed
-						}));
-						
-						image.on('object:modified',function() {
-							wmLeft = image.getBoundingRect()['left'];
-							wmTop = image.getBoundingRect()['top'];
-						});
-						
-						logoCanvas.getObjects().forEach(function(o) {
-							if (o.id == "wordmark") {
-								o.set("visible", false)
-							}
-						});
-
-						logoCanvas.add(image);
-						logoCanvas.renderAll();
-						$("#overlay").css("display","none");
-					}
-				}
-			})
+			ipcRenderer.send('warp-text', {deform: $("#warpEffect").val(), amount: $("#warpAmount").val(), imgdata: theImage})
 			return false;		
 		}
 	}
+
+	ipcRenderer.on('warp-text-response', (event, data) => {
+		var imgObj = new Image();
+		imgObj.src = data;
+		imgObj.onload = function () {
+			var image = new fabric.Image(imgObj);
+			image.set({
+				originX: 'center',
+				originY: 'center',
+				left: wordmark.get("left"),
+				top: wordmark.get("top"),
+				perPixelTargetFind: true,
+				centeredScaling: true,
+				centeredRotation: true,
+				borderColor: 'red',
+				cornerColor: 'yellow',
+				cornerSize: 12,
+				id: 'warpedText',
+				transparentCorners: false
+			});
+			
+			image.filters.push(new fabric.Image.filters.Resize({
+				resizeType: 'lanczos', // typo fixed
+				lanczosLobes: 2 // typo fixed
+			}));
+			
+			image.on('object:modified',function() {
+				wmLeft = image.getBoundingRect()['left'];
+				wmTop = image.getBoundingRect()['top'];
+			});
+			
+			logoCanvas.getObjects().forEach(function(o) {
+				if (o.id == "wordmark") {
+					o.set("visible", false)
+				}
+			});
+
+			logoCanvas.add(image);
+			logoCanvas.renderAll();
+			$("#overlay").css("display","none");
+		}
+	})
 	
 	function isWordmarkVisible() {
 		var objects = logoCanvas.getObjects();
@@ -4733,6 +4824,58 @@
 			})
 		}
 	})
+
+	ipcRenderer.on('imagemagick-response', (event, data) => {
+		$("#overlay").css("display","none");
+		var object = logoCanvas.getActiveObject()
+		var pictureName = object.get('id');
+		var imgObj = new Image();
+		imgObj.src = data;
+		imgObj.onload = function () {
+			var image = new fabric.Image(imgObj);
+			image.set({
+				originX: 'center',
+				originY: 'center',
+				left: imLeft,
+				top: imTop,
+				perPixelTargetFind: true,
+				centeredScaling: true,
+				centeredRotation: true,
+				borderColor: 'red',
+				cornerColor: 'yellow',
+				cornerSize: 12,
+				id: pictureName,
+				transparentCorners: false
+			});
+			
+			image.filters.push(new fabric.Image.filters.Resize({
+				resizeType: 'lanczos',
+				lanczosLobes: 2
+			}));
+			
+			image.on('object:modified',function() {
+				imLeft = image.get('left')
+				imTop = image.get('top');
+			});
+
+			image.on('selected',function() {
+				$("#straightenObject").css("display","inline-block");
+				$("#fileName").html(image.get('id'));
+				if ($("#trimImageDiv").css("display") == "none") {
+					$("#trimImageDiv").css("display","block");
+					$("#uploadImageDiv").css("display","none");
+					$("#selectedImageDiv").css("display","block");
+				}
+				$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
+			})
+			
+			logoCanvas.remove(object);
+			logoCanvas.add(image);
+			logoCanvas.renderAll();
+			imLeft = image.get('left')
+			imTop = image.get('top');
+		}
+	})
 	
 	$("#border").on("click",function(e) {
 		var action = $(this).data("action");
@@ -4745,61 +4888,7 @@
 				$("#colorSquare").removeClass("colorSquareActive").removeClass("colorSquareSelected");
 				var theImage = object._originalElement.currentSrc;	
 				theImage = theImage.substr(theImage.indexOf(',') + 1).toString();
-				$.ajax({
-					type: "POST",
-					url: "http://127.0.0.1:"+port+"/removeBorder",
-					data: {imgdata: theImage, x: "1", y: "1", action: "removeBorder", color: "null", newcolor: "null", fuzz: fuzz, filename: pictureName},
-					success: function(data) {
-						$("#overlay").css("display","none");
-						//$("#testImage").attr("src","data:image/png;base64,"+data);
-						var imgObj = new Image();
-						imgObj.src = data;
-						imgObj.onload = function () {
-							var image = new fabric.Image(imgObj);
-							image.set({
-								originX: 'center',
-								originY: 'center',
-								left: imLeft,
-								top: imTop,
-								perPixelTargetFind: true,
-								centeredScaling: true,
-								centeredRotation: true,
-								borderColor: 'red',
-								cornerColor: 'yellow',
-								cornerSize: 12,
-								id: pictureName,
-								transparentCorners: false
-							});
-							
-							image.filters.push(new fabric.Image.filters.Resize({
-								resizeType: 'lanczos',
-								lanczosLobes: 2
-							}));
-							
-							image.on('object:modified',function() {
-								imLeft = image.get('left')
-								imTop = image.get('top');
-							});
-
-							image.on('selected',function() {
-								$("#straightenObject").css("display","inline-block");
-								$("#fileName").html(image.get('id'));
-								if ($("#trimImageDiv").css("display") == "none") {
-									$("#trimImageDiv").css("display","block");
-									$("#uploadImageDiv").css("display","none");
-									$("#selectedImageDiv").css("display","block");
-								}
-								$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
-							})
-							
-							logoCanvas.remove(object);
-							logoCanvas.add(image);
-							logoCanvas.renderAll();
-							imLeft = image.get('left')
-							imTop = image.get('top');
-						}
-					}
-				})
+				ipcRenderer.send("remove-border", {imgdata: theImage, x: "1", y: "1", action: "removeBorder", color: "null", newcolor: "null", fuzz: fuzz, filename: pictureName})
 				return false;
 			}
 		}	
@@ -4831,64 +4920,56 @@
 				const pictureName = object.get('id');
 				$("#colorSquare").removeClass("colorSquareActive").removeClass("colorSquareSelected");
 				var theImage = object._originalElement.currentSrc;
-				theImage = theImage.substr(theImage.indexOf(',') + 1).toString();			
-				$.ajax({
-					type: "POST",
-					url: "http://127.0.0.1:"+port+"/removeColorRange",
-					data: {imgdata: theImage, x: x, y: y, color: color, action: action, fuzz: fuzz, filename: pictureName},
-					success: function(data) {
-						var imgObj = new Image();
-						imgObj.src = data;
-						imgObj.onload = function () {
-							var image = new fabric.Image(imgObj);
-							image.set({
-								originX: 'center',
-								originY: 'center',
-								left: imLeft,
-								top: imTop,
-								perPixelTargetFind: true,
-								centeredScaling: true,
-								centeredRotation: true,
-								borderColor: 'red',
-								cornerColor: 'yellow',
-								cornerSize: 12,
-								id: pictureName,
-								transparentCorners: false
-							});
-							
-							image.filters.push(new fabric.Image.filters.Resize({
-								resizeType: 'lanczos',
-								lanczosLobes: 2
-							}));
-							
-							image.on('object:modified',function() {
-								imLeft = image.get('left');
-								imTop = image.get('top');
-							});
+				theImage = theImage.substr(theImage.indexOf(',') + 1).toString();
+				const img = new Image();
+				img.onload = function() {
+					const canvas = document.createElement('canvas');
+					const ctx = canvas.getContext('2d');
 
-							image.on('selected',function() {
-								$("#straightenObject").css("display","inline-block");
-								$("#fileName").html(image.get('id'));
-								if ($("#trimImageDiv").css("display") == "none") {
-									$("#trimImageDiv").css("display","block");
-									$("#uploadImageDiv").css("display","none");
-									$("#selectedImageDiv").css("display","block");
-								}
-								$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
-							})
-							
-							logoCanvas.remove(object);
-							logoCanvas.add(image);
-							logoCanvas.renderAll();
-							imLeft = image.get('left');
-							imTop = image.get('top');
-							$("#colorSquare").val("Select Color");
-							$("#colorSquare").css("background","#FFFFFF");
-							$("#colorSquare").css("color","#000000");
-							$("#overlay").css("display","none");
+					canvas.width = img.width;
+					canvas.height = img.height;
+
+					ctx.drawImage(img, 0, 0);
+
+					const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+					const pixels = imageData.data;
+					const startIndex = (y * canvas.width + x) * 4;
+					const baseColor = {
+						r: pixels[startIndex],
+						g: pixels[startIndex + 1],
+						b: pixels[startIndex + 2],
+						a: pixels[startIndex + 3] // Get alpha channel value
+					};
+
+					const stack = [{ x: x, y: y }];
+
+					while (stack.length) {
+						const { x, y } = stack.pop();
+						const index = (y * canvas.width + x) * 4;
+
+						if (
+							x >= 0 && x < canvas.width &&
+							y >= 0 && y < canvas.height &&
+							isColorMatchAlpha(pixels, index, baseColor, replacementColor, fuzz)
+						) {
+							pixels[index] = replacementColor.r;
+							pixels[index + 1] = replacementColor.g;
+							pixels[index + 2] = replacementColor.b;
+							pixels[index + 3] = replacementColor.a; // Set alpha channel value
+
+							stack.push({ x: x + 1, y: y });
+							stack.push({ x: x - 1, y: y });
+							stack.push({ x: x, y: y + 1 });
+							stack.push({ x: x, y: y - 1 });
 						}
 					}
-				})
+
+					ctx.putImageData(imageData, 0, 0);
+
+					//document.body.appendChild(canvas);
+					ipcRenderer.send('replace-color', canvas.toDataURL())
+				};
+				img.src = object._originalElement.currentSrc;
 				return false;
 			}
 		}
@@ -4907,65 +4988,43 @@
 				var pictureName = object.get('id');
 				$("#colorSquare").removeClass("colorSquareActive").removeClass("colorSquareSelected");
 				var theImage = object._originalElement.currentSrc;
-				theImage = theImage.substr(theImage.indexOf(',') + 1).toString();			
-				$.ajax({
-					type: "POST",
-					//url: "./scripts/changecolor.php",
-					url: "http://127.0.0.1:"+port+"/removeAllColor",
-					data: {imgdata: theImage, x: x, y: y, color: color, action: action, fuzz: fuzz, filename: pictureName},
-					success: function(data) {
-						var imgObj = new Image();
-						imgObj.src = data;
-						imgObj.onload = function () {
-							var image = new fabric.Image(imgObj);
-							image.set({
-								originX: 'center',
-								originY: 'center',
-								left: imLeft,
-								top: imTop,
-								perPixelTargetFind: true,
-								centeredScaling: true,
-								centeredRotation: true,
-								borderColor: 'red',
-								cornerColor: 'yellow',
-								cornerSize: 12,
-								id: pictureName,
-								transparentCorners: false
-							});
-							
-							image.filters.push(new fabric.Image.filters.Resize({
-								resizeType: 'lanczos',
-								lanczosLobes: 2
-							}));
-							
-							image.on('object:modified',function() {
-								imLeft = image.get('left');
-								imTop = image.get('top');
-							});
+				theImage = theImage.substr(theImage.indexOf(',') + 1).toString();	
+				const img = new Image();
+				
+				img.onload = function() {
+					const canvas = document.createElement('canvas');
+					const ctx = canvas.getContext('2d');
 
-							image.on('selected',function() {
-								$("#straightenObject").css("display","inline-block");
-								$("#fileName").html(image.get('id'));
-								if ($("#trimImageDiv").css("display") == "none") {
-									$("#trimImageDiv").css("display","block");
-									$("#uploadImageDiv").css("display","none");
-									$("#selectedImageDiv").css("display","block");
-								}
-								$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
-							})
-							
-							logoCanvas.remove(object);
-							logoCanvas.add(image);
-							logoCanvas.renderAll();
-							imLeft = image.get('left');
-							imTop = image.get('top');
-							$("#colorSquare").val("Select Color");
-							$("#colorSquare").css("background","#FFFFFF");
-							$("#colorSquare").css("color","#000000");
-							$("#overlay").css("display","none");
+					canvas.width = img.width;
+					canvas.height = img.height;
+
+					ctx.drawImage(img, 0, 0);
+
+					const pixelData = ctx.getImageData(x, y, 1, 1).data; // Get pixel data at coordinates (x, y)
+					const color = { r: pixelData[0], g: pixelData[1], b: pixelData[2] }; // Extract RGB values from pixel data
+
+					const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+					const pixels = imageData.data;
+
+					for (let i = 0; i < pixels.length; i += 4) {
+						const r = pixels[i];
+						const g = pixels[i + 1];
+						const b = pixels[i + 2];
+						const a = pixels[i + 3];
+
+						if (isColorWithinTolerance({ r, g, b }, color, fuzz)) {
+							pixels[i] = replacementColor.r;
+							pixels[i + 1] = replacementColor.g;
+							pixels[i + 2] = replacementColor.b;
+							pixels[i + 3] = 0; // Set alpha channel to 0 for transparency
 						}
 					}
-				})
+
+					ctx.putImageData(imageData, 0, 0);
+
+					ipcRenderer.send('replace-color', canvas.toDataURL())
+				};
+				img.src = object._originalElement.currentSrc;		
 				return false;
 			}
 		}
@@ -4987,6 +5046,7 @@
 		var y = $(this).data("y");
 		var color = $("#colorSquare").val();
 		var newcolor = $("#replacementColor").spectrum("get").toHexString();
+		newcolor = hexToRgb(newcolor)
 		var fuzz = parseInt($("#colorFuzz").val());
 		if (logoCanvas.getActiveObject()) {
 			var object = logoCanvas.getActiveObject()
@@ -4997,63 +5057,93 @@
 				var theImage = object._originalElement.currentSrc;
 
 				theImage = theImage.substr(theImage.indexOf(',') + 1).toString();
-				
-				$.ajax({
-					type: "POST",
-					url: "http://127.0.0.1:"+port+"/replaceColor",
-					data: {imgdata: theImage, x: x, y: y, action: action, color: color, newcolor: newcolor, fuzz: fuzz, filename: pictureName},
-					success: function(data) {
-					//$("#testImage").attr("src","data:image/png;base64,"+data);
-						var imgObj = new Image();
-						imgObj.src = data;
-						imgObj.onload = function () {
-							var image = new fabric.Image(imgObj);
-							image.set({
-								originX: 'center',
-								originY: 'center',
-								left: imLeft,
-								top: imTop,
-								perPixelTargetFind: true,
-								centeredScaling: true,
-								centeredRotation: true,
-								borderColor: 'red',
-								cornerColor: 'yellow',
-								cornerSize: 12,
-								id: pictureName,
-								transparentCorners: false
-							});
-							
-							image.filters.push(new fabric.Image.filters.Resize({
-								resizeType: 'lanczos',
-								lanczosLobes: 2
-							}));
-							
-							image.on('object:modified',function() {
-								imLeft = image.get('left')
-								imTop = image.get('top');
-								//$("#infoWTF").html("imLeft: "+imLeft+"<br>imTop: "+imTop);
-							});
 
-							image.on('selected',function() {
-								$("#straightenObject").css("display","inline-block");
-								$("#fileName").html(image.get('id'));
-								if ($("#trimImageDiv").css("display") == "none") {
-									$("#trimImageDiv").css("display","block");
-									$("#uploadImageDiv").css("display","none");
-									$("#selectedImageDiv").css("display","block");
-								}
-								$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
-							})
-							
-							logoCanvas.remove(object);
-							logoCanvas.add(image);
-							logoCanvas.renderAll();
-							imLeft = image.get('left')
-							imTop = image.get('top');
-							//$("#infoWTF").html("imLeft: "+imLeft+"<br>imTop: "+imTop);
+				const img = new Image()
+				if (action == "replaceColorRange") {
+					console.log("replace color range")
+					img.onload = function() {
+						const canvas = document.createElement('canvas');
+						const ctx = canvas.getContext('2d');
+
+						canvas.width = img.width;
+						canvas.height = img.height;
+
+						ctx.drawImage(img, 0, 0);
+
+						const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+						const pixels = imageData.data;
+						const startIndex = (y * canvas.width + x) * 4;
+						const baseColor = {
+							r: pixels[startIndex],
+							g: pixels[startIndex + 1],
+							b: pixels[startIndex + 2]
+						};
+
+						const stack = [{ x: x, y: y }];
+
+						while (stack.length) {
+							const { x, y } = stack.pop();
+							const index = (y * canvas.width + x) * 4;
+
+							if (
+								x >= 0 && x < canvas.width &&
+								y >= 0 && y < canvas.height &&
+								isColorMatch(pixels, index, baseColor, color, fuzz)
+							) {
+								pixels[index] = newcolor.r;
+								pixels[index + 1] = newcolor.g;
+								pixels[index + 2] = newcolor.b;
+
+								stack.push({ x: x + 1, y: y });
+								stack.push({ x: x - 1, y: y });
+								stack.push({ x: x, y: y + 1 });
+								stack.push({ x: x, y: y - 1 });
+							}
 						}
+
+						ctx.putImageData(imageData, 0, 0);
+
+						ipcRenderer.send('replace-color', canvas.toDataURL())
+					};
+					img.src = object._originalElement.currentSrc
+				} else {
+					console.log("replace all color")
+					img.onload = function() {
+						const canvas = document.createElement('canvas');
+						const ctx = canvas.getContext('2d');
+
+						canvas.width = img.width;
+						canvas.height = img.height;
+
+						ctx.drawImage(img, 0, 0);
+
+						const pixelData = ctx.getImageData(x, y, 1, 1).data; // Get pixel data at coordinates (x, y)
+						const color = { r: pixelData[0], g: pixelData[1], b: pixelData[2] }; // Extract RGB values from pixel data
+
+						// Continue with your existing code...
+						const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+						const pixels = imageData.data;
+
+						for (let i = 0; i < pixels.length; i += 4) {
+							const r = pixels[i];
+							const g = pixels[i + 1];
+							const b = pixels[i + 2];
+							const a = pixels[i + 3];
+
+							if (isColorWithinTolerance({ r, g, b }, color, fuzz)) {
+								pixels[i] = newcolor.r;
+								pixels[i + 1] = newcolor.g;
+								pixels[i + 2] = newcolor.b;
+							}
+						}
+
+						ctx.putImageData(imageData, 0, 0);
+
+						ipcRenderer.send('replace-color', canvas.toDataURL())
+						return false;
 					}
-				})
+					img.src = object._originalElement.currentSrc;
+				}
 				return false;
 			}
 		}	
@@ -5282,13 +5372,7 @@
 				break;
 		}
 		
-		$.ajax({
-			type: "POST",
-			url: "http://127.0.0.1:"+port+"/setPreference",
-			data: {pref:pref,val:val},
-			success: function(result) {
-			}
-		})
+		ipcRenderer.send('set-preference', {pref:pref,val:val})
 	})
 	
 	function getDataUri(url, callback) {
@@ -5384,294 +5468,255 @@
 		exportCtx.drawImage(composite,0,0);
 		exportCtx.drawImage(can4,0,0)
 		exportCtx.drawImage(can5,0,0)
-		//new CanvasSaver('http://127.0.0.1:'+port+'/saveJersey').savePNG(document.getElementById("final"), fileName, "jersey");
-		$.ajax({
-			type: "POST",
-			url: "http://127.0.0.1:"+port+"/saveJersey",
-			data: {imgdata:finalCanvas.toDataURL(),name:fileName,canvas:JSON.stringify(exportMeta,null,2)},
-			success: function(result) {
-
-			}
-		})
+		ipcRenderer.send('save-jersey', {imgdata:finalCanvas.toDataURL(),name:fileName,canvas:JSON.stringify(exportMeta,null,2)})
 	})
 
 	$("#loadJersey").on("click",function(e) {
-		$.ajax({
-			type: "GET",
-			url: "http://127.0.0.1:"+port+"/uploadJersey",
-			success: function(response) {
-				digiGroup.splice(0, digiGroup.length)
-				camoGroup.splice(0, camoGroup.length)
-				customFonts.splice(0, customFonts.length)
-				const data = JSON.parse(response)
-				customTextureBase = data.customTexture;
-				var camoVisible = false;
-				var digiCamoVisible = false;
-
-				$("#teamName").val(data.team)
-				$("#startYear").val(data.start)
-				$("#endYear").val(data.end)
-				$("#jerseyType").val(data.type)
-				$("#sleeveType").val(data.sleeveLength)
-				$("#textureSelect").val(data.texture)
-				$("#makersMarkSelect").val(data.makersMark)
-				$("#buttonOpacity").val(data.buttonOpacity)
-				$("#buttonOpacitySpan").html(data.buttonOpacity);
-				$("#flapButtonOpacity").val(data.flapButtonOpacity)
-				$("#flapButtonOpacitySpan").html(data.flapButtonOpacity);
-				$("#shield1ButtonOpacity").val(data.shield1ButtonOpacity)
-				$("#shield1ButtonOpacitySpan").html(data.shield1ButtonOpacity)
-				$("#shield2ButtonOpacity").val(data.shield2ButtonOpacity)
-				$("#shield2ButtonOpacitySpan").html(data.shield2ButtonOpacity)
-				$("#jerseyPanelButtonOpacity").val(data.jerseyPanelButtonOpacity)
-				$("#jerseyPanelButtonOpacitySpan").html(data.jerseyPanelButtonOpacity)
-				$("#swashCombo").val(data.swashStyle).trigger('change')
-				$("#warpEffect").val(data.warpEffect).trigger('change')
-				$("#warpAmount").val(data.warpAmount)
-				$("#warpAmountDisplay").val(data.warpAmount)
-				$("#camoBaseColor").spectrum("set",data.camoBaseSelectorColor)
-				$("#camoLayer1Color").spectrum("set",data.camoLayer1SelectorColor)
-				$("#camoLayer2Color").spectrum("set",data.camoLayer2SelectorColor)
-				//$("#makersMarkSide").val(data.makersMarkSide)
-				$("#makersMarkColor").spectrum("set", data.makersMarkFill)
-				$("#camoSelect").val(data.camoType)
-				if (data.customFonts.length > 0) {
-					for (x in data.customFonts) {
-						const loadedFont = data.customFonts[x]
-						validFonts.push(loadedFont.familyName)
-						$("head").prepend("<style>@font-face {\n   font-family: '"+loadedFont.familyName+"';\n   src: url('"+loadedFont.fontData+"') format('truetype');\n}\n."+loadedFont.familyName+" { font-family: '"+loadedFont.familyName+"'; font-size: 1.1em;}\n</style>");
-						fontSources[loadedFont.familyName] = loadedFont.fontData;
-						var style = loadedFont.familyName;
-						var font_family = $("."+style).css("font-family");
-						var optgroup = $("<optgroup class='"+loadedFont.familyName+"'>");
-						optgroup.append("<option value='"+loadedFont.familyName+"'>"+loadedFont.fontName+"</option>")
-						$("#fontTypeCombo").append(optgroup)
-						customFonts.push(loadedFont)
-					}	
-				}
-				const selectedFont = (validFonts.includes(data.selectedFont)) ? data.selectedFont : "Leckerli One";
-				var anyTextVisible = false;
-				textureFJS.clear();
-				logoCanvas.clear();
-				below.clear();
-				below.loadFromJSON(data.canvas.below, below.renderAll.bind(below), function(o, object) {
-					//console.log(object.id)
-					below.add(object)
-					$("#"+object.id+"Check").prop("checked",object.visible)
-					$("#"+object.id).spectrum("set", object.fill)
-					if (object.visible) {
-						$("#"+object.id).spectrum('enable');
-					} else {
-						$("#"+object.id).spectrum('disable');
-					}
-					if (object.id.substring(0,4) == "digi") {
-						digiGroup.push(object)
-					}
-					if (object.id.substring(0,4) == "camo") {
-						camoGroup.push(object)
-					}
-					switch (object.id) {
-						case "uploadedLayer":
-							$("#customLayerCheck").prop("checked",object.visible).triggerHandler('click');
-							$("#customLayerName").html(object.name)
-							break;
-						case "camoBase":
-							camoVisible = object.visible;
-							break;
-						case "digiCamoBase":
-							digiCamoVisible = object.visible;
-							break;
-						case "jerseyPanelStrokeColor":				
-							if (object.visible) {
-								$("."+object.id+"Check").prop('disabled', false);
-								$("."+object.id+"Range").prop('disabled', false);
-								$("."+object.id+"Spectrum").spectrum('enable');
-							} else {
-								$("."+object.id+"Check").prop('disabled', true);
-								$("."+object.id+"Range").prop('disabled', true);
-								$("."+object.id+"Spectrum").spectrum('disable');
-							}
-							break;
-						case "jerseyShield2StrokeColor":				
-							if (object.visible) {
-								$("."+object.id+"Check").prop('disabled', false);
-								$("."+object.id+"Range").prop('disabled', false);
-								$("."+object.id+"Spectrum").spectrum('enable');
-							} else {
-								$("."+object.id+"Check").prop('disabled', true);
-								$("."+object.id+"Range").prop('disabled', true);
-								$("."+object.id+"Spectrum").spectrum('disable');
-							}
-							break;
-						case "jerseyShield1WideStrokeColor":				
-							if (object.visible) {
-								$("."+object.id+"Check").prop('disabled', false);
-								$("."+object.id+"Range").prop('disabled', false);
-								$("."+object.id+"Spectrum").spectrum('enable');
-							} else {
-								$("."+object.id+"Check").prop('disabled', true);
-								$("."+object.id+"Range").prop('disabled', true);
-								$("."+object.id+"Spectrum").spectrum('disable');
-							}
-							break;
-						case "jerseyFlapColor":				
-							if (object.visible) {
-								$("."+object.id+"Check").prop('disabled', false);
-								$("."+object.id+"Range").prop('disabled', false);
-								$("."+object.id+"Spectrum").spectrum('enable');
-							} else {
-								$("."+object.id+"Check").prop('disabled', true);
-								$("."+object.id+"Range").prop('disabled', true);
-								$("."+object.id+"Spectrum").spectrum('disable');
-							}
-							break;
-					}
-					if (camoVisible || digiCamoVisible) {
-						$("#camoCheck").prop("checked",true)
-						$("#camoSelect").prop("disabled",false)
-						$(".camoSelector").each(function() {
-							$(this).spectrum("enable")
-						})
-					} else {
-						$("#camoCheck").prop("checked",false)
-						$("#camoSelect").prop("disabled",true)
-						$(".camoSelector").each(function() {
-							$(this).spectrum("disable")
-						})
-					}
-				})
-				below.renderAll()
-				reRenderBG()
-
-				aboveCanvas.loadFromJSON(data.canvas.above, below.renderAll.bind(below), function(o, object) {
-					//console.log(object.id)
-					aboveCanvas.add(object)
-					$("#"+object.id).spectrum("set", object.fill)
-					if (object.visible) {
-						$("#"+object.id).spectrum('enable');
-					} else {
-						$("#"+object.id).spectrum('disable');
-					}
-					$("#"+object.id+"Check").prop("checked",object.visible)
-				})
-				aboveCanvas.renderAll()
-
-				logoCanvas.loadFromJSON(data.canvas.logo, logoCanvas.renderAll.bind(logoCanvas), function(o, object) {
-					$("#"+object.id+"Check").prop("checked",object.visible)
-					if (object.id == data.swashStyle) {
-						$("#swashCheck").prop("checked",object.visible).triggerHandler('click');
-						object.getObjects('path').forEach(function(o) {
-							if (o.id.slice(-6) == "Stroke") {
-								$("#swashStrokeColor").spectrum("set",o.fill)
-							}
-							if (o.id.slice(-4) == "Fill") {
-								$("#swashFillColor").spectrum("set",o.fill)
-							}
-						})
-					}
-					if (object.id == 'wordmark' || object.id == 'warpedText') {
-						$("#textLogoCheck").prop("checked",object.visible).triggerHandler('click');
-						if (object.id == 'warpedText') {
-							var myfont = new FontFaceObserver(data.selectedFont)
-							myfont.load()
-								.then(function() {
-									o.set("fontFamily", (validFonts.includes(data.selectedFont)) ? o.fontFamily : "Leckerli One")
-									logoCanvas.renderAll();
-									$("#fontTypeCombo").val(data.selectedFont)
-									$("#fontTypeCombo").removeClass().addClass(data.familyName);
-									$("#fontTypeCombo").trigger('change')
-								}).catch(function(e) {
-									console.log(e)
-								});
-						} else {
-							object.getObjects().forEach(function(o) {
-							var myfont = new FontFaceObserver(data.selectedFont)
-							myfont.load()
-								.then(function() {
-									o.set("fontFamily", (validFonts.includes(data.selectedFont)) ? o.fontFamily : "Leckerli One")
-									logoCanvas.renderAll();
-									$("#fontTypeCombo").val(data.selectedFont)
-									$("#fontTypeCombo").removeClass().addClass(data.familyName);
-									$("#fontTypeCombo").trigger('change')
-								}).catch(function(e) {
-									console.log(e)
-								});
-							})
-						}
-						
-					}
-					if (object.id == 'makersMark') {
-						$("#makersMarkCheck").prop("checked",object.visible)
-						if (object.visible) {
-							$("#makersMarkSelect").prop("disabled", false)
-							$("#makersMarkColor").spectrum("enable")
-						} else {
-							$("#makersMarkSelect").prop("disabled", true)
-							$("#makersMarkColor").spectrum("disable")
-						}				
-					}
-					if (object.type == 'image') {
-						object.on('object:modified',function() {
-							imLeft = image.get('left')
-							imTop = image.get('top');
-						})
-						object.on('selected',function() {
-							$("#straightenObject").css("display","inline-block");
-							$("#fileName").html(object.get('id'));
-							if ($("#trimImageDiv").css("display") == "none") {
-								$("#trimImageDiv").css("display","block");
-								$("#uploadImageDiv").css("display","none");
-								$("#selectedImageDiv").css("display","block");
-							}
-							$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
-						})	
-					}
-					logoCanvas.add(object)
-				})
-				logoCanvas.renderAll()
-
-				if (data.texture == "custom") {
-					$("#clearTexture").css("display","inline-block");
-					$("#textureSelect").val(null)
-					$("#textureSelect").trigger("change")	
-				} else {
-					$("#textureSelect").trigger("change")	
-				}
-				$("#textureSelect").val(data.texture)		
-				
-				reRenderBG()
-			}
-		});
+		ipcRenderer.send('load-jersey', null)
 	})
 
-	
-	$("#imgur").on("click",function(e) {
-		$("#overlay").css("display","inline-block");
-		logoCanvas.renderAll();
-		
-		var finalCanvas = document.getElementById('final');
-		var exportCtx = finalCanvas.getContext('2d');
-		exportCtx.clearRect(0,0,512,512);
-		exportCtx.drawImage(composite,0,0);
-		exportCtx.drawImage(can4,0,0)
-		exportCtx.drawImage(can5,0,0)
-		
-		var finalImage = finalCanvas.toDataURL();
-		
-		$.ajax({
-			url : './scripts/imgur.php',
-			type : 'POST',
-			data : {imgdata:finalImage,watermark:'jm_watermark.png'},
-			dataType: "json",
-			success : function(result) {
-				$("#overlay").css("display","none");
-				if (result.success == true) {
-					prompt("Image uploaded successfully!\n\nTo get the link, simply copy the text below, and then click either button...\n\n",result.data.link);
-				} else {
-					alert(result.error);
-				}
+	ipcRenderer.on('load-jersey-response', (event, response) => {
+		digiGroup.splice(0, digiGroup.length)
+		camoGroup.splice(0, camoGroup.length)
+		customFonts.splice(0, customFonts.length)
+		const data = JSON.parse(response)
+		console.log(data)
+		customTextureBase = data.customTexture;
+		var camoVisible = false;
+		var digiCamoVisible = false;
+
+		$("#teamName").val(data.team)
+		$("#startYear").val(data.start)
+		$("#endYear").val(data.end)
+		$("#jerseyType").val(data.type)
+		$("#sleeveType").val(data.sleeveLength)
+		$("#textureSelect").val(data.texture)
+		$("#makersMarkSelect").val(data.makersMark)
+		$("#buttonOpacity").val(data.buttonOpacity)
+		$("#buttonOpacitySpan").html(data.buttonOpacity);
+		$("#flapButtonOpacity").val(data.flapButtonOpacity)
+		$("#flapButtonOpacitySpan").html(data.flapButtonOpacity);
+		$("#shield1ButtonOpacity").val(data.shield1ButtonOpacity)
+		$("#shield1ButtonOpacitySpan").html(data.shield1ButtonOpacity)
+		$("#shield2ButtonOpacity").val(data.shield2ButtonOpacity)
+		$("#shield2ButtonOpacitySpan").html(data.shield2ButtonOpacity)
+		$("#jerseyPanelButtonOpacity").val(data.jerseyPanelButtonOpacity)
+		$("#jerseyPanelButtonOpacitySpan").html(data.jerseyPanelButtonOpacity)
+		$("#swashCombo").val(data.swashStyle).trigger('change')
+		$("#warpEffect").val(data.warpEffect).trigger('change')
+		$("#warpAmount").val(data.warpAmount)
+		$("#warpAmountDisplay").val(data.warpAmount)
+		$("#camoBaseColor").spectrum("set",data.camoBaseSelectorColor)
+		$("#camoLayer1Color").spectrum("set",data.camoLayer1SelectorColor)
+		$("#camoLayer2Color").spectrum("set",data.camoLayer2SelectorColor)
+		//$("#makersMarkSide").val(data.makersMarkSide)
+		$("#makersMarkColor").spectrum("set", data.makersMarkFill)
+		$("#camoSelect").val(data.camoType)
+		if (data.customFonts.length > 0) {
+			for (x in data.customFonts) {
+				const loadedFont = data.customFonts[x]
+				validFonts.push(loadedFont.familyName)
+				$("head").prepend("<style>@font-face {\n   font-family: '"+loadedFont.familyName+"';\n   src: url('"+loadedFont.fontData+"') format('truetype');\n}\n."+loadedFont.familyName+" { font-family: '"+loadedFont.familyName+"'; font-size: 1.1em;}\n</style>");
+				fontSources[loadedFont.familyName] = loadedFont.fontData;
+				var style = loadedFont.familyName;
+				var font_family = $("."+style).css("font-family");
+				var optgroup = $("<optgroup class='"+loadedFont.familyName+"'>");
+				optgroup.append("<option value='"+loadedFont.familyName+"'>"+loadedFont.fontName+"</option>")
+				$("#fontTypeCombo").append(optgroup)
+				customFonts.push(loadedFont)
+			}	
+		}
+		const selectedFont = (validFonts.includes(data.selectedFont)) ? data.selectedFont : "Leckerli One";
+		var anyTextVisible = false;
+		textureFJS.clear();
+		logoCanvas.clear();
+		below.clear();
+		below.loadFromJSON(data.canvas.below, below.renderAll.bind(below), function(o, object) {
+			//console.log(object.id)
+			below.add(object)
+			$("#"+object.id+"Check").prop("checked",object.visible)
+			$("#"+object.id).spectrum("set", object.fill)
+			if (object.visible) {
+				$("#"+object.id).spectrum('enable');
+			} else {
+				$("#"+object.id).spectrum('disable');
+			}
+			if (object.id.substring(0,4) == "digi") {
+				digiGroup.push(object)
+			}
+			if (object.id.substring(0,4) == "camo") {
+				camoGroup.push(object)
+			}
+			switch (object.id) {
+				case "uploadedLayer":
+					$("#customLayerCheck").prop("checked",object.visible).triggerHandler('click');
+					$("#customLayerName").html(object.name)
+					break;
+				case "camoBase":
+					camoVisible = object.visible;
+					break;
+				case "digiCamoBase":
+					digiCamoVisible = object.visible;
+					break;
+				case "jerseyPanelStrokeColor":				
+					if (object.visible) {
+						$("."+object.id+"Check").prop('disabled', false);
+						$("."+object.id+"Range").prop('disabled', false);
+						$("."+object.id+"Spectrum").spectrum('enable');
+					} else {
+						$("."+object.id+"Check").prop('disabled', true);
+						$("."+object.id+"Range").prop('disabled', true);
+						$("."+object.id+"Spectrum").spectrum('disable');
+					}
+					break;
+				case "jerseyShield2StrokeColor":				
+					if (object.visible) {
+						$("."+object.id+"Check").prop('disabled', false);
+						$("."+object.id+"Range").prop('disabled', false);
+						$("."+object.id+"Spectrum").spectrum('enable');
+					} else {
+						$("."+object.id+"Check").prop('disabled', true);
+						$("."+object.id+"Range").prop('disabled', true);
+						$("."+object.id+"Spectrum").spectrum('disable');
+					}
+					break;
+				case "jerseyShield1WideStrokeColor":				
+					if (object.visible) {
+						$("."+object.id+"Check").prop('disabled', false);
+						$("."+object.id+"Range").prop('disabled', false);
+						$("."+object.id+"Spectrum").spectrum('enable');
+					} else {
+						$("."+object.id+"Check").prop('disabled', true);
+						$("."+object.id+"Range").prop('disabled', true);
+						$("."+object.id+"Spectrum").spectrum('disable');
+					}
+					break;
+				case "jerseyFlapColor":				
+					if (object.visible) {
+						$("."+object.id+"Check").prop('disabled', false);
+						$("."+object.id+"Range").prop('disabled', false);
+						$("."+object.id+"Spectrum").spectrum('enable');
+					} else {
+						$("."+object.id+"Check").prop('disabled', true);
+						$("."+object.id+"Range").prop('disabled', true);
+						$("."+object.id+"Spectrum").spectrum('disable');
+					}
+					break;
+			}
+			if (camoVisible || digiCamoVisible) {
+				$("#camoCheck").prop("checked",true)
+				$("#camoSelect").prop("disabled",false)
+				$(".camoSelector").each(function() {
+					$(this).spectrum("enable")
+				})
+			} else {
+				$("#camoCheck").prop("checked",false)
+				$("#camoSelect").prop("disabled",true)
+				$(".camoSelector").each(function() {
+					$(this).spectrum("disable")
+				})
 			}
 		})
+		below.renderAll()
+		reRenderBG()
+
+		aboveCanvas.loadFromJSON(data.canvas.above, below.renderAll.bind(below), function(o, object) {
+			//console.log(object.id)
+			aboveCanvas.add(object)
+			$("#"+object.id).spectrum("set", object.fill)
+			if (object.visible) {
+				$("#"+object.id).spectrum('enable');
+			} else {
+				$("#"+object.id).spectrum('disable');
+			}
+			$("#"+object.id+"Check").prop("checked",object.visible)
+		})
+		aboveCanvas.renderAll()
+
+		logoCanvas.loadFromJSON(data.canvas.logo, logoCanvas.renderAll.bind(logoCanvas), function(o, object) {
+			$("#"+object.id+"Check").prop("checked",object.visible)
+			if (object.id == data.swashStyle) {
+				$("#swashCheck").prop("checked",object.visible).triggerHandler('click');
+				object.getObjects('path').forEach(function(o) {
+					if (o.id.slice(-6) == "Stroke") {
+						$("#swashStrokeColor").spectrum("set",o.fill)
+					}
+					if (o.id.slice(-4) == "Fill") {
+						$("#swashFillColor").spectrum("set",o.fill)
+					}
+				})
+			}
+			if (object.id == 'wordmark' || object.id == 'warpedText') {
+				$("#textLogoCheck").prop("checked",object.visible).triggerHandler('click');
+				if (object.id == 'warpedText') {
+					var myfont = new FontFaceObserver(data.selectedFont)
+					myfont.load()
+						.then(function() {
+							o.set("fontFamily", (validFonts.includes(data.selectedFont)) ? o.fontFamily : "Leckerli One")
+							logoCanvas.renderAll();
+							$("#fontTypeCombo").val(data.selectedFont)
+							$("#fontTypeCombo").removeClass().addClass(data.familyName);
+							$("#fontTypeCombo").trigger('change')
+						}).catch(function(e) {
+							console.log(e)
+						});
+				} else {
+					object.getObjects().forEach(function(o) {
+					var myfont = new FontFaceObserver(data.selectedFont)
+					myfont.load()
+						.then(function() {
+							o.set("fontFamily", (validFonts.includes(data.selectedFont)) ? o.fontFamily : "Leckerli One")
+							logoCanvas.renderAll();
+							$("#fontTypeCombo").val(data.selectedFont)
+							$("#fontTypeCombo").removeClass().addClass(data.familyName);
+							$("#fontTypeCombo").trigger('change')
+						}).catch(function(e) {
+							console.log(e)
+						});
+					})
+				}
+				
+			}
+			if (object.id == 'makersMark') {
+				$("#makersMarkCheck").prop("checked",object.visible)
+				if (object.visible) {
+					$("#makersMarkSelect").prop("disabled", false)
+					$("#makersMarkColor").spectrum("enable")
+				} else {
+					$("#makersMarkSelect").prop("disabled", true)
+					$("#makersMarkColor").spectrum("disable")
+				}				
+			}
+			if (object.type == 'image') {
+				object.on('object:modified',function() {
+					imLeft = image.get('left')
+					imTop = image.get('top');
+				})
+				object.on('selected',function() {
+					$("#straightenObject").css("display","inline-block");
+					$("#fileName").html(object.get('id'));
+					if ($("#trimImageDiv").css("display") == "none") {
+						$("#trimImageDiv").css("display","block");
+						$("#uploadImageDiv").css("display","none");
+						$("#selectedImageDiv").css("display","block");
+					}
+					$("#tipContainer").html("Use Arrow keys to move image 1 pixel.<br>Use Shift + Arrow keys to move image 10 pixels.<br>Use Delete key to remove image");
+				})	
+			}
+			logoCanvas.add(object)
+		})
+		logoCanvas.renderAll()
+
+		if (data.texture == "custom") {
+			$("#clearTexture").css("display","inline-block");
+			$("#textureSelect").val(null)
+			$("#textureSelect").trigger("change")	
+		} else {
+			$("#textureSelect").trigger("change")	
+		}
+		$("#textureSelect").val(data.texture)		
+		
+		reRenderBG()
 	})
 
 	$("#fakeFontButton").on("click", function(e) {
@@ -5680,40 +5725,73 @@
 	})
 
 	$("#uploadTheFont").on("click", function(e) {
-		//$("#fontTypeCombo").removeClass().addClass('alegreya');
-		$.ajax({
-			type: "GET",
-			url: "http://127.0.0.1:"+port+"/customFont",
-			success: function(data) {
-				customFonts.push(data)
-				$("head").prepend("<style>@font-face {\n   font-family: '"+data.familyName+"';\n   src: url('"+data.fontData+"') format('truetype');\n}\n."+data.familyName+" { font-family: '"+data.familyName+"'; font-size: 1.1em;}\n</style>");
-				var style = data.familyName;
-				var font_family = $("."+style).css("font-family");
-				const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
-				var myfont = new FontFaceObserver(data.familyName)
-				myfont.load()
-					.then(function() {
-					// when font is loaded, use it.
-						g.getObjects().forEach(function(o) {
-							o.fontFamily = data.familyName;
-						})
-						logoCanvas.renderAll();
-						var optgroup = $("<optgroup class='"+data.familyName+"'>");
-						optgroup.append("<option value='"+data.familyName+"'>"+data.fontName+"</option>")
-						$("#fontTypeCombo").append(optgroup)
-						$("#fontTypeCombo").children().remove("optgroup[class='alegreya']");
-						$("#fontTypeCombo").val(data.familyName)
-						$("#fontTypeCombo").removeClass().addClass(data.familyName);
-						$("#fontTypeCombo").trigger('change')
-					}).catch(function(e) {
-						console.log(e)
-						alert('font loading failed ' + data.familyName);
-					});
-			}
-		})
+		ipcRenderer.send('custom-font', null)
 	})
 
-	
+	ipcRenderer.on('custom-font-response', (event, data) => {
+		console.log(data)
+		wordmarkChange(data,true)
+	})
+
+	ipcRenderer.on('local-font-folder-response', (event, data) => {
+		let fontErrors = []
+		if (data.result == 'success') {
+			const dropdown = document.getElementById("fontTypeCombo").msDropdown;
+
+			for (result of data.fonts) {
+				if (result.status == "ok") {
+					fontList.push(result.fontName)
+					var thumb = null;
+					const name = result.fontName
+					const value = result.fontPath
+					opentype.load(result.fontPath, (err,font) => {
+						if (err || !font) {
+							log.error(err)
+							return;
+						}
+						
+						var thumbText = font.getPath("ABC 123", 0, 0, 96)
+						var outPath = thumbText.toPathData(5)
+
+						thumbText = new fabric.Path(outPath, {
+							left: 0,
+							originX: 'center',
+							originY: 'center',
+							centeredScaling: true,
+							centeredRotation: true,
+							fill: 'black',
+							height: '80px'
+						})
+
+						thumb = thumbText.toDataURL()
+
+						if (findIndexByText(dropdown, name) == -1) {
+							dropdown.add({text:name, value:value, image:thumb},0)
+						}
+
+						const selectedFont = $("#fontTypeCombo").val()
+						$("#fontTypeCombo").html($('#fontTypeCombo option').sort(function(x, y) {
+							return $(x).text().toLowerCase() < $(y).text().toLowerCase() ? -1 : 1;
+						}))
+						$("#fontTypeCombo").val(selectedFont)
+						
+					})
+				} else {
+					fontErrors.push(result.fontName)
+				}
+				
+			}
+		}
+		//hideOverlay()
+		if (fontErrors.length > 0) {
+			var message = "The following fonts failed to import, and have been removed from your user fonts folder:\r\n\r\n"
+			for (font of fontErrors) {
+				message += font+"\r\n"
+			}
+			alert(message)
+			//ipcRenderer.send('show-alert',message)
+		}
+	})
 
 	function makeid(length) {
 		var result           = '';
@@ -5723,6 +5801,64 @@
 		result += characters.charAt(Math.floor(Math.random() * charactersLength));
 	}
 		return result;
+	}
+
+function isColorWithinTolerance(pixelColor, targetColor, tolerance) {
+	const dr = Math.abs(pixelColor.r - targetColor.r);
+	const dg = Math.abs(pixelColor.g - targetColor.g);
+	const db = Math.abs(pixelColor.b - targetColor.b);
+
+	return (dr <= tolerance && dg <= tolerance && db <= tolerance);
+}
+
+function isColorMatch(pixels, index, baseColor, targetColor, tolerance) {
+	const dr = Math.abs(baseColor.r - pixels[index]);
+	const dg = Math.abs(baseColor.g - pixels[index + 1]);
+	const db = Math.abs(baseColor.b - pixels[index + 2]);
+
+	return (dr + dg + db) / 3 <= tolerance;
+}
+
+function isColorMatchAlpha(pixels, index, baseColor, targetColor, tolerance) {
+	const dr = Math.abs(baseColor.r - pixels[index]);
+	const dg = Math.abs(baseColor.g - pixels[index + 1]);
+	const db = Math.abs(baseColor.b - pixels[index + 2]);
+	const da = Math.abs(baseColor.a - pixels[index + 3]); // Include alpha channel difference
+
+	return (dr + dg + db + da) / 4 <= tolerance
+}
+
+function hexToRgb(hex) {
+	// Remove '#' if present
+	hex = hex.replace(/^#/, '');
+
+	// Parse hex values
+	const bigint = parseInt(hex, 16);
+
+	// Extract RGB components
+	const r = (bigint >> 16) & 255;
+	const g = (bigint >> 8) & 255;
+	const b = bigint & 255;
+
+	return { r, g, b };
+}
+
+function findIndexByText(dropdown, text) {
+		for (child of dropdown.children) {
+			if (child.text == text) {
+				return child.index
+			}
+		}
+		return -1
+	}
+
+	function findIndexByValue(dropdown, value) {
+		for (child of dropdown.children) {
+			if (child.value == value) {
+				return child.index
+			}
+		}
+		return -1
 	}
 </script>
 </html>

@@ -1,99 +1,92 @@
-const { app, BrowserWindow, dialog, Menu, shell } = require('electron')
+const { app, BrowserWindow, dialog, Menu, shell, ipcMain } = require('electron')
 const path = require('path')
 const fs = require('fs');
-const express = require('express');
+const url = require('url');
 const Jimp = require('jimp');
-const imagemagickCli = require('imagemagick-cli');
-const ttfInfo = require('ttfinfo');
+const { distortUnwrap } = require('@alxcube/lens')
+require('@alxcube/lens-jimp');
 const isMac = process.platform === 'darwin'
 const os = require('os');
 const tempDir = os.tmpdir()
-const app2 = express()
-const url = require('url');
 const archiver = require('archiver')
-const font2base64 = require("node-font2base64")
 const Store = require("electron-store")
-
-const server = app2.listen(0, () => {
-	console.log(`Server running on port ${server.address().port}`);
-});
+const fontname = require('fontname')
 
 const store = new Store();
 
 const preferredColorFormat = store.get("preferredColorFormat", "hex")
 const preferredTexture = store.get("preferredTexture", "default_jersey_texture")
+const userFontsFolder = path.join(app.getPath('userData'),"fonts")
+if (!fs.existsSync(userFontsFolder)) {
+    fs.mkdirSync(userFontsFolder);
+}
 
-app2.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
-
-app2.get("/uploadImage", (req, res) => {
+ipcMain.on('upload-image', (event, arg) => {
+	const json = {}
 	dialog.showOpenDialog(null, {
-		properties: ['openFile'],
-		filters: [
-			{ name: 'Images', extensions: ['jpg', 'png', 'gif'] }
-		]
-	  }).then(result => {
-		  if(!result.canceled) {
-			Jimp.read(result.filePaths[0], (err, image) => {
-				if (err) {
-					console.log(err);
-				} else {
-					image.getBase64(Jimp.AUTO, (err, ret) => {
-						res.json({
-							"filename": path.basename(result.filePaths[0]),
-							"image": ret
-						  });
-						res.end();
-					})
-				}
-			});
-		  }
-	  }).catch(err => {
+	properties: ['openFile'],
+	filters: [
+		{ name: 'Images', extensions: ['jpg', 'png', 'gif'] }
+	]
+	}).then(result => {
+		if(!result.canceled) {
+		Jimp.read(result.filePaths[0], (err, image) => {
+			if (err) {
+				console.log(err);
+			} else {
+				image.getBase64(Jimp.AUTO, (err, ret) => {
+					json.filename = path.basename(result.filePaths[0]),
+					json.image = ret
+					//console.log(json)
+					event.sender.send('upload-image-response', json)
+				})
+			}
+		});
+		}
+	}).catch(err => {
 		console.log(err)
-	  })
+	})
 })
 
-app2.post('/saveJersey', (req, res) => {
-	const buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	const json = Buffer.from(req.body.canvas, 'utf-8')
+ipcMain.on('save-jersey', (event, arg) => {
+	console.log(arg)
+	const buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
+	const json = Buffer.from(arg.canvas, 'utf-8')
 
-	const output = fs.createWriteStream(tempDir + '/'+req.body.name+'.zip');
+	const output = fs.createWriteStream(tempDir + '/'+arg.name+'.zip');
 
 	output.on('close', function() {
-		//fs.writeFileSync(app.getPath('downloads') + '/' + req.body.name+'.jrs', json)
-		var data = fs.readFileSync(tempDir + '/'+req.body.name+'.zip');
+		//fs.writeFileSync(app.getPath('downloads') + '/' + arg.name+'.jrs', json)
+		var data = fs.readFileSync(tempDir + '/'+arg.name+'.zip');
 		var saveOptions = {
-		  defaultPath: app.getPath('downloads') + '/' + req.body.name+'.zip',
+		  defaultPath: app.getPath('downloads') + '/' + arg.name+'.zip',
 		}
 		dialog.showSaveDialog(null, saveOptions).then((result) => { 
 		  if (!result.canceled) {
 			fs.writeFile(result.filePath, data, function(err) {
 			  if (err) {
-				res.end("success")
-				fs.unlink(tempDir + '/'+req.body.name+'.zip', (err) => {
+				fs.unlink(tempDir + '/'+arg.name+'.zip', (err) => {
 				  if (err) {
 					console.error(err)
 					return
 				  }
 				})
-				res.end("success")
 			  } else {
-				fs.unlink(tempDir + '/'+req.body.name+'.zip', (err) => {
+				fs.unlink(tempDir + '/'+arg.name+'.zip', (err) => {
 				  if (err) {
 					console.error(err)
 					return
 				  }
 				})
-				res.end("success")
 			  };
 			})
 		  } else {
-			fs.unlink(tempDir + '/'+req.body.name+'.zip', (err) => {
+			fs.unlink(tempDir + '/'+arg.name+'.zip', (err) => {
 			  if (err) {
 				console.error(err)
 				return
 			  }
 			})
-			res.end("success");
 		  }
 		})
 	});
@@ -114,275 +107,340 @@ app2.post('/saveJersey', (req, res) => {
 		} else {
 			var watermark = fs.readFileSync(__dirname + "/images/jm_watermark.png", {encoding: 'base64'});
 			var buffer = Buffer.from(watermark, 'base64');
-				Jimp.read(buffer, (err, sec_img) => {
-					if(err) {
-						console.log(err);
-					} else {
-						fir_img.composite(sec_img, 0, 0);
-						fir_img.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
-							const finalImage = Buffer.from(buffer);
-							archive.append(finalImage, {name: req.body.name+".png"})
-							archive.append(json, {name: req.body.name+".jrs"})
-							archive.finalize()
-							});
-						
-					}
-				})
-			}
-		}); 
-});
+			Jimp.read(buffer, (err, sec_img) => {
+				if(err) {
+					console.log(err);
+				} else {
+					fir_img.composite(sec_img, 0, 0);
+					fir_img.getBuffer(Jimp.MIME_PNG, (err, buffer) => {
+						const finalImage = Buffer.from(buffer);
+						archive.append(finalImage, {name: arg.name+".png"})
+						archive.append(json, {name: arg.name+".jrs"})
+						archive.finalize()
+						});
+					
+				}
+			})
+		}
+	}); 
+})
 
-app2.get("/uploadJersey", (req, res) => {
+ipcMain.on('load-jersey', (event, arg) => {
 	const file = dialog.showOpenDialogSync(null, {
 		properties: ['openFile'],
 		filters: [
 			{ name: 'Jersey Files', extensions: ['jrs'] }
 		]
 	})
-	res.end(JSON.stringify(JSON.parse(fs.readFileSync(file[0]).toString())))
+
+	event.sender.send('load-jersey-response', JSON.stringify(JSON.parse(fs.readFileSync(file[0]).toString())))
 })
 
-app2.post("/removeBorder", (req, res) => {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var fuzz = parseInt(req.body.fuzz);
+ipcMain.on('remove-border', (event, arg) => {
+	var buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
+	var fuzz = parseInt(arg.fuzz);
 	Jimp.read(buffer, (err, image) => {
 		if (err) {
 			console.log(err);
 		} else {
-			image.write(tempDir+"/temp.png");
-			imagemagickCli.exec('magick convert -trim -fuzz '+fuzz+'% '+tempDir+'/temp.png '+tempDir+'/temp.png').then(({ stdout, stderr }) => {
-				Jimp.read(tempDir+"/temp.png", (err, image) => {
-					if (err) {
-						console.log(err);
-					} else {
-						image.getBase64(Jimp.AUTO, (err, ret) => {
-							res.end(ret);
-						})
+			image.autocrop()
+			image.getBase64(Jimp.AUTO, (err, ret) => {
+				console.log(ret)
+				event.sender.send('imagemagick-response', ret)
+			})
+		}
+	})
+})
+
+ipcMain.on('replace-color', (event, arg) => {	
+	var buffer = Buffer.from(arg.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
+	Jimp.read(buffer, (err, image) => {
+		if (err) {
+			console.log(err);
+		} else {
+			image.getBase64(Jimp.AUTO, (err, ret) => {
+				event.sender.send('imagemagick-response', ret)
+			})
+		}
+	})
+})
+
+ipcMain.on('warp-text', (event, arg) => {
+	let buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
+	let amount = arg.amount;
+	let deform = arg.deform;
+	try {
+		switch (deform) {
+			case "arch":
+				arch()
+				async function arch() {
+					try {
+						let image = await Jimp.read(buffer);
+						const newImage = new Jimp(image.bitmap.width, image.bitmap.height);
+						image.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx) {
+							const radians = x / image.bitmap.width * 360 * Math.PI / 180;
+							const offsetY = (amount * -1) * Math.cos(radians);
+							const newY = y + offsetY;
+						
+							const yFloor = Math.floor(newY);
+							const yCeil = Math.ceil(newY);
+							const yWeight = newY - yFloor;
+						
+							const clampedYFloor = Math.max(0, Math.min(image.bitmap.height - 1, yFloor));
+							const clampedYCeil = Math.max(0, Math.min(image.bitmap.height - 1, yCeil));
+						
+							const colorFloor = Jimp.intToRGBA(image.getPixelColor(x, clampedYFloor));
+							const colorCeil = Jimp.intToRGBA(image.getPixelColor(x, clampedYCeil));
+						
+							const r = colorFloor.r * (1 - yWeight) + colorCeil.r * yWeight;
+							const g = colorFloor.g * (1 - yWeight) + colorCeil.g * yWeight;
+							const b = colorFloor.b * (1 - yWeight) + colorCeil.b * yWeight;
+							const a = colorFloor.a * (1 - yWeight) + colorCeil.a * yWeight;
+						
+							const interpolatedColor = Jimp.rgbaToInt(r, g, b, a);
+							newImage.setPixelColor(interpolatedColor, x, y);
+						});
+						newImage.autocrop()
+						let b64 = await newImage.getBase64Async(Jimp.AUTO)
+						event.sender.send('warp-text-response', b64)
+					} catch (error) {
+						console.error('Error applying wave effect:', error);
+						return null;
 					}
-				})
-			})
-		}
-	})
-})
-
-app2.post("/replaceColor", (req, res) => {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var x = parseInt(req.body.x);
-	var y = parseInt(req.body.y);
-	var color = req.body.color;
-	var newcolor = req.body.newcolor;
-	var action = req.body.action;
-	var fuzz = parseInt(req.body.fuzz);
-	var cmdString;
-	Jimp.read(buffer, (err, image) => {
-		if (err) {
-			console.log(err);
-		} else {
-			image.write(tempDir+"/temp.png");
-			if (action == "replaceColorRange") {
-				cmdString = 'magick convert '+tempDir+'/temp.png -fuzz '+fuzz+'% -fill '+newcolor+' -draw "color '+x+','+y+' floodfill" '+tempDir+'/temp.png';		
-			} else {
-				cmdString = 'magick convert '+tempDir+'/temp.png -fuzz '+fuzz+'% -fill '+newcolor+' -opaque '+color+' '+tempDir+'/temp.png';	
-			}
-			imagemagickCli.exec(cmdString).then(({ stdout, stderr }) => {
-				Jimp.read(tempDir+"/temp.png", (err, image) => {
-					if (err) {
-						console.log(err);
-					} else {
-						image.getBase64(Jimp.AUTO, (err, ret) => {
-							res.end(ret);
-						})
+				}
+				break;
+			case "arc":
+				arc()
+				async function arc() {
+					let image = await Jimp.read(buffer)
+					image.autocrop()
+					let result = await distortUnwrap(image, "Arc", [parseInt(amount)])
+					let tempImg = await new Jimp(result.bitmap.width*4, result.bitmap.height*4)
+					await tempImg.blit(result, 5, 5)
+					await tempImg.autocrop()
+					let b64 = await tempImg.getBase64Async(Jimp.AUTO)
+					event.sender.send('warp-text-response', b64)
+				}
+				break;
+			case "bilinearUp":
+				bilinearUp()
+				async function bilinearUp() {
+					let image = await Jimp.read(buffer)
+					await image.autocrop()
+					const y2=image.bitmap.height*((100-amount)*0.01)
+					const controlPoints = [1.5,0,0,0,0,0,image.bitmap.height,0,image.bitmap.height,image.bitmap.width,0,image.bitmap.width,0,image.bitmap.width,image.bitmap.height,image.bitmap.width,y2]
+					const result = await distortUnwrap(image, "Polynomial", controlPoints)
+					const tempImg = await new Jimp(result.bitmap.width*4, result.bitmap.height*4)
+					await tempImg.blit(result, 5, 5)
+					await tempImg.autocrop()
+					let b64 = await tempImg.getBase64Async(Jimp.AUTO)
+					event.sender.send('warp-text-response', b64)
+				}
+				break;
+			case "bilinearDown":
+				bilinearDown()
+				async function bilinearDown() {
+					let image = await Jimp.read(buffer)
+					await image.autocrop()
+					const y2=image.bitmap.height*((100-amount)*0.01)
+					const controlPoints = [1.5,0,0,0,0,0,image.bitmap.height,0,y2,image.bitmap.width,0,image.bitmap.width,0,image.bitmap.width,image.bitmap.height,image.bitmap.width,image.bitmap.height]
+					const result = await distortUnwrap(image, "Polynomial", controlPoints)
+					const tempImg = await new Jimp(result.bitmap.width*4, result.bitmap.height*4)
+					await tempImg.blit(result, 5, 5)
+					await tempImg.autocrop()
+					let b64 = await tempImg.getBase64Async(Jimp.AUTO)
+					event.sender.send('warp-text-response', b64)
+				}
+				break;
+			case "archUp":
+				archUp()
+				async function archUp() {
+					try {
+						let image = await Jimp.read(buffer);
+						const tempImage = new Jimp(image.bitmap.width * 2, image.bitmap.height)
+						tempImage.blit(image, 0, 0, 0, 0, image.bitmap.width, image.bitmap.height);
+						const newImage = new Jimp(image.bitmap.width, image.bitmap.height);
+						tempImage.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx) {
+							const radians = (x * 180) / image.bitmap.width * Math.PI / 180;
+							const offsetY = (amount * -1) * Math.cos(radians);
+							const newY = y + offsetY;
+						
+							const yFloor = Math.floor(newY);
+							const yCeil = Math.ceil(newY);
+							const yWeight = newY - yFloor;
+						
+							const clampedYFloor = Math.max(0, Math.min(image.bitmap.height - 1, yFloor));
+							const clampedYCeil = Math.max(0, Math.min(image.bitmap.height - 1, yCeil));
+						
+							const colorFloor = Jimp.intToRGBA(image.getPixelColor(x, clampedYFloor));
+							const colorCeil = Jimp.intToRGBA(image.getPixelColor(x, clampedYCeil));
+						
+							const r = colorFloor.r * (1 - yWeight) + colorCeil.r * yWeight;
+							const g = colorFloor.g * (1 - yWeight) + colorCeil.g * yWeight;
+							const b = colorFloor.b * (1 - yWeight) + colorCeil.b * yWeight;
+							const a = colorFloor.a * (1 - yWeight) + colorCeil.a * yWeight;
+						
+							const interpolatedColor = Jimp.rgbaToInt(r, g, b, a);
+							newImage.setPixelColor(interpolatedColor, x, y);
+						});
+						
+						newImage.autocrop();
+						
+						let b64 = await newImage.getBase64Async(Jimp.AUTO)
+						event.sender.send('warp-text-response', b64)
+					} catch (error) {
+						console.error('Error applying wave effect:', error);
+						return null;
 					}
-				})
-			})
-		}
-	})
-})
-
-app2.post("/removeColorRange", (req, res) => {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var x = parseInt(req.body.x);
-	var y = parseInt(req.body.y);
-	var fuzz = parseInt(req.body.fuzz);
-	Jimp.read(buffer, (err, image) => {
-		if (err) {
-			console.log(err);
-		} else {
-			image.write(tempDir+"/temp.png", (err) => {
-				imagemagickCli.exec('magick convert '+tempDir+'/temp.png -fuzz '+fuzz+'% -fill none -draw "color '+x+','+y+' floodfill" '+tempDir+'/temp.png')
-				.then(({ stdout, stderr }) => {
-					Jimp.read(tempDir+"/temp.png", (err, image) => {
-						if (err) {
-							console.log(err);
-						} else {
-							image.getBase64(Jimp.AUTO, (err, ret) => {
-								res.end(ret);
-							})
-						}
-					})
-				})
-			})
-		}
- 	})
-})
-
-app2.post('/removeAllColor', (req, res) => {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var x = parseInt(req.body.x);
-	var y = parseInt(req.body.y);
-	var color = req.body.color;
-	var fuzz = parseInt(req.body.fuzz);
-	Jimp.read(buffer, (err, image) => {
-		if (err) {
-			console.log(err);		
-		} else {
-			image.write(tempDir+"/temp.png", (err) => {
-				var cmdString = 'magick convert '+tempDir+'/temp.png -fuzz '+fuzz+'% -transparent '+color+' '+tempDir+'/temp.png';
-				imagemagickCli.exec(cmdString).then(({ stdout, stderr }) => {
-					Jimp.read(tempDir+"/temp.png", (err, image) => {
-						if (err) {
-							console.log(err);
-						} else {
-							image.getBase64(Jimp.AUTO, (err, ret) => {
-								res.end(ret);
-							})
-						}
-					})
-				})
-			})
-		}
-	})
-});
-
-app2.post('/warpText', (req, res)=> {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var amount = req.body.amount;
-	var deform = req.body.deform;
-	var width;
-	var height;
-	var cmdLine;
-	console.log(req.body.deform)
-	Jimp.read(buffer, (err, image) => {
-		if (err) {
-			console.log(err);
-		} else {
-			image.autocrop();
-			image.write(tempDir+"/temp.png");
-			width = image.bitmap.width;
-			height = image.bitmap.height;
-			console.log(width +'x'+height)
-			switch (deform) {
-				case "arch":
-					cmdLine = 'magick convert -background transparent -wave -'+amount+'x'+width*2+' -trim +repage '+tempDir+'/temp.png '+tempDir+'/'+deform+'.png'
-					break;
-				case "arc":
-					cmdLine = 'magick convert '+tempDir+'/temp.png -virtual-pixel Background -background transparent -distort Arc '+amount+' -trim +repage '+tempDir+'/'+deform+'.png'
-					break;
-				case "bilinearUp":
-					console.log(amount)
-					console.log(((100-amount)*0.01));
-					var y2=height*((100-amount)*0.01)
-					cmdLine = 'magick convert '+tempDir+'/temp.png -virtual-pixel transparent -interpolate Spline -distort BilinearForward "0,0 0,0 0,'+height+' 0,'+height+' '+width+',0 '+width+',0 '+width+','+height+' '+width+','+y2+'" '+tempDir+'/'+deform+'.png'
-					break;
-				case "bilinearDown":
-					console.log(amount)
-					console.log(((100-amount)*0.01));
-					var y2=height*((100-amount)*0.01)
-					cmdLine = 'magick convert '+tempDir+'/temp.png -virtual-pixel transparent -interpolate Spline -distort BilinearForward "0,0 0,0 0,'+height+' 0,'+y2+' '+width+',0 '+width+',0 '+width+','+height+' '+width+','+height+'" '+tempDir+'/'+deform+'.png'
-					break;
-				case "archUp":
-					imagemagickCli.exec('magick convert '+tempDir+'/temp.png -gravity west -background transparent -extent '+width*2+'x'+height+' '+tempDir+'/temp.png').then(({stdout, stderr }) => {
-						imagemagickCli.exec('magick convert -background transparent -wave -'+amount*2+'x'+width*4+' -trim +repage '+tempDir+'/temp.png '+tempDir+'/'+deform+'.png').then(({ stdout, stderr }) => {
-							Jimp.read(tempDir+'/'+deform+'.png', (err, image) => {
-								if (err) {
-									console.log(err);
-								} else {
-									image.getBase64(Jimp.AUTO, (err, ret) => {
-										res.end(ret);
-									})
-								}
-							})
-						})
-					})
-					break;
-				case "archDown":
-					imagemagickCli.exec('magick convert '+tempDir+'/temp.png -gravity east -background transparent -extent '+width*2+'x'+height+' '+tempDir+'/temp.png').then(({stdout, stderr }) => {
-						imagemagickCli.exec('magick convert -background transparent -wave -'+amount*2+'x'+width*4+' -trim +repage '+tempDir+'/temp.png '+tempDir+'/'+deform+'.png').then(({ stdout, stderr }) => {
-							Jimp.read(tempDir+'/'+deform+'.png', (err, image) => {
-								if (err) {
-									console.log(err);
-								} else {
-									image.getBase64(Jimp.AUTO, (err, ret) => {
-										res.end(ret);
-									})
-								}
-							})
-						})
-					})
-					break;
-				default:
+				}
+				break;
+			case "archDown":
+				archDown()
+				async function archDown() {
+					try {
+						let image = await Jimp.read(buffer);
+						const tempImage = new Jimp(image.bitmap.width * 2, image.bitmap.height)
+						tempImage.blit(image, image.bitmap.width, 0, 0, 0, image.bitmap.width, image.bitmap.height);
+						const newImage = new Jimp(image.bitmap.width, image.bitmap.height);
+						tempImage.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx) {
+							const radians = (x * 180) / image.bitmap.width * Math.PI / 180;
+							const offsetY = amount * Math.cos(radians);
+							const newY = y + offsetY;
+						
+							const yFloor = Math.floor(newY);
+							const yCeil = Math.ceil(newY);
+							const yWeight = newY - yFloor;
+						
+							const clampedYFloor = Math.max(0, Math.min(image.bitmap.height - 1, yFloor));
+							const clampedYCeil = Math.max(0, Math.min(image.bitmap.height - 1, yCeil));
+						
+							const colorFloor = Jimp.intToRGBA(image.getPixelColor(x, clampedYFloor));
+							const colorCeil = Jimp.intToRGBA(image.getPixelColor(x, clampedYCeil));
+						
+							const r = colorFloor.r * (1 - yWeight) + colorCeil.r * yWeight;
+							const g = colorFloor.g * (1 - yWeight) + colorCeil.g * yWeight;
+							const b = colorFloor.b * (1 - yWeight) + colorCeil.b * yWeight;
+							const a = colorFloor.a * (1 - yWeight) + colorCeil.a * yWeight;
+						
+							const interpolatedColor = Jimp.rgbaToInt(r, g, b, a);
+							newImage.setPixelColor(interpolatedColor, x, y);
+						});						
+						newImage.autocrop()
+						let b64 = await newImage.getBase64Async(Jimp.AUTO)
+						event.sender.send('warp-text-response', b64)
+					} catch (error) {
+						console.error('Error applying wave effect:', error);
+						return null;
+					}
+				}
+				break;
+			default:
+				Jimp.read(buffer, (err, image) => {
 					image.getBase64(Jimp.AUTO, (err, ret) => {
-						res.end(ret);
+						event.sender.send('warp-text-response', b64)
 					})
-					break;
-			}
-			console.log(cmdLine);
-			imagemagickCli.exec(cmdLine).then(({ stdout, stderr }) => {
-				Jimp.read(tempDir+'/'+deform+'.png', (err, image) => {
-					if (err) {
-						console.log(err);
-					} else {
-						image.getBase64(Jimp.AUTO, (err, ret) => {
-							res.end(ret);
-						})
-					}
 				})
-			})
+				break;		
 		}
-	})
-})
+	} catch (err) {
+		console.log(err)
+		image.getBase64(Jimp.AUTO, (err, ret) => {
+			event.sender.send('warp-text-response', b64)
+		})
+	}
+})	
 
-app2.get("/customFont", (req, res) => {
-	dialog.showOpenDialog(null, {
+ipcMain.on('custom-font', (event, arg) => {
+	let json = {}
+	const options = {
+		defaultPath: store.get("uploadFontPath", app.getPath('desktop')),
 		properties: ['openFile'],
 		filters: [
 			{ name: 'Fonts', extensions: ['ttf', 'otf'] }
 		]
-	}).then(result => {
+	}
+	dialog.showOpenDialog(null, options).then(result => {
 		if(!result.canceled) {
-			ttfInfo(result.filePaths[0], function(err, info) {
-			var ext = getExtension(result.filePaths[0])
-				const dataUrl = font2base64.encodeToDataUrlSync(result.filePaths[0])
-				var fontPath = url.pathToFileURL(tempDir + '/'+path.basename(result.filePaths[0]))
-				fs.copyFile(result.filePaths[0], tempDir + '/'+path.basename(result.filePaths[0]), (err) => {
-					if (err) {
-						console.log(err)
-					} else {
-						res.json({
-							"fontName": info.tables.name[1],
-							"fontStyle": info.tables.name[2],
-							"familyName": info.tables.name[6],
-							"fontFormat": ext,
-							"fontMimetype": 'font/' + ext,
-							"fontData": fontPath.href,
-							"fontBase64": dataUrl
-						});
-						res.end()
-					}
-				})
-			});
+			store.set("uploadFontPath", path.dirname(result.filePaths[0]))
+			const filePath = path.join(userFontsFolder,path.basename(result.filePaths[0]))
+			try {
+				const fontMeta = fontname.parse(fs.readFileSync(result.filePaths[0]))[0];
+				var ext = getExtension(result.filePaths[0])
+				var fontPath = url.pathToFileURL(result.filePaths[0])
+				json.status = "ok"
+				json.fontName = fontMeta.fullName
+				json.fontStyle = fontMeta.fontSubfamily
+				json.familyName = fontMeta.fontFamily
+				json.fontFormat = ext
+				json.fontMimetype = 'font/' + ext
+				json.fontData = fontPath.href
+				json.fontPath = filePath
+				fs.copyFileSync(result.filePaths[0], filePath)
+				event.sender.send('custom-font-response', json)
+			} catch (err) {
+				json.status = "error"
+				json.fontName = path.basename(result.filePaths[0])
+				json.fontPath = result.filePaths[0]
+				json.message = err
+				event.sender.send('custom-font-response', json)
+				fs.unlinkSync(result.filePaths[0])
+			}
+		} else {
+			json.status = "cancelled"
+			event.sender.send('custom-font-response', json)
+			log.info("User cancelled custom font dialog")
 		}
 	}).catch(err => {
 		console.log(err)
+		json.status = "error",
+		json.message = err
+		event.sender.send('custom-font-response', json)
 	})
 })
 
-app2.post('/setPreference', (req, res) => {
-	const pref = req.body.pref;
-	const val = req.body.val;
-	store.set(pref, val)
-	res.end()
-});
+ipcMain.on('local-font-folder', (event, arg) => {
+	const jsonObj = {}
+	const jsonArr = []
+
+	filenames = fs.readdirSync(userFontsFolder);
+	for (i=0; i<filenames.length; i++) {
+		if (path.extname(filenames[i]).toLowerCase() == ".ttf" || path.extname(filenames[i]).toLowerCase() == ".otf") {
+			const filePath = path.join(userFontsFolder,filenames[i])
+			try {
+				const fontMeta = fontname.parse(fs.readFileSync(filePath))[0];
+				var ext = getExtension(filePath)
+				var fontPath = url.pathToFileURL(filePath)
+				var json = {
+					"status": "ok",
+					"fontName": fontMeta.fullName,
+					"fontStyle": fontMeta.fontSubfamily,
+					"familyName": fontMeta.fontFamily,
+					"fontFormat": ext,
+					"fontMimetype": 'font/' + ext,
+					"fontData": fontPath.href,
+					"fontPath": filePath,
+				};
+				jsonArr.push(json)
+			} catch (err) {
+				const json = {
+					"status": "error",
+					"fontName": path.basename(filePath),
+					"fontPath": filePath,
+					"message": err
+				}
+				jsonArr.push(json)
+				fs.unlinkSync(filePath)
+			}
+		}
+	}
+	jsonObj.result = "success"
+	jsonObj.fonts = jsonArr
+	event.sender.send('local-font-folder-response', jsonObj)
+})
+
+ipcMain.on('set-preference', (event, arg) => {
+	store.set(arg.pref, arg.val)
+})
 
 function getExtension(filename) {
 	var ext = path.extname(filename||'').split('.');
@@ -488,7 +546,7 @@ const createWindow = () => {
 	const menu = Menu.buildFromTemplate(template)
 	Menu.setApplicationMenu(menu)
   
-    mainWindow.loadURL(`file://${__dirname}/index.html?port=${server.address().port}&preferredColorFormat=${preferredColorFormat}&preferredTexture=${preferredTexture}`);
+    mainWindow.loadURL(`file://${__dirname}/index.html?&preferredColorFormat=${preferredColorFormat}&preferredTexture=${preferredTexture}`);
 
 	mainWindow.webContents.setWindowOpenHandler(({ url }) => {
 		shell.openExternal(url);
