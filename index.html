@@ -12,7 +12,7 @@
 	<script type="text/javascript" src="./scripts/canvassaver.js"></script>
 	<script type="text/javascript" src="./scripts/modernizr.custom.68502.js"></script>
 	<script type="text/javascript" src="./scripts/jquery.magnific-popup.min.js"></script>
-	<script type="text/javascript" src="./scripts/jquery.dd.min.js"></script>
+	<script type="text/javascript" src="./scripts/dd.min.js"></script>
 	<script type="text/javascript" src="./scripts/jquery.range-min.js"></script>
 	<script type="text/javascript" src="./scripts/jquery.mousewheel.min.js"></script>
 	<script type="text/javascript" src="./scripts/spin.min.js"></script>
@@ -813,7 +813,77 @@
 							<table style="width:100%;">
 								<tr>
 									<td colspan="3">
-										<select id="fontTypeCombo" class='textOption Leckerli_One' style="width:100%;">
+										<select id="fontTypeCombo" class="textOption" style="width:100%;">
+											<option data-image="./images/Acme.png" value="./fonts/Acme-Regular.ttf">Acme</option>
+											<option data-image="./images/All State.png" value="./fonts/all_state-webfont.ttf">All State</option>
+											<option data-image="./images/Athletic Gothic.png" value="./fonts/athletic_gothic-webfont.ttf">Athletic Gothic</option>
+											<option data-image="./images/Athletic Gothic Shadow.png" value="./fonts/athletic_gothic_shadow-webfont.ttf">Athletic Gothic Shadow</option>
+											<option data-image="./images/Beaverton Script.png" value="./fonts/beaverton_script-webfont.ttf">Beaverton Script</option>
+											<option data-image="./images/Berkshire Swash.png" value="./fonts/BerkshireSwash-Regular.ttf">Berkshire Swash</option>
+											<option data-image="./images/CantoraOne.png" value="./fonts/CantoraOne-Regular.ttf">CantoraOne</option>
+											<option data-image="./images/Caxton Roman.png" value="./fonts/caxton_roman-webfont.ttf">Caxton Roman</option>
+											<option data-image="./images/Chela One.png" value="./fonts/ChelaOne-Regular.ttf">Chela</option>
+											<option data-image="./images/Russell Circus.png" value="./fonts/circus-webfont.ttf">Russell Circus</option>
+											<option data-image="./images/Condiment.png" value="./fonts/Condiment-Regular.ttf">Condiment</option>
+											<option data-image="./images/Cookie.png" value="./fonts/Cookie-Regular.ttf">Cookie</option>
+											<option data-image="./images/Courgette.png" value="./fonts/Courgette-Regular.ttf">Courgette</option>
+											<option data-image="./images/Croissant One.png" value="./fonts/CroissantOne-Regular.ttf">Croissant</option>
+											<option data-image="./images/Damion.png" value="./fonts/Damion-Regular.ttf">Damion</option>
+											<option data-image="./images/Engagement.png" value="./fonts/Engagement-Regular.ttf">Engagement</option>
+											<option data-image="./images/Germania One.png" value="./fonts/GermaniaOne-Regular.ttf">Germania</option>
+											<option data-image="./images/Graduate.png" value="./fonts/Graduate-Regular.ttf">Graduate</option>
+											<option data-image="./images/Grand Hotel.png" value="./fonts/GrandHotel-Regular.ttf">Grand Hotel</option>
+											<option data-image="./images/Jockey One.png" value="./fonts/JockeyOne-Regular.ttf">Jockey</option>
+											<option data-image="./images/Kaushan Script.png" value="./fonts/KaushanScript-Regular.ttf">Kaushan Script</option>
+											<option data-image="./images/Leckerli One.png" value="./fonts/LeckerliOne-Regular.ttf" selected>Leckerli</option>
+											<option data-image="./images/Lily Script One.png" value="./fonts/LilyScriptOne-Regular.ttf">Lily Script</option>
+											<option data-image="./images/Lobster.png" value="./fonts/Lobster-Regular.ttf">Lobster</option>
+											<option data-image="./images/Lobster Two.png" value="./fonts/LobsterTwo-Regular.ttf">Lobster Two</option>
+											<option data-image="./images/Metal Mania.png" value="./fonts/MetalMania-Regular.ttf">Metal Mania</option>
+											<option data-image="./images/Miniver.png" value="./fonts/Miniver-Regular.ttf">Miniver</option>
+											<option data-image="./images/MLB Block.png" value="./fonts/MLBBlock.ttf">MLB Block</option>
+											<option data-image="./images/MLB Cubs.png" value="./fonts/MLBCubs.ttf">MLB Chicago N</option>
+											<option data-image="./images/MLB Red Sox.png" value="./fonts/MLBRedSox.ttf">McAuliffe</option>
+											<option data-image="./images/Molle.png" value="./fonts/Molle-Regular.ttf">Molle</option>
+											<option data-image="./images/New Rocker.png" value="./fonts/NewRocker-Regular.ttf">New Rocker</option>
+											<option data-image="./images/Norican.png" value="./fonts/Norican-Regular.ttf">Norican</option>
+											<option data-image="./images/Oleo Script.png" value="./fonts/OleoScript-Regular.ttf">Oleo Script</option>
+											<option data-image="./images/Pacifico.png" value="./fonts/Pacifico.ttf">Pacifico</option>
+											<option data-image="./images/Pirata One.png" value="./fonts/PirataOne-Regular.ttf">Pirata</option>
+											<option data-image="./images/Playball.png" value="./fonts/Playball-Regular.ttf">Playball</option>
+											<option data-image="./images/Pro Full Block.png" value="./fonts/pro_full_block-webfont.ttf">Pro Full Block</option>
+											<option data-image="./images/Quicksand.png" value="./fonts/Quicksand-Regular.ttf">Quicksand</option>
+											<option data-image="./images/Rubik Mono One.png" value="./fonts/RubikMonoOne-Regular.ttf">Rubik Mono</option>
+											<option data-image="./images/Rubik One.png" value="./fonts/RubikOne-Regular.ttf">Rubik</option>
+											<option data-image="./images/Rum Raisin.png" value="./fonts/RumRaisin-Regular.ttf">Rum Raisin</option>
+											<option data-image="./images/Satisfy.png" value="./fonts/Satisfy-Regular.ttf">Satisfy</option>
+											<option data-image="./images/Seymour One.png" value="./fonts/SeymourOne-Regular.ttf">Seymour</option>
+											<option data-image="./images/UA Tiffany.png" value="./fonts/tiffany-webfont.ttf">Tiffany</option>
+											<option data-image="./images/Trade Winds.png" value="./fonts/TradeWinds-Regular.ttf">Trade Winds</option>
+											<option data-image="./images/Kansas.png" value="./fonts/tuscan-webfont.ttf">Kansas</option>
+											<option data-image="./images/UnifrakturCook.png" value="./fonts/UnifrakturCook-Bold.ttf">Unifraktur Cook</option>
+											<option data-image="./images/UnifrakturMaguntia.png" value="./fonts/UnifrakturMaguntia-Book.ttf">Unifraktur Maguntia</option>
+											<option data-image="./images/Varsity Block C.png" value="./fonts/VarsityBlockC.ttf">Varsity Block C</option>
+											<option data-image="./images/Varsity Classic Serif A.png" value="./fonts/VarsityClassicSerifA.ttf">Varsity Classic Serif A</option>
+											<option data-image="./images/Varsity Classic Serif B.png" value="./fonts/VarsityClassicSerifB.ttf">Varsity Classic Serif B</option>
+											<option data-image="./images/Vibur.png" value="./fonts/Vibur-Regular.ttf">Vibur</option>
+											<option data-image="./images/Viga.png" value="./fonts/Viga-Regular.ttf">Viga</option>
+											<option data-image="./images/Wellfleet.png" value="./fonts/Wellfleet-Regular.ttf">Wellfleet</option>
+											<option data-image="./images/Wendy One.png" value="./fonts/WendyOne-Regular.ttf">Wendy</option>
+											<option data-image="./images/Yellowtail.png" value="./fonts/Yellowtail-Regular.ttf">Yellowtail</option>
+											<option data-image="./images/Rawlings Fancy Block.png" value="./fonts/rawlingsfancyblock-regular-webfont.ttf">Fancy Block</option>
+											<option data-image="./images/Rawlings Old English.png" value="./fonts/rawlingsoldenglish-webfont.ttf">Old English</option>
+											<option data-image="./images/Richardson Fancy Block.png" value="./fonts/richardson_fancy_block-webfont.ttf">Fancy Block 2</option>
+											<option data-image="./images/SPL28Script.png" value="./fonts/spl28script-webfont.ttf">SPL Script</option>
+											<option data-image="./images/VarsityClassicD.png" value="./fonts/VarsityClassicD.ttf">Varsity Classic D</option>
+											<option data-image="./images/VarsityBlockA.png" value="./fonts/VarsityBlockA.ttf">Varsity Block A</option>
+											<option data-image="./images/VarsityBlockB.png" value="./fonts/VarsityBlockB.ttf">Varsity Block B</option>
+											<option data-image="./images/VarsityBlockD.png" value="./fonts/VarsityBlockD.ttf">Varsity Block D</option>
+											<option data-image="./images/VarsityClassicA.png" value="./fonts/VarsityClassicA.ttf">Varsity Classic A</option>
+											<option data-image="./images/VarsityClassicB.png" value="./fonts/VarsityClassicB.ttf">Varsity Classic B</option>
+											<option data-image="./images/VarsityClassicC.png" value="./fonts/VarsityClassicC.ttf">Varsity Classic C</option>
+										</select>
+										<!-- <select id="fontTypeCombo" class='textOption Leckerli_One' style="width:100%;">
 											<optgroup class='Acme'>
 											<option value='Acme'>Acme</option>
 											</optgroup>
@@ -928,9 +998,9 @@
 											<optgroup class='ProFullBlock'>
 											<option value='ProFullBlock'>Pro Full Block</option>
 											</optgroup>
-											<!--<optgroup class='Quicksand'>
+											<optgroup class='Quicksand'>
 											<option value='Quicksand'>Quicksand</option>
-											</optgroup>-->
+											</optgroup>
 											<optgroup class='RichardsonFancyBlock'>
 											<option value='RichardsonFancyBlock'>Richardson Block</option>
 											</optgroup>
@@ -979,8 +1049,8 @@
 											<optgroup class='Yellowtail'>
 											<option value='Yellowtail'>Yellowtail</option>
 											</optgroup>
-										</select>
-									</td>
+										</select> -->
+									</td> 
 								</tr>
 								<tr><td colspan="3" align="center">
 									<input id="customFont" type="file" name="customFont" accept=".ttf, .otf" style="display:none;" />
@@ -1177,7 +1247,10 @@
 				$(this).append($('<option />').val(i).html(i));
 			}
 		})
-		$(".msDropDown").msDropDown();
+		//$(".msDropDown").msDropDown();
+		let jerseyDropdown = new MsDropdown(document.getElementById("fontTypeCombo"), {visibleRows: 6})
+		let swashDropdown = new MsDropdown(document.getElementById("swashCombo"), {visibleRows: 5})
+		let warpDropdown = new MsDropdown(document.getElementById("warpEffect"), {visibleRows: 8})
 		if ($(".wordmarkToggle").is(':checked')) {
 			$(".textOption").each(function() {
 				$(this).prop( "disabled", false );
@@ -1185,7 +1258,7 @@
 			$(".textColorSelector").each(function() {
 				$(this).spectrum('enable');
 			})
-			$("#warpEffect").msDropDown().data("dd").set("disabled", false)
+			//$("#warpEffect").msDropDown().data("dd").set("disabled", false)
 		} else {
 			state = false;
 			$(".textOption").each(function() {
@@ -1194,7 +1267,7 @@
 			$(".textColorSelector").each(function() {
 				$(this).spectrum('disable');
 			})
-			$("#warpEffect").msDropDown().data("dd").set("disabled", true)
+			//$("#warpEffect").msDropDown().data("dd").set("disabled", true)
 		}
 		$("#buttonOpacitySpan").html(buttonOpacity);
 		$("#flapButtonOpacitySpan").html(buttonOpacity);
@@ -1243,9 +1316,9 @@
 		
 		$(".swashToggle").each(function(e) {
 			if ($(this).is(':checked')) {
-				$("#swashCombo").msDropDown().data("dd").set("disabled", false);
+				//$("#swashCombo").msDropDown().data("dd").set("disabled", false);
 			} else {
-				$("#swashCombo").msDropDown().data("dd").set("disabled", true);
+				//$("#swashCombo").msDropDown().data("dd").set("disabled", true);
 			}
 		})
 	});
@@ -1253,7 +1326,89 @@
 	initializeCanvas();
 	
     $("#fontTypeCombo").on("change",function() {
-		var style = $(this).val();
+		
+		opentype.load($("#fontTypeCombo").val(), (err,font) => {
+			if (err || !font) {
+				console.log(err)
+				return;
+			}
+
+			const path = font.getPath($("#wordmarkTextBox").val(),256,681,30)
+			const svgPath = path.toPathData(5)
+			
+			var grp = logoCanvas.getObjects("group").find(o => o.id === "wordmark")
+
+			grp.getObjects('path').forEach(function(o) {
+				grp.removeWithUpdate(o)
+			})
+
+			wordmarkText = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				id: 'wordmarkText',
+				fill: ($("#wordmarkTextColor").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextColor").spectrum("get").toHexString(),
+				stroke: ($("#wordmarkTextColor").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextColor").spectrum("get").toHexString(),
+				strokeWidth: 0,
+				visible: $("#wordmarkTextColorCheck").is(":checked")
+			})
+		
+			wordmarkTextStroke1 = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				id: 'wordmarkTextStroke1',
+				stroke: ($("#wordmarkTextStroke1Color").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextStroke1Color").spectrum("get").toHexString(),
+				strokeWidth: 6,
+				strokeLineCap: "round",
+				fill: ($("#wordmarkTextStroke1Color").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextStroke1Color").spectrum("get").toHexString(),
+				visible: $("#wordmarkTextStroke1ColorCheck").is(":checked")
+			})
+		
+			wordmarkTextStroke2 = new fabric.Path(svgPath, {
+				left: 357,
+				top: 382,
+				originX: 'center',
+				originY: 'center',
+				centeredScaling: true,
+				centeredRotation: true,
+				strokeLineCap: "round",
+				id: 'wordmarkTextStroke2',
+				stroke: ($("#wordmarkTextStroke2Color").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextStroke2Color").spectrum("get").toHexString(),
+				strokeWidth: 10,
+				strokeLineCap: "round",
+				fill: ($("#wordmarkTextStroke2Color").spectrum("get") == null) ? 'transparent' : $("#wordmarkTextStroke2Color").spectrum("get").toHexString(),
+				visible: $("#wordmarkTextStroke2ColorCheck").is(":checked")
+			})
+
+			grp.addWithUpdate(wordmarkTextStroke2)
+			grp.addWithUpdate(wordmarkTextStroke1)
+			grp.addWithUpdate(wordmarkText)
+
+			logoCanvas.renderAll()
+
+			/* if (newFont) {
+				var thumbText = font.getPath("ABC 123", 0, 0, 96)
+				var outPath = thumbText.toPathData(5)
+
+				var foo = new fabric.Path(outPath, {
+					fill: 'black',
+					top: 0,
+					left: 0
+				})
+
+				refreshDropdowns("jersey",data,foo)
+			} */
+
+			$("#warpEffect").trigger("change")
+		})
+		/* var style = $(this).val();
 		var font_family = $("."+style).css("font-family");
 		var objects = logoCanvas.getObjects("group");
 		const g = logoCanvas.getObjects('group').find(o => o.id === 'wordmark')
@@ -1330,7 +1485,7 @@
 				warpText();
 				break;
 		}
-		logoCanvas.renderAll();
+		logoCanvas.renderAll(); */
 	})
 	
 	$("#wordmarkTextBox").on("change",function() {
@@ -3663,7 +3818,7 @@
 			$(".textColorSelector").each(function() {
 				$(this).spectrum('enable');
 			})
-			$("#warpEffect").msDropDown().data("dd").set("disabled", false);
+			//$("#warpEffect").msDropDown().data("dd").set("disabled", false);
 		} else {
 			state = false;
 			$(".textOption").each(function() {
@@ -3674,7 +3829,7 @@
 			})
 			//logoCanvas.deactivateAll();
 			$("#tipContainer").html("");
-			$("#warpEffect").msDropDown().data("dd").set("disabled", true);
+			//$("#warpEffect").msDropDown().data("dd").set("disabled", true);
 			$("#warpAmount").prop("disabled",true);
 		}
 		var id = $(this).data("id");
@@ -4031,7 +4186,7 @@
 					if (obj.get('name') == "warpedText") {
 						wordmark.visible = false;
 						$("#textLogoCheck").attr("checked",false);
-						$("#warpEffect").msDropdown().data("dd").set("selectedIndex", 0);
+						//$("#warpEffect").msDropdown().data("dd").set("selectedIndex", 0);
 						$("#warpAmount").val("0");
 						$("#warpAmountDisplay").val("0");
 						$(".textOption").each(function() {
@@ -4040,7 +4195,7 @@
 						$(".textColorSelector").each(function() {
 							$(this).spectrum('disable');
 						})
-						$("#warpEffect").msDropDown().data("dd").set("disabled", true);
+						//$("#warpEffect").msDropDown().data("dd").set("disabled", true);
 					}
 					logoCanvas.renderAll();
 					$("#tipContainer").html("");
@@ -4228,9 +4383,9 @@
 			state = false;
 		}
 		if (state == true) {
-			$("#swashCombo").msDropDown().data("dd").set("disabled", false);
+			//$("#swashCombo").msDropDown().data("dd").set("disabled", false);
 		} else {
-			$("#swashCombo").msDropDown().data("dd").set("disabled", true);
+			//$("#swashCombo").msDropDown().data("dd").set("disabled", true);
 		}
 		var visibleSwash = $("#swashCombo").val();
 		var objects = logoCanvas.getObjects();
