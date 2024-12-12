@@ -397,37 +397,46 @@ ipcMain.on('custom-font', (event, arg) => {
 		json.message = err
 		event.sender.send('custom-font-response', json)
 	})
-	/* let json = {}
-	dialog.showOpenDialog(null, {
-		properties: ['openFile'],
-		filters: [
-			{ name: 'Fonts', extensions: ['ttf', 'otf'] }
-		]
-	}).then(result => {
-		if(!result.canceled) {
-			ttfInfo(result.filePaths[0], function(err, info) {
-			var ext = getExtension(result.filePaths[0])
-				//const dataUrl = font2base64.encodeToDataUrlSync(result.filePaths[0])
-				var fontPath = url.pathToFileURL(tempDir + '/'+path.basename(result.filePaths[0]))
-				fs.copyFile(result.filePaths[0], tempDir + '/'+path.basename(result.filePaths[0]), (err) => {
-					if (err) {
-						console.log(err)
-					} else {
-						json.fontName = info.tables.name[1],
-						json.fontStyle = info.tables.name[2],
-						json.familyName = info.tables.name[6],
-						json.fontFormat = ext,
-						json.fontMimetype = 'font/' + ext,
-						json.fontData = fontPath.href,
-						json.fontBase64 = ""
-						event.sender.send('custom-font-response', json)
-					}
-				})
-			});
+})
+
+ipcMain.on('local-font-folder', (event, arg) => {
+	const jsonObj = {}
+	const jsonArr = []
+
+	filenames = fs.readdirSync(userFontsFolder);
+	for (i=0; i<filenames.length; i++) {
+		if (path.extname(filenames[i]).toLowerCase() == ".ttf" || path.extname(filenames[i]).toLowerCase() == ".otf") {
+			const filePath = path.join(userFontsFolder,filenames[i])
+			try {
+				const fontMeta = fontname.parse(fs.readFileSync(filePath))[0];
+				var ext = getExtension(filePath)
+				var fontPath = url.pathToFileURL(filePath)
+				var json = {
+					"status": "ok",
+					"fontName": fontMeta.fullName,
+					"fontStyle": fontMeta.fontSubfamily,
+					"familyName": fontMeta.fontFamily,
+					"fontFormat": ext,
+					"fontMimetype": 'font/' + ext,
+					"fontData": fontPath.href,
+					"fontPath": filePath,
+				};
+				jsonArr.push(json)
+			} catch (err) {
+				const json = {
+					"status": "error",
+					"fontName": path.basename(filePath),
+					"fontPath": filePath,
+					"message": err
+				}
+				jsonArr.push(json)
+				fs.unlinkSync(filePath)
+			}
 		}
-	}).catch(err => {
-		console.log(err)
-	}) */
+	}
+	jsonObj.result = "success"
+	jsonObj.fonts = jsonArr
+	event.sender.send('local-font-folder-response', jsonObj)
 })
 
 ipcMain.on('set-preference', (event, arg) => {
