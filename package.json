@@ -21,7 +21,6 @@
     "archiver": "^5.3.0",
     "electron-store": "^8.0.1",
     "jimp": "0.22.12",
-    "node-font2base64": "^0.7.1",
     "ttfinfo": "^0.2.0"
   },
   "devDependencies": {
