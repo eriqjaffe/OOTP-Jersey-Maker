@@ -1,29 +1,22 @@
 const { app, BrowserWindow, dialog, Menu, shell, ipcMain, ipcRenderer } = require('electron')
 const path = require('path')
 const fs = require('fs');
-const express = require('express');
+//const express = require('express');
 const Jimp = require('jimp');
 const imagemagickCli = require('imagemagick-cli');
 const ttfInfo = require('ttfinfo');
 const isMac = process.platform === 'darwin'
 const os = require('os');
 const tempDir = os.tmpdir()
-const app2 = express()
-const url = require('url');
+//const app2 = express()const url = require('url');
 const archiver = require('archiver')
-const font2base64 = require("node-font2base64")
+//const font2base64 = require("node-font2base64")
 const Store = require("electron-store")
-
-const server = app2.listen(0, () => {
-	console.log(`Server running on port ${server.address().port}`);
-});
 
 const store = new Store();
 
 const preferredColorFormat = store.get("preferredColorFormat", "hex")
 const preferredTexture = store.get("preferredTexture", "default_jersey_texture")
-
-app2.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 
 ipcMain.on('upload-image', (event, arg) => {
 	const json = {}
@@ -140,7 +133,6 @@ ipcMain.on('load-jersey', (event, arg) => {
 	event.sender.send('load-jersey-response', JSON.stringify(JSON.parse(fs.readFileSync(file[0]).toString())))
 })
 
-//app2.post("/removeBorder", (req, res) => {
 ipcMain.on('remove-border', (event, arg) => {
 	var buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
 	var fuzz = parseInt(arg.fuzz);
@@ -169,61 +161,6 @@ ipcMain.on('replace-color', (event, arg) => {
 		}
 	})
 })
-
-app2.post("/removeColorRange", (req, res) => {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var x = parseInt(req.body.x);
-	var y = parseInt(req.body.y);
-	var fuzz = parseInt(req.body.fuzz);
-	Jimp.read(buffer, (err, image) => {
-		if (err) {
-			console.log(err);
-		} else {
-			image.write(tempDir+"/temp.png", (err) => {
-				imagemagickCli.exec('magick convert '+tempDir+'/temp.png -fuzz '+fuzz+'% -fill none -draw "color '+x+','+y+' floodfill" '+tempDir+'/temp.png')
-				.then(({ stdout, stderr }) => {
-					Jimp.read(tempDir+"/temp.png", (err, image) => {
-						if (err) {
-							console.log(err);
-						} else {
-							image.getBase64(Jimp.AUTO, (err, ret) => {
-								res.end(ret);
-							})
-						}
-					})
-				})
-			})
-		}
- 	})
-})
-
-app2.post('/removeAllColor', (req, res) => {
-	var buffer = Buffer.from(req.body.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
-	var x = parseInt(req.body.x);
-	var y = parseInt(req.body.y);
-	var color = req.body.color;
-	var fuzz = parseInt(req.body.fuzz);
-	Jimp.read(buffer, (err, image) => {
-		if (err) {
-			console.log(err);		
-		} else {
-			image.write(tempDir+"/temp.png", (err) => {
-				var cmdString = 'magick convert '+tempDir+'/temp.png -fuzz '+fuzz+'% -transparent '+color+' '+tempDir+'/temp.png';
-				imagemagickCli.exec(cmdString).then(({ stdout, stderr }) => {
-					Jimp.read(tempDir+"/temp.png", (err, image) => {
-						if (err) {
-							console.log(err);
-						} else {
-							image.getBase64(Jimp.AUTO, (err, ret) => {
-								res.end(ret);
-							})
-						}
-					})
-				})
-			})
-		}
-	})
-});
 
 ipcMain.on('warp-text', (event, arg) => {
 	var buffer = Buffer.from(arg.imgdata.replace(/^data:image\/(png|gif|jpeg);base64,/,''), 'base64');
@@ -324,7 +261,7 @@ ipcMain.on('custom-font', (event, arg) => {
 		if(!result.canceled) {
 			ttfInfo(result.filePaths[0], function(err, info) {
 			var ext = getExtension(result.filePaths[0])
-				const dataUrl = font2base64.encodeToDataUrlSync(result.filePaths[0])
+				//const dataUrl = font2base64.encodeToDataUrlSync(result.filePaths[0])
 				var fontPath = url.pathToFileURL(tempDir + '/'+path.basename(result.filePaths[0]))
 				fs.copyFile(result.filePaths[0], tempDir + '/'+path.basename(result.filePaths[0]), (err) => {
 					if (err) {
@@ -336,7 +273,7 @@ ipcMain.on('custom-font', (event, arg) => {
 						json.fontFormat = ext,
 						json.fontMimetype = 'font/' + ext,
 						json.fontData = fontPath.href,
-						json.fontBase64 = dataUrl
+						json.fontBase64 = ""
 						event.sender.send('custom-font-response', json)
 					}
 				})
@@ -455,7 +392,7 @@ const createWindow = () => {
 	const menu = Menu.buildFromTemplate(template)
 	Menu.setApplicationMenu(menu)
   
-    mainWindow.loadURL(`file://${__dirname}/index.html?port=${server.address().port}&preferredColorFormat=${preferredColorFormat}&preferredTexture=${preferredTexture}`);
+    mainWindow.loadURL(`file://${__dirname}/index.html?&preferredColorFormat=${preferredColorFormat}&preferredTexture=${preferredTexture}`);
 
 	mainWindow.webContents.setWindowOpenHandler(({ url }) => {
 		shell.openExternal(url);
